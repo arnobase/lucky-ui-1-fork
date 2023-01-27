@@ -1,9 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
 import { AiOutlineDown } from "react-icons/ai";
 import Shiden from "../assets/Shiden.png";
-import { ConnectContext } from "../context/ConnectProvider";
+const DAPP_NAME = "Lucky";
+import { WalletSelect } from '@talismn/connect-components';
 import dynamic from "next/dynamic";
+import accountProvider from "../context/account";
 
 const style = {
   title: "text-4xl text-white-700 text-center font-semibold",
@@ -15,8 +17,9 @@ const style = {
   buttonIconContainer: `flex items-center justify-center w-8 h-8`,
   network: `mr-2`,
 };
+
 function Header() {
-  const { connectWallet, currentAccount, api } = useContext(ConnectContext);
+  const [activeAccount, setActiveAccount] = useState({name:"Connect"})
   const Identicon = dynamic(() => import("@polkadot/react-identicon"), {
     ssr: false,
   });
@@ -30,30 +33,15 @@ function Header() {
           </div>
           <p className={style.network}>Shibuya</p>
         </div>
-        {currentAccount ? (
-          <div className={`${style.button} ${style.buttonPadding}`}>
-            <div className={style.buttonIconContainer}>
-              <Identicon
-                value={currentAccount.address}
-                size={20}
-                theme={"polkadot"}
-              />
-            </div>
-
-            <div className={style.buttonTextContainer}>
-              {currentAccount.meta.name}
-            </div>
-          </div>
-        ) : (
-          <div
-            onClick={() => connectWallet()}
-            className={`${style.button} ${style.buttonPadding}`}
-          >
-            <div className={`${style.buttonAccent} ${style.buttonPadding}`}>
-              Connect Wallet
-            </div>
-          </div>
-        )}
+        <WalletSelect 
+          onlyShowInstalled
+          dappName={DAPP_NAME}
+          showAccountsList={true}
+          triggerComponent={
+            <button>{activeAccount.name}</button>
+          } 
+          onAccountSelected={(account) => { console.log(account); accountProvider.setCurrent(account); setActiveAccount(account)}}// }}
+        />
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Button from "./Button";
 import { ConnectContext } from "../context/ConnectProvider";
 import { DAPP_STAKING_CONTRACT_ADDRESS } from "../artifacts/constants";
+import account from "../context/account";
 
 const style = {
   wrapper: `h-screen w-screen flex items-center justify-center mt-14`,
@@ -9,13 +10,14 @@ const style = {
   transferPropContainer: `bg-[#20242A] my-4 rounded-2xl p-4 text-3xl  border border-[#20242A] hover:border-[#41444F]  flex justify-between`,
   transferPropInput: `bg-transparent placeholder:text-[#B2B9D2] outline-none mb-6 w-full text-2xl`,
 };
+let injector;
 
-const BondAndStake = () => {
+function BondAndStake() {
 
-  const { currentAccount, api } = useContext(ConnectContext);
-  const [stakeValue, setStakeValue] = useState();
+  const { api } = useContext(ConnectContext);
+  const [stakeValue, setStakeValue] = useState(5000000000000000000n);
 
-  const bondAndStake = async (stakeValue) => {
+  async function doBondAndStake() {
     try {
       // maximum gas to be consumed for the call. if limit is too small the call will fail.
       const gasLimit = 30000n * 1000000n;
@@ -23,13 +25,15 @@ const BondAndStake = () => {
       // if null is passed, unlimited balance can be used
       const storageDepositLimit = null;
 
-      const { web3FromSource } = await import("@polkadot/extension-dapp");
-      const injector = await web3FromSource(currentAccount.meta.source);
+      //const { web3FromSource } = await import("@polkadot/extension-dapp");
+      const { web3FromSource } = await import('@talismn/connect-components');
+      const injector = await web3FromSource(account.account.meta.source);
   
-      if (stakeValue == undefined){
+      /*
+      if (stakeValue === undefined){
         console.log('Set default value');
         stakeValue = 5000000000000000000n;
-      }
+      }*/
 
       console.log('Bond and stake ' + stakeValue);
 
@@ -80,10 +84,10 @@ const BondAndStake = () => {
               <input
                 type="text"
                 className={style.transferPropInput}
-                placeholder="Stake Value, min: 5000000000000000000"
-                onChange={(e) => setStakeValue(e.target.value)}
+                placeholder="Stake Value, min: 5 SBY"
+                onChange={(e) => {setStakeValue(e.target.value); console.log(e.target.value*1000000000000000000)}}
               />
-            <div onClick={() => bondAndStake()}>
+            <div onClick={() => doBondAndStake()}>
               <Button title="Stake" />
             </div>
           </div>   
