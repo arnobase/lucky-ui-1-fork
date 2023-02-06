@@ -1,4 +1,4 @@
 node_modules
-node_modules
-.history
-.next
+.history/
+.next/
+.DS_Store
