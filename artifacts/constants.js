@@ -1,3 +1,16 @@
+export const SS58_PREFIX = {
+  astar:5,
+  shiden:5,
+  shibuya:5,
+  rococo:42,
+  westend:42
+};
+
+export const TOKEN_DECIMALS = {
+  ASTR: 18,
+  SDN: 18
+};
+
 export const DAPP_STAKING_CONTRACT_ADDRESS = "bc3yCAej7WxPBi4x1Ba1zru9HtieZrW7jk15QmGWSwZ7D6G";
 
 export const REWARD_MANAGER_CONTRACT_ADDRESS = "XuPw8i9hzwHmN5TgcKQRwMbjYjLhq4v94gW7opAFsJhksta";

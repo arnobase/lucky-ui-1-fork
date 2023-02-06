@@ -1,8 +1,9 @@
 import { ApiPromise, WsProvider } from "@polkadot/api";
 import React, { useState, useEffect } from "react";
+import ENDPOINTS from "../lib/endpoint";
 export const ConnectContext = React.createContext();
 
-const WS_PROVIDER = "wss://rpc.shibuya.astar.network";
+const WS_PROVIDER = ENDPOINTS.shibuya.provider;
 const DAPP_NAME = "Lucky";
 
 export const ConnectProvider = ({ children }) => {
