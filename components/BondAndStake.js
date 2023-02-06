@@ -79,7 +79,7 @@ function BondAndStake() {
     <div className={style.wrapper}>
       <div className={style.content}>
           <div>
-            Value
+            Feelin lucky ?
             <div className={style.transferPropContainer}>
               <input
                 type="text"
