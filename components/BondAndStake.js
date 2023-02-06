@@ -27,8 +27,9 @@ function BondAndStake() {
 
       //const { web3FromSource } = await import("@polkadot/extension-dapp");
       const { web3FromSource } = await import('@talismn/connect-components');
-      const injector = await web3FromSource(account.account.meta.source);
-  
+      //console.log("SaS:"+account)
+      const injector = await web3FromSource(account.current.source);
+      
       /*
       if (stakeValue === undefined){
         console.log('Set default value');
@@ -41,13 +42,13 @@ function BondAndStake() {
       const contractId = api.registry.createType('AccountId', DAPP_STAKING_CONTRACT_ADDRESS);
       console.log('stake ' + stake.toHuman());
       console.log('contractId ' + contractId.toHuman());
-  
+      
       api.tx.dappsStaking.bondAndStake(
         {Wasm : contractId}, 
         stake
         )
         .signAndSend(
-          currentAccount.address,
+          account.current.address,
           {signer: injector.signer}, 
           (result) => {
             console.log('Transaction status:', result.status.type);
@@ -74,7 +75,6 @@ function BondAndStake() {
     }
   };
   
-
   return (
     <div className={style.wrapper}>
       <div className={style.content}>
