@@ -1,36 +1,39 @@
 import { ApiPromise, WsProvider } from "@polkadot/api";
 import React, { useState, useEffect } from "react";
-import ENDPOINTS from "../lib/endpoint";
-export const ConnectContext = React.createContext();
 
-const WS_PROVIDER = ENDPOINTS.shibuya.provider;
-const DAPP_NAME = "Lucky";
+export const ApiContext = React.createContext();
 
-export const ConnectProvider = ({ children }) => {
+const WS_PROVIDER = "wss://rpc.shibuya.astar.network";
+
+export const ApiProvider = ({ children }) => {
+  
   const [api, setapi] = useState();
+  const [network, setNetwork] = useState("shibuya");
 
   useEffect(() => {
     connectApi();
   }, []);
 
   const connectApi = async () => {
-    try {
+    try { 
       const provider = new WsProvider(WS_PROVIDER);
       const api = await ApiPromise.create({ provider });
       setapi(api);
-      await api.isReady;
-     
+      
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
-    <ConnectContext.Provider
+    <ApiContext.Provider
       value={{
         api,
+        network,
+        setNetwork
       }}
     >
       {children}
-    </ConnectContext.Provider>
+    </ApiContext.Provider>
   );
 };

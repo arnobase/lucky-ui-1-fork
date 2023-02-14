@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import Button from "./Button";
-import { ConnectContext } from "../context/ConnectProvider";
+import { ApiContext } from "../context/ApiProvider";
 import { DAPP_STAKING_CONTRACT_ADDRESS } from "../artifacts/constants";
 import account from "../context/account";
 
@@ -14,7 +14,7 @@ let injector;
 
 function BondAndStake() {
 
-  const { api } = useContext(ConnectContext);
+  const { api } = useContext(ApiContext);
   const [stakeValue, setStakeValue] = useState(5000000000000000000n);
 
   async function doBondAndStake() {

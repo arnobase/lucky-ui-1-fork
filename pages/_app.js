@@ -1,10 +1,13 @@
 import "../styles/globals.css";
-import { ConnectProvider } from "../context/ConnectProvider";
+import { ApiProvider } from "../context/ApiProvider";
+import { AccountProvider } from "../context/AccountProvider";
 function MyApp({ Component, pageProps }) {
   return (
-    <ConnectProvider>
-      <Component {...pageProps} />
-    </ConnectProvider>
+    <ApiProvider>
+      <AccountProvider>
+        <Component {...pageProps} />
+      </AccountProvider>
+    </ApiProvider>
   );
 }
 
