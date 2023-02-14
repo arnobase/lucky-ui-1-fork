@@ -20,6 +20,8 @@
     "@talismn/connect-components": "^1.1.6",
     "@talismn/connect-ui": "^1.1.2",
     "@talismn/connect-wallets": "^1.2.3",
+    "@tanstack/react-query": "^4.24.6",
+    "graphql-request": "^5.1.0",
     "mime": "^3.0.0",
     "next": "13.0.0",
     "nft.storage": "^7.0.0",
