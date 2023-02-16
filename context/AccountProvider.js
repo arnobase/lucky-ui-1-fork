@@ -6,15 +6,16 @@ export const AccountContext = React.createContext();
 export const AccountProvider = ({ children }) => {
   
   const [account, setStateAccount] = useState(undefined);
-  
+  let lsAccount = undefined;
+
   useEffect(()=>{
     loadAccount()
   },[])
   
   const loadAccount = () => {
-    const lsAccount = getFromStorage("account",true)
+    //lsAccount = getFromStorage("account",true)
     console.log("lsAccount",lsAccount)
-    if (typeof lsAccount !== "undefined") {
+    if (typeof lsAccount !== "undefined" && lsAccount !== null) {
       setStateAccount(lsAccount)
     }
   }
