@@ -1,6 +1,6 @@
 import Image from "next/image"
 import styles from "../styles/styles.js"
-import shidenLogo from "../assets/shiden.png";
+import shidenLogo from "../assets/Shiden.png";
 import shibuyaLogo from "../assets/shibuya.png";
 import astarLogo from "../assets/astar.png";
 import { useContext } from "react";``

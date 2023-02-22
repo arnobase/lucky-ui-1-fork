@@ -1,5 +1,4 @@
 import "../styles/globals.css";
-import "../styles/bg-anim.css";
 import { ApiProvider } from "../context/ApiProvider";
 import { AccountProvider } from "../context/AccountProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
