@@ -1,5 +1,4 @@
 import Image from "next/image"
-import styles from "../styles/styles.js"
 import { useContext } from "react";
 import { AccountContext } from "../context/AccountProvider";
 import { WalletSelect } from '@talismn/connect-components';
@@ -23,7 +22,7 @@ const AccountSelect = ( () => {
         showAccountsList={true}
         triggerComponent={<div className={`${headerStyle.button} ${headerStyle.buttonPadding}`}>
           <div className={headerStyle.buttonIconContainer}>
-            <Image src={activeAccount.wallet.logo.src} height={styles.btnLogoSize} width={styles.btnLogoSize} />
+            <Image src={activeAccount.wallet.logo.src} height={20} width={20} />
           </div>
           <button>{activeAccount.name}</button>
           </div>

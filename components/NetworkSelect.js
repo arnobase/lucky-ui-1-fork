@@ -1,5 +1,4 @@
 import Image from "next/image"
-import styles from "../styles/styles.js"
 import shidenLogo from "../assets/shiden.png";
 import shibuyaLogo from "../assets/shibuya.png";
 import astarLogo from "../assets/astar.png";
@@ -19,7 +18,7 @@ const NetworkSelect = ( () => {
   const networkLogo = {astar:astarLogo,shiden:shidenLogo,shibuya:shibuyaLogo}
   return <div className={`${headerStyle.button} ${headerStyle.buttonPadding}`}>
         <div className={headerStyle.buttonIconContainer}>
-            <Image src={networkLogo[network]} alt={network} height={styles.btnLogoSize} width={styles.btnLogoSize} />
+            <Image src={networkLogo[network]} alt={network} height={20} width={20} />
         </div>
         <p className={headerStyle.network}>Shibuya</p>
       </div>

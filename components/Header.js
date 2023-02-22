@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import styles from "../styles/styles.js"
 import LuckyLogo from "../assets/lucky.svg";
 import NetworkSelect from "./NetworkSelect";
 import AccountSelect from "./AccountSelect.js";
