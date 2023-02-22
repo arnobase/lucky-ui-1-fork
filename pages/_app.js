@@ -1,10 +1,19 @@
 import "../styles/globals.css";
-import { ConnectProvider } from "../context/ConnectProvider";
+import { ApiProvider } from "../context/ApiProvider";
+import { AccountProvider } from "../context/AccountProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
 function MyApp({ Component, pageProps }) {
   return (
-    <ConnectProvider>
-      <Component {...pageProps} />
-    </ConnectProvider>
+    <ApiProvider>
+      <AccountProvider>
+        <QueryClientProvider client={queryClient}>
+          <Component {...pageProps} />
+        </QueryClientProvider>
+      </AccountProvider>
+    </ApiProvider>
   );
 }
 
