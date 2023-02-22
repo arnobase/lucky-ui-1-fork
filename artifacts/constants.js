@@ -1,3 +1,5 @@
+export const DAPP_NAME = "Lucky";
+
 export const SS58_PREFIX = {
   astar:5,
   shiden:5,
