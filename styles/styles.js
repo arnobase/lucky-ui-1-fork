@@ -6,7 +6,7 @@ const styles = {
         buttonsContainer: `flex w-1/4 justify-end items-center`,
         button: `flex items-center bg-[#191B1F] rounded-2xl mx-2 text-[0.9rem] font-semibold cursor-pointer`,
         buttonPadding: `p-2`,
-        buttonIconContainer: `flex items-center justify-center px-2`,
+        buttonIconContainer: `flex items-center justify-center p-2`,
         network: `mr-2`,
     },
     logoSize: 40,

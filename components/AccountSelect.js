@@ -5,7 +5,11 @@ import { AccountContext } from "../context/AccountProvider";
 import { WalletSelect } from '@talismn/connect-components';
 import { DAPP_NAME } from "../artifacts/constants.js";
 
-const headerStyle = styles.headerStyle
+const headerStyle={
+  button: `flex items-center  bg-[#191B1F] hover:bg-[#333437] rounded-2xl mx-2 text-[0.9rem] font-semibold cursor-pointer`,
+  buttonPadding: `p-2 pr-5`,
+  buttonIconContainer: `flex items-center justify-center p-2`,
+}
 
 const AccountSelect = ( () => {
 
