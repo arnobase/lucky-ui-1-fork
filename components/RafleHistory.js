@@ -15,7 +15,7 @@ const RafleHistory = (props) => {
     if (props.elements.length !== 0) {
     return <ul className="text-sm">      
       {props.elements.map(reward=>(
-        <li>Era <span>{reward.era}</span>: <span>{formatAddressShort(addressDisplay)}</span> wins <span>{formatTokenBalance(reward.amount)}</span></li>
+        <li>Era <span>{reward.era}</span>: <span>{formatAddressShort(props.address)}</span> wins <span>{formatTokenBalance(reward.amount)}</span></li>
       ))}
     </ul>
     }
@@ -42,7 +42,7 @@ const RafleHistory = (props) => {
       return <div className={`w-screen flex items-center justify-center mt-14`}>
         <div className="bg-[#191B1F] rounded-2xl px-8 py-8 ">
           <div className="flex items-center justify-center text-lg" ><h2>Raffle history</h2></div>
-          <div><RaffleElements elements={elements}/></div>
+          <div><RaffleElements address={addressDisplay} elements={elements}/></div>
         </div>
       </div>;
     }
