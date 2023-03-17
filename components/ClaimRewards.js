@@ -16,12 +16,13 @@ const ClaimRewards = (refBtConnect) => {
 
   useEffect (()=>{
     const loadInjector = async () => {
-      const { web3FromSource } = await import('@talismn/connect-components');
+      const { getWalletBySource} = await import('@talismn/connect-wallets');
        //const { web3FromSource } = await import("@polkadot/extension-dapp");
       currentAccount = account
-      console.log(currentAccount.source)
-      injector = await web3FromSource(currentAccount.source);
-      console.log("INJECTTTTTTTTT",injector)
+      //console.log(currentAccount.source)
+      injector = await getWalletBySource(currentAccount.source);
+      await injector.enable('Lucky')
+      //console.log("INJECTTTTTTTTT",injector.signer)
     }
     loadInjector();
   },[account]);
@@ -29,8 +30,8 @@ const ClaimRewards = (refBtConnect) => {
 
   const claim = async () => {
     try {
-      console.log("accountProvider:"+account);
-      console.log(JSON.stringify(account, null, 2))
+      //console.log("accountProvider:"+account);
+      //console.log(JSON.stringify(account, null, 2))
       // maximum gas to be consumed for the call. if limit is too small the call will fail.
       const gasLimit = 3000000n * 1000000n;
       // a limit to how much Balance to be used to pay for the storage created by the contract call
