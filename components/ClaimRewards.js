@@ -32,7 +32,7 @@ const ClaimRewards = (refBtConnect) => {
       console.log("accountProvider:"+account);
       console.log(JSON.stringify(account, null, 2))
       // maximum gas to be consumed for the call. if limit is too small the call will fail.
-      const gasLimit = 30000n * 1000000n;
+      const gasLimit = 3000000n * 1000000n;
       // a limit to how much Balance to be used to pay for the storage created by the contract call
       // if null is passed, unlimited balance can be used
       const storageDepositLimit = null;
