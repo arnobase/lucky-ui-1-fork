@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { ContractPromise } from "@polkadot/api-contract";
+import { Abi, ContractPromise } from "@polkadot/api-contract";
 import { ApiContext } from "../context/ApiProvider";
 import { REWARD_MANAGER_CONTRACT_ABI, REWARD_MANAGER_CONTRACT_ADDRESS } from "../artifacts/constants";
 
@@ -8,15 +8,19 @@ export const ContractContext = React.createContext();
 export const ContractProvider = ({ children }) => {
   const { api } = useContext(ApiContext);
   const [rewardManagerContract, setRewardManagerContract] = useState();
-    
+  
   useEffect(() => {
-    loadContract();
-  }, []);
+    console.log("loadRewardManagerContract")
+    loadRewardManagerContract();
+  }, [api]);
   
-  
-  const loadContract = async () => {
+  const loadRewardManagerContract = async () => {
     try { 
-      setRewardManagerContract(new ContractPromise(api, REWARD_MANAGER_CONTRACT_ABI, REWARD_MANAGER_CONTRACT_ADDRESS));
+      const abi = new Abi(REWARD_MANAGER_CONTRACT_ABI, api.registry.getChainProperties());
+      console.log("ABI-----",abi)
+      const contract = new ContractPromise(api, abi, REWARD_MANAGER_CONTRACT_ADDRESS);
+      console.log("CONTRACT-----",contract)
+      setRewardManagerContract(contract);
     } catch (error) {
       console.error(error);
     }

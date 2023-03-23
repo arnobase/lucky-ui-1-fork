@@ -14,7 +14,7 @@ export const EraEtaProvider = ({ children }) => {
   
   const updateEta = () => {
     axios.get("https://api.astar.network/api/v1/astar/dapps-staking/stats/nexteraeta").then((response) => {
-    console.log("ERAETA",response.data)
+    //console.log("ERAETA",response.data)
     let etaNextEra = DateTime.local()
       .plus(response.data * 1000)
       .toFormat('HH:mm dd-MMM');

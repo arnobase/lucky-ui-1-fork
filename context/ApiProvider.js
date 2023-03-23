@@ -1,6 +1,8 @@
 import { ApiPromise, WsProvider } from "@polkadot/api";
 import React, { useState, useEffect } from "react";
 import { options } from "@astar-network/astar-api";
+import { PROVIDER_ENDPOINTS } from "../artifacts/constants";
+
 export const ApiContext = React.createContext();
 
 export const ApiProvider = ({ children }) => {
@@ -15,9 +17,9 @@ export const ApiProvider = ({ children }) => {
   const connectApi = async () => {
     try { 
       const provider = new WsProvider(PROVIDER_ENDPOINTS[network]);
-      const api = new ApiPromise(options({ provider }));
-      await api.isReady;
-      setapi(api);
+      const apiPromise = new ApiPromise(options({ provider }));
+      await apiPromise.isReady;
+      setapi(apiPromise);
       
     } catch (error) {
       console.error(error);

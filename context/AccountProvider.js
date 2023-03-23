@@ -14,7 +14,7 @@ export const AccountProvider = ({ children }) => {
   
   const loadAccount = () => {
     lsAccount = getFromStorage("account",true)
-    console.log("lsAccount",lsAccount)
+    //console.log("lsAccount",lsAccount)
     if (typeof lsAccount !== "undefined" && lsAccount !== null) {
       setStateAccount(lsAccount)
     }

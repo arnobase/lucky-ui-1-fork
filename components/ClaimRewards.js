@@ -1,27 +1,26 @@
 import { useContext } from "react";
 import Button from "./Button";
+import { ApiContext } from "../context/ApiProvider";
 import { AccountContext } from "../context/AccountProvider";
 import { ContractContext } from "../context/ContractProvider";
 
 import toast from 'react-hot-toast';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const ClaimRewards = (refBtConnect) => {
-  
+  const { api } = useContext(ApiContext);
   const { account } = useContext(AccountContext);
   const { rewardManagerContract } = useContext(ContractContext)
-  let currentAccount = undefined;
-  let injector = undefined;
+  //let currentAccount = undefined;
+  let [injector, setInjector] = useState(undefined);
 
   useEffect (()=>{
     const loadInjector = async () => {
       const { getWalletBySource} = await import('@talismn/connect-wallets');
-       //const { web3FromSource } = await import("@polkadot/extension-dapp");
-      currentAccount = account
-      //console.log(currentAccount.source)
-      injector = await getWalletBySource(currentAccount.source);
-      await injector.enable('Lucky')
-      //console.log("INJECTTTTTTTTT",injector.signer)
+      console.log(account.source)
+      const i = await getWalletBySource(account.source);
+      await i.enable('Lucky')
+      setInjector(i)
     }
     loadInjector();
   },[account]);
@@ -29,8 +28,6 @@ const ClaimRewards = (refBtConnect) => {
 
   const claim = async () => {
     try {
-      //console.log("accountProvider:"+account);
-      //console.log(JSON.stringify(account, null, 2))
       // maximum gas to be consumed for the call. if limit is too small the call will fail.
       const gasLimit = 3000000n * 1000000n;
       // a limit to how much Balance to be used to pay for the storage created by the contract call
@@ -45,7 +42,7 @@ const ClaimRewards = (refBtConnect) => {
         { storageDepositLimit, gasLimit }
       )
       .signAndSend(
-        currentAccount.address,
+        account.address,
         {signer: injector.signer}, 
         (result) => {
         try {
