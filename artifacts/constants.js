@@ -20,6 +20,12 @@ export const TOKEN_DECIMALS = {
   SBY: 18
 };
 
+export const PROVIDER_ENDPOINTS = {
+  astar:"wss://rpc.astar.network",
+  shiden:"wss://shiden.api.onfinality.io/public-ws",
+  shibuya:"wss://rpc.shibuya.astar.network"
+}
+
 export const CONTRACT_STAKING_URL = {
   shibuya: "https://portal.astar.network/#/shibuya-testnet/dapp-staking/dapp?dapp=bfh3ckzo3ydndgo7evd3utfnoaj5fdy9nycmpzg23vjfhnw"
 }

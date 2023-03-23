@@ -1,16 +1,15 @@
 import { useContext } from "react";
 import Button from "./Button";
-import { ApiContext } from "../context/ApiProvider";
 import { AccountContext } from "../context/AccountProvider";
-import { REWARD_MANAGER_CONTRACT_ABI, REWARD_MANAGER_CONTRACT_ADDRESS } from "../artifacts/constants";
-import { ContractPromise } from "@polkadot/api-contract";
+import { ContractContext } from "../context/ContractProvider";
+
 import toast from 'react-hot-toast';
 import { useEffect } from "react";
 
 const ClaimRewards = (refBtConnect) => {
   
-  const { api } = useContext(ApiContext);
   const { account } = useContext(AccountContext);
+  const { rewardManagerContract } = useContext(ContractContext)
   let currentAccount = undefined;
   let injector = undefined;
 
@@ -38,7 +37,7 @@ const ClaimRewards = (refBtConnect) => {
       // if null is passed, unlimited balance can be used
       const storageDepositLimit = null;
 
-      const rewardManagerContract = new ContractPromise(api, REWARD_MANAGER_CONTRACT_ABI, REWARD_MANAGER_CONTRACT_ADDRESS);
+      //const rewardManagerContract = new ContractPromise(api, REWARD_MANAGER_CONTRACT_ABI, REWARD_MANAGER_CONTRACT_ADDRESS);
 
       console.log('Claim ...');
       
