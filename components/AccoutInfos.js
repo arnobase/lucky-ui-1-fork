@@ -20,20 +20,19 @@ const AccountInfos = () => {
   const { account } = useContext(AccountContext)
   const { network } = useContext(ApiContext)
   let querydata;
-  if (account !== undefined && account != null) {
+  if (account && account.address) {
     const address = formatAddress(account.address)
     const { data } = useAccountData(address);
     querydata = data
   }
 
   function AccountAddr() {
-    if (account !== undefined) {
+    if (account?.address) {
       const address = account.address
       return <>
         <span>Address: </span>
         <span>{formatAddressShort(address)}</span>&nbsp;
-        <a 
-          className="float-right font-medium underline"
+        <a className="float-right font-medium underline"
           target="_blank"
           href={CONTRACT_STAKING_URL[network]}
           >Manage your stake

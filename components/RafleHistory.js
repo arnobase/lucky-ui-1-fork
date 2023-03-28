@@ -12,7 +12,7 @@ import LuckyLogo from "../assets/lucky.svg";
 const RafleHistory = (props) => {
 
   function RaffleElements(props) {
-    if (props.elements.length !== 0) {
+    if (props?.address && props.elements?.length !== 0) {
     return <ul className="text-sm">      
       {props.elements.map(reward=>(
         <li>Era <span>{reward.era}</span>: <span>{formatAddressShort(props.address)}</span> wins <span>{formatTokenBalance(reward.amount)}</span></li>
@@ -31,8 +31,8 @@ const RafleHistory = (props) => {
     const addressQuery = formatAddress(account.address,42);
     //const addressQuery = "5DaCixaPPaYrdGdSxP6Mwptn7dPNp3DTeJCQKuCUQe5jp6fL"
     const addressDisplay = formatAddress(account.address);
-    console.log("42 ADDR:",addressQuery)
-    console.log("ADDR:",addressDisplay)
+    //console.log("42 ADDR:",addressQuery)
+    //console.log("ADDR:",addressDisplay)
     const { data } = useRewardsData(addressQuery);
     if (
       data !== undefined 

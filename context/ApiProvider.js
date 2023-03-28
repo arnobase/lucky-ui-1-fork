@@ -12,7 +12,7 @@ export const ApiProvider = ({ children }) => {
 
   useEffect(() => {
     connectApi();
-  }, []);
+  }, [network]);
 
   const connectApi = async () => {
     try { 

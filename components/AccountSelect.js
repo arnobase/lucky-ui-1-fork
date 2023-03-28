@@ -22,7 +22,7 @@ const AccountSelect = ( () => {
         showAccountsList={true}
         triggerComponent={<div className={`${headerStyle.button} ${headerStyle.buttonPadding}`}>
           <div className={headerStyle.buttonIconContainer}>
-            <Image src={activeAccount.wallet.logo.src} height={20} width={20} />
+            <Image alt="account" src={activeAccount?.wallet?.logo.src} height={20} width={20} />
           </div>
           <button>{activeAccount.name}</button>
           </div>
