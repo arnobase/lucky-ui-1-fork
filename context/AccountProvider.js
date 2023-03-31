@@ -1,12 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { setToStorage, getFromStorage } from "../lib/storage";
+import { ApiContext } from "../context/ApiProvider";
 
 export const AccountContext = React.createContext();
 
 export const AccountProvider = ({ children }) => {
-  
+  const { api } = useContext(ApiContext);
   const [account, setStateAccount] = useState(undefined);
   let lsAccount = undefined;
+
+  useEffect (()=>{
+    const loadSigner = async () => {
+      const { getWalletBySource} = await import('@talismn/connect-wallets');
+      console.log(account.source)
+      const injector = await getWalletBySource(account.source);
+      await injector.enable('Lucky')
+      api.setSigner(injector.signer)
+    }
+    if (api && account) loadSigner();
+  },[account,api]);
 
   useEffect(()=>{
     loadAccount()

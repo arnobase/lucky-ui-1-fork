@@ -10,15 +10,15 @@ const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }) {
   return (
     <ApiProvider>
-      <ContractProvider>
-        <AccountProvider>
+      <AccountProvider>
+        <ContractProvider>
           <QueryClientProvider client={queryClient}>
             <EraEtaProvider>
               <Component {...pageProps} />
             </EraEtaProvider>
           </QueryClientProvider>
-        </AccountProvider>
-      </ContractProvider>
+        </ContractProvider>
+      </AccountProvider>
     </ApiProvider>
   );
 }
