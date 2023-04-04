@@ -21,7 +21,7 @@ const AccountInfos = () => {
   const { network } = useContext(ApiContext)
   let querydata;
   if (account && account.address) {
-    const address = formatAddress(account.address)
+    const address = formatAddress(account.address,network)
     const { data } = useAccountData(address);
     querydata = data
   }
