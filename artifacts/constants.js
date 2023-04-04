@@ -27,12 +27,14 @@ export const PROVIDER_ENDPOINTS = {
 }
 
 export const CONTRACT_STAKING_URL = {
-  shibuya: "https://portal.astar.network/#/shibuya-testnet/dapp-staking/dapp?dapp=bfh3ckzo3ydndgo7evd3utfnoaj5fdy9nycmpzg23vjfhnw"
+  shibuya: "https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=bfh3ckzo3ydndgo7evd3utfnoaj5fdy9nycmpzg23vjfhnw"
 }
 
-export const QUERY_URL = "https://api.subquery.network/sq/GuiGou12358/lucky---shibuya"
+//export const QUERY_URL = "https://api.subquery.network/sq/GuiGou12358/lucky---shibuya"
+export const QUERY_URL = "https://api.subquery.network/sq/GuiGou12358/lucky-shibuya-v0_1_0"
 
-export const REWARD_MANAGER_CONTRACT_ADDRESS = "W66fXdDBkcp7RkZmsS7qLLpjdHB4FDSqWgJArbvCYG3PQ48";
+//export const REWARD_MANAGER_CONTRACT_ADDRESS = "W66fXdDBkcp7RkZmsS7qLLpjdHB4FDSqWgJArbvCYG3PQ48";
+export const REWARD_MANAGER_CONTRACT_ADDRESS = "WDtNnQgygsCXKfjdvL5TgimewWhcBhJgSSCkb5u5pzZJTpR";
 
 import reward_manager_metadata from "./reward_manager_metadata.json"
 export const REWARD_MANAGER_CONTRACT_ABI_METADATA = reward_manager_metadata
