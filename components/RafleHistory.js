@@ -6,16 +6,17 @@ import { formatAddressShort } from "../lib/formatAddressShort";
 import { formatTokenBalance } from "../lib/formatTokenBalance";
 import { useContext } from "react";
 import { AccountContext } from "../context/AccountProvider";
+import { network } from "../context/ApiProvider"
 import Image from "next/image";
 import LuckyLogo from "../assets/lucky.svg";
 
-const RafleHistory = (props) => {
+const RafleHistory = () => {
 
   function RaffleElements(props) {
-    if (props?.address && props.elements?.length !== 0) {
+    if (props.elements?.length !== 0) {
     return <ul className="text-sm">      
       {props.elements.map(reward=>(
-        <li>Era <span>{reward.era}</span>: <span>{formatAddressShort(props.address)}</span> wins <span>{formatTokenBalance(reward.amount)}</span></li>
+        <li id={"era"+reward.era}>Era <span>{reward.era}</span>: <span>{formatAddressShort(reward.accountId)}</span> wins <span>{formatTokenBalance(reward.amount)}</span></li>
       ))}
     </ul>
     }
@@ -28,12 +29,9 @@ const RafleHistory = (props) => {
 
   const { account } = useContext(AccountContext);
   if (account !== undefined) {
-    const addressQuery = formatAddress(account.address,42);
-    //const addressQuery = "5DaCixaPPaYrdGdSxP6Mwptn7dPNp3DTeJCQKuCUQe5jp6fL"
-    const addressDisplay = formatAddress(account.address);
-    //console.log("42 ADDR:",addressQuery)
-    //console.log("ADDR:",addressDisplay)
-    const { data } = useRewardsData(addressQuery);
+    //const addressQuery = formatAddress(account.address,"rococo");
+    //const addressDisplay = formatAddress(account.address,network);
+    const { data } = useRewardsData();
     if (
       data !== undefined 
       && data.rewards.nodes !== undefined
@@ -42,7 +40,7 @@ const RafleHistory = (props) => {
       return <div className={`w-screen flex items-center justify-center mt-14`}>
         <div className="bg-[#191B1F] rounded-2xl px-8 py-8 ">
           <div className="flex items-center justify-center text-lg" ><h2>Raffle history</h2></div>
-          <div><RaffleElements address={addressDisplay} elements={elements}/></div>
+          <div><RaffleElements elements={elements}/></div>
         </div>
       </div>;
     }
