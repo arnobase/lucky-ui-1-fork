@@ -14,7 +14,7 @@ export const ContractProvider = ({ children }) => {
   const [claimDryRunRes,setClaimDryRunRes] = useState(undefined)
 
   useEffect(() => {
-    console.log("loadRewardManagerContract")
+    //console.log("loadRewardManagerContract")
     if (api) loadRewardManagerContract();
   }, [api]);
   
@@ -30,10 +30,10 @@ export const ContractProvider = ({ children }) => {
     try { 
       const abi = new Abi(REWARD_MANAGER_CONTRACT_ABI_METADATA, api.registry.getChainProperties());
       const contract = new ContractPromise(api, abi, REWARD_MANAGER_CONTRACT_ADDRESS);
-      console.log("CONTRACT-----",contract)
+      //console.log("CONTRACT-----",contract)
       setRewardManagerContract(contract);
     } catch (error) {
-      console.error(error);
+      console.error("Error in loadRewardManagerContract", error);
     }
   };
 
@@ -77,7 +77,7 @@ export const ContractProvider = ({ children }) => {
         error = error ? error.Ok.Err.toString() : 'Revert'
       }
     }
-    console.error(error)
+    console.log("Contract ERROR:",error)
     return { gasRequired, storageDeposit, result, error }
   }
 
@@ -100,7 +100,7 @@ export const ContractProvider = ({ children }) => {
     const { gasRequired, error } = claimDryRunRes
     //console.log("DRYRUNRES",gasRequired, result, error)
     
-    if (!error) {
+    //if (!error) {
       const unsub = await rewardManagerContract.tx["psp22Reward::claim"]({
         gasLimit: getEstimatedGas(gasRequired),
         storageDepositLimit: null
@@ -116,7 +116,7 @@ export const ContractProvider = ({ children }) => {
           unsub()
         }
       })
-    }
+    //}
   }
 
   return (

@@ -7,7 +7,7 @@ export const useRewardsData = (
   ) => {
     if (address) {
       return useQuery(["rewardsdatas", address], () => {
-        if (!address) return undefined;
+        if (!address) return null;
         return request(
           QUERY_URL,
           gql`query {
@@ -19,7 +19,7 @@ export const useRewardsData = (
       });
     }
     else {
-      return useQuery(["rewardsdatas", address], () => {
+      return useQuery(["rewardsdatas"], () => {
         return request(
           QUERY_URL,
           gql`query {

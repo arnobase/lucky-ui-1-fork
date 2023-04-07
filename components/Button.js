@@ -5,6 +5,6 @@ const style = {
 };
 
 const Button = (props) => {
-  return <div className={style.confirmButton}>{props.title}</div>;
+  return <button  className={style.confirmButton}>{props.title}</button>;
 };
 export default Button;

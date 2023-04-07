@@ -5,11 +5,14 @@ import toast from 'react-hot-toast';
 
 const ClaimRewards = () => {
   const { rewardManagerContract, claim, claimDryRunRes } = useContext(ContractContext)
+  const Enable = (()=>{
+    return claimDryRunRes?.error !== undefined && claimDryRunRes?.error !== "NoReward"
+  })
   return (
   <>
-    <span className="cursor-pointer" enable={rewardManagerContract} onClick={() => claim()}>
+    <span className="cursor-pointer" onClick={() => claim()}>
       {claimDryRunRes?.error}
-      <Button title="Claim" />
+      <Button enable={Enable()} title="Claim" />
     </span>
   </>
   );

@@ -5,8 +5,16 @@ export const SS58_PREFIX = {
   shiden:5,
   shibuya:5,
   rococo:42,
-  westend:42
+  westend:42,
+  polkadot:0,
+  kusama:2
 };
+
+export const CONTRACT_PALLET_NETWORK = {
+  astar: "polkadot",
+  shiden: "kusama",
+  shibuya: "rococo"
+}
 
 export const NETWORK_TOKENS = {
   astar:"ASTR",
@@ -27,7 +35,7 @@ export const PROVIDER_ENDPOINTS = {
 }
 
 export const CONTRACT_STAKING_URL = {
-  shibuya: "https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=bfh3ckzo3ydndgo7evd3utfnoaj5fdy9nycmpzg23vjfhnw"
+  shibuya: "https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=xz3shvmrgry3mt3qq3sjz3aupqtfhkj4rkeoqm6vjrend3w"
 }
 
 //export const QUERY_URL = "https://api.subquery.network/sq/GuiGou12358/lucky---shibuya"

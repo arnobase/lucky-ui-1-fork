@@ -2,8 +2,10 @@ import ClaimRewards from "./ClaimRewards";
 import { formatAddressShort } from "../lib/formatAddressShort";
 import { formatAddress } from "../lib/formatAddress";
 import { formatTokenBalance } from "../lib/formatTokenBalance";
-import { useAccountData } from "../artifacts/useAccountData";
+import { useAccountStakeData } from "../artifacts/useAccountStakeData";
+import { useAccountRewardsData } from "../artifacts/useAccountRewardsData";
 import { CONTRACT_STAKING_URL } from "../artifacts/constants";
+import { SS58_PREFIX } from "../artifacts/constants";
 import { useContext } from "react";
 import { AccountContext } from "../context/AccountProvider";
 import { ApiContext } from "../context/ApiProvider";
@@ -16,22 +18,18 @@ const style = {
 };
 
 const AccountInfos = () => {
- 
   const { account } = useContext(AccountContext)
   const { network } = useContext(ApiContext)
-  let querydata;
-  if (account && account.address) {
-    const address = formatAddress(account.address,network)
-    const { data } = useAccountData(address);
-    querydata = data
-  }
+  const address = formatAddress(account?.address,network)
+  const stakeData = useAccountStakeData(address,network)
+  const rewardsData = useAccountRewardsData(address,network)
 
   function AccountAddr() {
     if (account?.address) {
       const address = account.address
       return <>
         <span>Address: </span>
-        <span>{formatAddressShort(address)}</span>&nbsp;
+        <span>{formatAddressShort(address,SS58_PREFIX[network])}</span>&nbsp;
         <a className="float-right font-medium underline"
           target="_blank"
           href={CONTRACT_STAKING_URL[network]}
@@ -42,22 +40,20 @@ const AccountInfos = () => {
   }
 
   function StakeDatas() {
-    if (account !== undefined) {
-
-      
-      if (
-        querydata !== undefined 
-          && querydata.accounts.nodes[0] !== undefined
-        ) {
-        const totalStake = formatTokenBalance(querydata.accounts.nodes[0].totalStake)
-        const totalClaimed = formatTokenBalance(querydata.accounts.nodes[0].totalClaimed)
-        const totalPending = formatTokenBalance(querydata.accounts.nodes[0].totalPending)
-        return <div>
-          <div className="py-1"><span>Your stake on Lucky: </span><span>{totalStake}</span></div>
-          <div className="py-1"><span>You already Claimed </span><span>{totalClaimed}</span><span> on Lucky</span></div>
-          <div className="py-1"><span>You have </span><span>{totalPending}</span><span> pending on Lucky</span><span className="pl-12 float-right"><ClaimRewards /></span></div>
-        </div>
+    let totalStake;
+    let totalClaimed;
+    let totalPending;
+    if (account) {
+      if (stakeData?.data?.accounts?.nodes[0]) totalStake = formatTokenBalance(stakeData.data?.accounts.nodes[0].totalStake)
+      if (rewardsData?.data?.accounts?.nodes[0]) {
+        totalClaimed = formatTokenBalance(rewardsData.data?.accounts.nodes[0].totalClaimed)
+        totalPending = formatTokenBalance(rewardsData.data?.accounts.nodes[0].totalPending)
       }
+      return <div>
+        <div className="py-1"><span>Your stake on Lucky: </span><span>{totalStake}</span></div>
+        <div className="py-1"><span>You already Claimed </span><span>{totalClaimed}</span><span> on Lucky</span></div>
+        <div className="py-1"><span>You have </span><span>{totalPending}</span><span> pending on Lucky</span><span className="pl-12 float-right"><ClaimRewards /></span></div>
+      </div>
     }
     else {
       return <div className="flex items-center justify-center">
