@@ -7,11 +7,11 @@ export const useAccountRewardsData = (
     address,
     network
   ) => {
-    console.log("AN",address,network)
+    //console.log("AN",address,network)
     return useQuery(["accountrewardsdatas", address], () => {
       if (!(address&&network)) return null;
       const address_contract = formatAddress(address,CONTRACT_PALLET_NETWORK[network]);
-      console.log("address_contract",address_contract)
+      //console.log("address_contract",address_contract)
       return request(
         QUERY_URL,
         gql`

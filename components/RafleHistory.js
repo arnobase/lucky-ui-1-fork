@@ -25,7 +25,7 @@ const RafleHistory = () => {
   if (account && querydata?.rewards?.nodes) {
       const elements = querydata.rewards.nodes;
       return <div className={`w-screen flex items-center justify-center mt-14`}>
-        <div className="bg-[#191B1F] rounded-2xl px-8 py-8 ">
+        <div className="content-block bg-[#191B1F] rounded-2xl px-8 py-8 ">
           <div className="flex items-center justify-center text-lg" ><h2>Raffle history</h2></div>
           <div><RaffleElements elements={elements}/></div>
         </div>

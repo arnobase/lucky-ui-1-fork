@@ -11,13 +11,15 @@ export const AccountProvider = ({ children }) => {
 
   useEffect (()=>{
     const loadSigner = async () => {
+      console.log("using account: "+account.address)
       const { getWalletBySource} = await import('@talismn/connect-wallets');
-      console.log(account.source)
+      //console.log(account.source)
       const injector = await getWalletBySource(account.source);
       await injector.enable('Lucky')
       api.setSigner(injector.signer)
+      
     }
-    if (api && account) loadSigner();
+    if (api && account && account!== "undefined") loadSigner();
   },[account,api]);
 
   useEffect(()=>{
@@ -35,6 +37,7 @@ export const AccountProvider = ({ children }) => {
   const setAccount = (a) => {
     setToStorage("account",a,true)
     setStateAccount(a)
+    
   }
 
   return (

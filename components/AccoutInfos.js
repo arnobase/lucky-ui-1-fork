@@ -14,7 +14,7 @@ import LuckyLogo from "../assets/lucky.svg";
 
 const style = {
   wrapper: `w-screen flex items-center justify-center mt-14`,
-  content: `bg-[#191B1F] rounded-2xl px-8 py-8 min-w-[500px]`
+  content: `content-block bg-[#191B1F] rounded-2xl px-8 py-8 min-w-[500px]`
 };
 
 const AccountInfos = () => {
@@ -40,20 +40,37 @@ const AccountInfos = () => {
   }
 
   function StakeDatas() {
-    let totalStake;
-    let totalClaimed;
-    let totalPending;
+    let totalStake = undefined;
+    let totalClaimed = undefined;
+    let totalPending = undefined;
     if (account) {
-      if (stakeData?.data?.accounts?.nodes[0]) totalStake = formatTokenBalance(stakeData.data?.accounts.nodes[0].totalStake)
+      //console.log("stakeData",stakeData.isFetching)
+      if (stakeData?.data?.accounts?.nodes[0]) {totalStake = formatTokenBalance(stakeData.data?.accounts.nodes[0].totalStake)}
+      else {totalStake = 0}
       if (rewardsData?.data?.accounts?.nodes[0]) {
         totalClaimed = formatTokenBalance(rewardsData.data?.accounts.nodes[0].totalClaimed)
         totalPending = formatTokenBalance(rewardsData.data?.accounts.nodes[0].totalPending)
       }
-      return <div>
-        <div className="py-1"><span>Your stake on Lucky: </span><span>{totalStake}</span></div>
-        <div className="py-1"><span>You already Claimed </span><span>{totalClaimed}</span><span> on Lucky</span></div>
-        <div className="py-1"><span>You have </span><span>{totalPending}</span><span> pending on Lucky</span><span className="pl-12 float-right"><ClaimRewards /></span></div>
+      else { totalClaimed = 0; totalPending=0 }
+
+      if (stakeData.isFetching){
+        return <div className="flex items-center justify-center">
+          <span>Loading... <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
+        </div>
+      }
+      else if (totalStake!==0 || totalClaimed!==0 || totalPending!==0) {
+        return <div>
+        <div className="py-1"><span>Your stake: </span><span>{totalStake}</span></div>
+        <div className="py-1"><span>Already claimed: </span><span>{totalClaimed}</span></div>
+        <div className="py-1"><span>Pending: </span><span>{totalPending}</span><span className="pl-12 float-right"><ClaimRewards /></span></div>
       </div>
+      }
+      else {
+        return <div className="flex items-center justify-center">
+            <span>You don't have any stake or rewards yet on Lucky <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
+        </div>
+      }
+      
     }
     else {
       return <div className="flex items-center justify-center">

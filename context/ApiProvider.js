@@ -20,7 +20,7 @@ export const ApiProvider = ({ children }) => {
       const apiPromise = new ApiPromise(options({ provider }));
       await apiPromise.isReady;
       setapi(apiPromise);
-      
+      console.log("connected to "+network+" API: "+PROVIDER_ENDPOINTS[network])
     } catch (error) {
       console.error(error);
     }

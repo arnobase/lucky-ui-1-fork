@@ -31,7 +31,8 @@ export const TOKEN_DECIMALS = {
 export const PROVIDER_ENDPOINTS = {
   astar:"wss://rpc.astar.network",
   shiden:"wss://shiden.api.onfinality.io/public-ws",
-  shibuya:"wss://rpc.shibuya.astar.network"
+  //shibuya:"wss://rpc.shibuya.astar.network",
+  shibuya:"wss://shibuya-rpc.dwellir.com",
 }
 
 export const CONTRACT_STAKING_URL = {
