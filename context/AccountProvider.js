@@ -7,6 +7,7 @@ export const AccountContext = React.createContext();
 export const AccountProvider = ({ children }) => {
   const { api } = useContext(ApiContext);
   const [account, setStateAccount] = useState(undefined);
+  const [wallet, setStateWallet] = useState(undefined);
   let lsAccount = undefined;
 
   useEffect (()=>{
@@ -15,6 +16,8 @@ export const AccountProvider = ({ children }) => {
       const { getWalletBySource} = await import('@talismn/connect-wallets');
       //console.log(account.source)
       const injector = await getWalletBySource(account.source);
+      setStateWallet(injector);
+      console.log("Wallet(injector)",injector)
       await injector.enable('Lucky')
       api.setSigner(injector.signer)
       
@@ -44,6 +47,7 @@ export const AccountProvider = ({ children }) => {
     <AccountContext.Provider
       value={{
         account,
+        wallet,
         setAccount,
         loadAccount
       }}

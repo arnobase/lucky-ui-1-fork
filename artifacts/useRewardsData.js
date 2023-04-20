@@ -11,7 +11,7 @@ export const useRewardsData = (
         return request(
           QUERY_URL,
           gql`query {
-            rewards(orderBy: ERA_DESC, filter : {accountId: {equalTo: "${address}"}}){
+            rewards(first:10000,orderBy: ERA_DESC, filter : {accountId: {equalTo: "${address}"}}){
               nodes{ era, accountId, amount }
           }
           }`
@@ -23,7 +23,7 @@ export const useRewardsData = (
         return request(
           QUERY_URL,
           gql`query {
-            rewards(last:10000,orderBy: ERA_DESC){
+            rewards(first:10000,orderBy: ERA_DESC){
               nodes{ era, accountId, amount }
           }
           }`

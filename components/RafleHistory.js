@@ -25,20 +25,20 @@ const RafleHistory = () => {
   if (account && querydata?.rewards?.nodes) {
       const elements = querydata.rewards.nodes;
       return <div className={`w-screen flex items-center justify-center mt-14`}>
-        <div className="content-block bg-[#191B1F] rounded-2xl px-8 py-8 ">
-          <div className="flex items-center justify-center text-lg" ><h2>Raffle history</h2></div>
-          <div><RaffleElements elements={elements}/></div>
+        <div className="md:w-[500px] content-block bg-[#191B1F] rounded-2xl px-8 py-8 ">
+          <div className="flex items-center justify-center text-xl pb-3" ><h2>Raffle history</h2></div>
+          <div className="max-h-96 overflow-auto"><RaffleElements elements={elements}/></div>
         </div>
       </div>;
   }
 
   function RaffleElements(props) {
     if (props.elements?.length !== 0) {
-    return <ul className="text-sm">      
+    return <div className="reward-list grid justify-center">      
       {props.elements.map(reward=>(
-        <li key={"era"+reward.era}>Era <span>{reward.era}</span>: <span>{formatAddressShort(reward.accountId,SS58_PREFIX[network])}</span> wins <span>{formatTokenBalance(reward.amount)}</span></li>
+        <div className="reward-item win-w-[300px]" key={"era"+reward.era}>Era <span>{reward.era}</span>: <span>{formatAddressShort(reward.accountId,SS58_PREFIX[network])}</span> wins <span>{formatTokenBalance(reward.amount)}</span></div>
       ))}
-    </ul>
+    </div>
     }
     else {
       return <div className="flex items-center justify-center">

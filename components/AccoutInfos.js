@@ -9,20 +9,28 @@ import { SS58_PREFIX } from "../artifacts/constants";
 import { useContext } from "react";
 import { AccountContext } from "../context/AccountProvider";
 import { ApiContext } from "../context/ApiProvider";
+import { ContractContext } from "../context/ContractProvider";
 import Image from "next/image";
 import LuckyLogo from "../assets/lucky.svg";
 
 const style = {
   wrapper: `w-screen flex items-center justify-center mt-14`,
-  content: `content-block bg-[#191B1F] rounded-2xl px-8 py-8 min-w-[500px]`
+  content: `md:w-[500px] content-block bg-[#191B1F] rounded-2xl px-8 py-8 `
 };
 
 const AccountInfos = () => {
   const { account } = useContext(AccountContext)
   const { network } = useContext(ApiContext)
+  const { currentEraStake } = useContext(ContractContext)
   const address = formatAddress(account?.address,network)
   const stakeData = useAccountStakeData(address,network)
   const rewardsData = useAccountRewardsData(address,network)
+
+  function CurrentEraStake() {
+    if (currentEraStake) {
+      return <div>Total stake on Lucky: {formatTokenBalance(currentEraStake)}</div>
+    }
+  }
 
   function AccountAddr() {
     if (account?.address) {
@@ -53,18 +61,20 @@ const AccountInfos = () => {
       }
       else { totalClaimed = 0; totalPending=0 }
 
-      if (stakeData.isFetching){
-        return <div className="flex items-center justify-center">
-          <span>Loading... <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
-        </div>
-      }
-      else if (totalStake!==0 || totalClaimed!==0 || totalPending!==0) {
+      /*
+      */ 
+      if (totalStake!==0 || totalClaimed!==0 || totalPending!==0) {
         return <div>
         <div className="py-1"><span>Your stake: </span><span>{totalStake}</span></div>
         <div className="py-1"><span>Already claimed: </span><span>{totalClaimed}</span></div>
         <div className="py-1"><span>Pending: </span><span>{totalPending}</span><span className="pl-12 float-right"><ClaimRewards /></span></div>
       </div>
       }
+      else if (stakeData.isFetching){
+        return <div className="flex items-center justify-center">
+          <span>Loading... <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
+        </div>
+      } 
       else {
         return <div className="flex items-center justify-center">
             <span>You don't have any stake or rewards yet on Lucky <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
@@ -86,6 +96,7 @@ const AccountInfos = () => {
             <div className="py-1">
               <AccountAddr/>
             </div>
+            {/*<CurrentEraStake/>*/}
             <StakeDatas/>
           </div>
       </div>

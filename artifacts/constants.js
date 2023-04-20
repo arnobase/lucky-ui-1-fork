@@ -44,6 +44,7 @@ export const QUERY_URL = "https://api.subquery.network/sq/GuiGou12358/lucky-shib
 
 //export const REWARD_MANAGER_CONTRACT_ADDRESS = "W66fXdDBkcp7RkZmsS7qLLpjdHB4FDSqWgJArbvCYG3PQ48";
 export const REWARD_MANAGER_CONTRACT_ADDRESS = "WDtNnQgygsCXKfjdvL5TgimewWhcBhJgSSCkb5u5pzZJTpR";
+export const DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS = 'Xz3sHvmRgRY3mt3qQ3SjZ3aUPQTfHkj4rKeoQM6VJrenD3W';
 
 import reward_manager_metadata from "./reward_manager_metadata.json"
 export const REWARD_MANAGER_CONTRACT_ABI_METADATA = reward_manager_metadata

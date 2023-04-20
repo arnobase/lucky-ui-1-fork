@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Abi, ContractPromise } from "@polkadot/api-contract";
 import { ApiContext } from "../context/ApiProvider";
 import { AccountContext } from "../context/AccountProvider";
-import { REWARD_MANAGER_CONTRACT_ABI_METADATA, REWARD_MANAGER_CONTRACT_ADDRESS } from "../artifacts/constants";
+import { REWARD_MANAGER_CONTRACT_ABI_METADATA, REWARD_MANAGER_CONTRACT_ADDRESS, DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS } from "../artifacts/constants";
 import BN from "bn.js"
 import toast from 'react-hot-toast';
 
@@ -13,6 +13,8 @@ export const ContractProvider = ({ children }) => {
   const { account } = useContext(AccountContext);
   const [rewardManagerContract, setRewardManagerContract] = useState();
   const [claimDryRunRes,setClaimDryRunRes] = useState(undefined)
+  const [currentEra,setCurrentEra] = useState(undefined)
+  const [currentEraStake,setCurrentEraStake] = useState(undefined)
 
   useEffect(() => {
     //console.log("loadRewardManagerContract")
@@ -24,6 +26,31 @@ export const ContractProvider = ({ children }) => {
       doDryRun();
     }
   },[rewardManagerContract,account])
+
+  useEffect(()=>{
+    if (api) subscribeCurrentEra()
+  },[api])
+
+  const subscribeCurrentEra = async ()=>{
+    const unsub = await api.query.dappsStaking.currentEra(
+      (era) => {
+        console.log("ERA",era.toString());
+        setCurrentEra(era.toString())
+        getCurrentEraStake(era.toString())
+      }
+    );
+  }
+
+  const getCurrentEraStake = async (era)=>{
+    if(era) {
+      const stake = await api.query.dappsStaking.contractEraStake({"Wasm":DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS},era);
+      if (stake) {
+        console.log("UNWRAP.STAKE",stake)
+        setCurrentEraStake(stake.unwrap().total.toString())
+        console.log("STAKE",stake.unwrap().total.toString())
+      }
+    }
+  }
 
   const doDryRun = async () => {
     const { gasRequired, result, error } = await claimDryRun();
@@ -219,7 +246,9 @@ export const ContractProvider = ({ children }) => {
         rewardManagerContract,
         claim,
         claimDryRun,
-        claimDryRunRes
+        claimDryRunRes,
+        currentEra,
+        currentEraStake
       }}
     >
       {children}
