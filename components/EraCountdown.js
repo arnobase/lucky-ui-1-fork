@@ -22,21 +22,21 @@ const EraCountdown = (props) => {
     var hours = Math.floor((distance % (60 * 60 * 24)) / (60 * 60));
     var minutes = Math.floor((distance % (60 * 60)) / (60)).toString().padStart(2,"0");
     var seconds = Math.floor((distance % (60))).toString().padStart(2,"0");
-    return <div className="countdown">
+    if (distance) return <div className="countdown">
       <span className="countdown-hours">{hours}</span><span className="countdown-colon">:</span>
       <span className="countdown-minutes">{minutes}</span><span className="countdown-colon">:</span>
       <span className="countdown-seconds">{seconds}</span>
       </div>
   }
 
-    return <div className={`w-screen flex items-center justify-center mt-14`}>
-      <div className="content-block bg-[#191B1F] rounded-2xl px-8 py-8 ">
-        <div className="flex items-center justify-center text-lg" >Current ERA: {currentEra}</div>
-        <div className="flex items-center justify-center text-lg" >Next Era:&nbsp;<EtaDisplay eraeta={eraeta}/></div>
-        <div className="flex items-center justify-center text-2xl" ><CountdownDisplay countdown={countdown}/></div>
-        <span></span>
-      </div>
-    </div>;
+  return <div className={`w-screen flex items-center justify-center mt-14`}>
+    <div className="content-block bg-[#191B1F] rounded-2xl px-8 py-8 ">
+      <div className="flex items-center justify-center text-lg" >Current ERA: {currentEra}</div>
+      <div className="flex items-center justify-center text-lg" >Next Era:&nbsp;<EtaDisplay eraeta={eraeta}/></div>
+      <div className="flex items-center justify-center text-2xl" ><CountdownDisplay countdown={countdown}/></div>
+      <span></span>
+    </div>
+  </div>;
   
 };
 export default EraCountdown;
