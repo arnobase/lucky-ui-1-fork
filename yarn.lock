@@ -5744,6 +5744,11 @@ swarm-js@^0.1.40:
     tar "^4.0.2"
     xhr-request "^1.0.1"
 
+tailwind-scrollbar@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/tailwind-scrollbar/-/tailwind-scrollbar-3.0.0.tgz#efc233195afc69bcae4cff393600d31fabe7860c"
+  integrity sha512-OkVRX9Q1T769vk979UZ519jhj/j/zNBHql7zPLI+tlhX+ahksYO4ZryWD29lOETDx9Wj1sw+K1OeW7W3+ECQOA==
+
 tailwindcss@^3.2.6:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.2.6.tgz#9bedbc744a4a85d6120ce0cc3db024c551a5c733"
