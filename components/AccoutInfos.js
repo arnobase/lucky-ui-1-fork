@@ -2,38 +2,43 @@ import ClaimRewards from "./ClaimRewards";
 import { formatAddressShort } from "../lib/formatAddressShort";
 import { formatAddress } from "../lib/formatAddress";
 import { formatTokenBalance } from "../lib/formatTokenBalance";
-import { useAccountData } from "../artifacts/useAccountData";
+import { useAccountStakeData } from "../artifacts/useAccountStakeData";
+import { useAccountRewardsData } from "../artifacts/useAccountRewardsData";
 import { CONTRACT_STAKING_URL } from "../artifacts/constants";
+import { SS58_PREFIX } from "../artifacts/constants";
 import { useContext } from "react";
 import { AccountContext } from "../context/AccountProvider";
 import { ApiContext } from "../context/ApiProvider";
+import { ContractContext } from "../context/ContractProvider";
 import Image from "next/image";
 import LuckyLogo from "../assets/lucky.svg";
 
 const style = {
-  wrapper: `w-screen flex items-center justify-center mt-14`,
-  content: `bg-[#191B1F] rounded-2xl px-8 py-8 min-w-[500px]`
+  wrapper: `flex items-center justify-center mt-14`,
+  content: `md:w-[500px] content-block bg-[#191B1F] rounded-2xl px-8 py-8 `
 };
 
 const AccountInfos = () => {
- 
   const { account } = useContext(AccountContext)
   const { network } = useContext(ApiContext)
-  let querydata;
-  if (account !== undefined && account != null) {
-    const address = formatAddress(account.address)
-    const { data } = useAccountData(address);
-    querydata = data
+  const { currentEraStake } = useContext(ContractContext)
+  const address = formatAddress(account?.address,network)
+  const stakeData = useAccountStakeData(address,network)
+  const rewardsData = useAccountRewardsData(address,network)
+
+  function CurrentEraStake() {
+    if (currentEraStake) {
+      return <div>Total stake on Lucky: {formatTokenBalance(currentEraStake)}</div>
+    }
   }
 
   function AccountAddr() {
-    if (account !== undefined) {
+    if (account?.address) {
       const address = account.address
       return <>
         <span>Address: </span>
-        <span>{formatAddressShort(address)}</span>&nbsp;
-        <a 
-          className="float-right font-medium underline"
+        <span>{formatAddressShort(address,SS58_PREFIX[network])}</span>&nbsp;
+        <a className="float-right font-medium underline"
           target="_blank"
           href={CONTRACT_STAKING_URL[network]}
           >Manage your stake
@@ -43,22 +48,39 @@ const AccountInfos = () => {
   }
 
   function StakeDatas() {
-    if (account !== undefined) {
+    let totalStake = undefined;
+    let totalClaimed = undefined;
+    let totalPending = undefined;
+    if (account) {
+      //console.log("stakeData",stakeData.isFetching)
+      if (stakeData?.data?.accounts?.nodes[0]) {totalStake = formatTokenBalance(stakeData.data?.accounts.nodes[0].totalStake)}
+      else {totalStake = 0}
+      if (rewardsData?.data?.accounts?.nodes[0]) {
+        totalClaimed = formatTokenBalance(rewardsData.data?.accounts.nodes[0].totalClaimed)
+        totalPending = formatTokenBalance(rewardsData.data?.accounts.nodes[0].totalPending)
+      }
+      else { totalClaimed = 0; totalPending=0 }
 
-      
-      if (
-        querydata !== undefined 
-          && querydata.accounts.nodes[0] !== undefined
-        ) {
-        const totalStake = formatTokenBalance(querydata.accounts.nodes[0].totalStake)
-        const totalClaimed = formatTokenBalance(querydata.accounts.nodes[0].totalClaimed)
-        const totalPending = formatTokenBalance(querydata.accounts.nodes[0].totalPending)
+      /*
+      */ 
+      if (totalStake!==0 || totalClaimed!==0 || totalPending!==0) {
         return <div>
-          <div className="py-1"><span>Your stake on Lucky: </span><span>{totalStake}</span></div>
-          <div className="py-1"><span>You already Claimed </span><span>{totalClaimed}</span><span> on Lucky</span></div>
-          <div className="py-1"><span>You have </span><span>{totalPending}</span><span> pending on Lucky</span><span className="pl-12 float-right"><ClaimRewards /></span></div>
+        <div className="py-1"><span>Your stake: </span><span>{totalStake}</span></div>
+        <div className="py-1"><span>Already claimed: </span><span>{totalClaimed}</span></div>
+        <div className="py-1"><span>Pending: </span><span>{totalPending}</span><span className="pl-12 float-right"><ClaimRewards /></span></div>
+      </div>
+      }
+      else if (stakeData.isFetching){
+        return <div className="flex items-center justify-center">
+          <span>Loading... <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
+        </div>
+      } 
+      else {
+        return <div className="flex items-center justify-center">
+            <span>You don't have any stake or rewards yet on Lucky <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
         </div>
       }
+      
     }
     else {
       return <div className="flex items-center justify-center">
@@ -74,6 +96,7 @@ const AccountInfos = () => {
             <div className="py-1">
               <AccountAddr/>
             </div>
+            {/*<CurrentEraStake/>*/}
             <StakeDatas/>
           </div>
       </div>

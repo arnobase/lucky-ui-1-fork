@@ -1,11 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Poppins, Roboto, Arial, sans-serif;
   color: white;
-  background-color: #000000;
+  background-color: #101010; 
+}
+.content-block {
+  background-color: rgba(32, 33, 37, 0.9) !important;
+}
+.raffle-history{
+  max-height: 300px;
+  overflow: auto;
 }
 
 a {
@@ -13,8 +22,49 @@ a {
   text-decoration: none;
 }
 
+button:disabled,
+button[disabled]{
+  cursor:not-allowed;
+}
+
+.toast-tx-result{
+  padding-right:70px;
+  text-align:right;
+}
+.toast-tx-result a {
+  text-decoration:underline;
+  color:"#30308c";
+}
+.btn-tx-result {
+  width:70px;
+  border-top-right-radius:10px;
+  border-bottom-right-radius:10px;
+  padding: 0; 
+  padding:5px; 
+  margin:0; 
+  background-color: rgb(241, 241, 241); 
+  border-left: 1px solid rgb(226, 230, 234);
+  height:100%; 
+  right:0; 
+  top:0; 
+  display:block; 
+  position:absolute
+}
+
 * {
   box-sizing: border-box;
+}
+
+#react-portal-modal-container div div {
+  overflow: auto;
+}
+
+
+
+.countdown {
+  font-family: 'Share Tech Mono', Courier, monospace;
+  font-size: 1.2em;
+  padding-top: 10px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,7 +74,12 @@ a {
 
   body {
     color: white;
-    background: black;
+    /*background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);*/
+    background-color: #101010;
+
+  }
+  .content-block {
+    background-color: rgba(32, 33, 37, 0.9) !important;
   }
 }
 
