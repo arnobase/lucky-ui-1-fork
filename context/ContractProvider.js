@@ -45,9 +45,12 @@ export const ContractProvider = ({ children }) => {
     if(era) {
       const stake = await api.query.dappsStaking.contractEraStake({"Wasm":DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS},era);
       if (stake) {
-        console.log("UNWRAP.STAKE",stake)
-        setCurrentEraStake(stake.unwrap().total.toString())
-        console.log("STAKE",stake.unwrap().total.toString())
+        try {
+          setCurrentEraStake(stake.unwrap().total.toString())
+        }
+        catch (error) {
+          console.log("UNWRAP STAKE ERROR",stake,error)
+        }
       }
     }
   }
