@@ -29,7 +29,7 @@ const EraCountdown = (props) => {
       </div>
   }
 
-  return <div className={`w-screen flex items-center justify-center mt-14`}>
+  return <div className={`flex items-center justify-center mt-14`}>
     <div className="content-block bg-[#191B1F] rounded-2xl px-8 py-8 ">
       <div className="flex items-center justify-center text-lg" >Current ERA: {currentEra}</div>
       <div className="flex items-center justify-center text-lg" >Next Era:&nbsp;<EtaDisplay eraeta={eraeta}/></div>

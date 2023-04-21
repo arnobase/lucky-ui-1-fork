@@ -24,7 +24,7 @@ const RafleHistory = () => {
 
   if (account && querydata?.rewards?.nodes) {
       const elements = querydata.rewards.nodes;
-      return <div className={`w-screen flex items-center justify-center mt-14`}>
+      return <div className={`flex items-center justify-center mt-14`}>
         <div className="md:w-[500px] content-block bg-[#191B1F] rounded-2xl px-8 py-8 ">
           <div className="flex items-center justify-center text-xl pb-3" ><h2>Raffle history</h2></div>
           <div className="max-h-96 overflow-auto"><RaffleElements elements={elements}/></div>

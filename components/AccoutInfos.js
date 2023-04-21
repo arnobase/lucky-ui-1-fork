@@ -14,7 +14,7 @@ import Image from "next/image";
 import LuckyLogo from "../assets/lucky.svg";
 
 const style = {
-  wrapper: `w-screen flex items-center justify-center mt-14`,
+  wrapper: `flex items-center justify-center mt-14`,
   content: `md:w-[500px] content-block bg-[#191B1F] rounded-2xl px-8 py-8 `
 };
 
