@@ -10,7 +10,6 @@ import { useContext, useState } from "react";
 import { AccountContext } from "../context/AccountProvider";
 import { ApiContext } from "../context/ApiProvider";
 import { ContractContext } from "../context/ContractProvider";
-import { Share } from 'react-twitter-widgets'
 import Image from "next/image";
 import LuckyLogo from "../assets/lucky.svg";
 
