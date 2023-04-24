@@ -6,7 +6,7 @@ import { useAccountStakeData } from "../artifacts/useAccountStakeData";
 import { useAccountRewardsData } from "../artifacts/useAccountRewardsData";
 import { CONTRACT_STAKING_URL } from "../artifacts/constants";
 import { SS58_PREFIX } from "../artifacts/constants";
-import { useContext, useState } from "react";
+import { useContext, useEffect } from "react";
 import { AccountContext } from "../context/AccountProvider";
 import { ApiContext } from "../context/ApiProvider";
 import { ContractContext } from "../context/ContractProvider";
@@ -26,6 +26,10 @@ const AccountInfos = () => {
   const address = formatAddress(account?.address,network)
   const stakeData = useAccountStakeData(address,network)
   const rewardsData = useAccountRewardsData(address,network)
+
+  useEffect(() => {
+    rewardsData.refetch()
+  }, [hasClaimed]);
 
   function CurrentEraStake() {
     if (currentEraStake) {
@@ -79,7 +83,7 @@ const AccountInfos = () => {
             <div className="flex items-center justify-center">
             <div className="text-center">
               <div className="py-4">
-                <a className="tweetbutton" href="http://twitter.com/share?text=I won the LuckyRaffle 💰🥳%0AStake your $ASTR and be the lucky guy next time 🍀&url=https://portal.astar.network/shibuya-testnet/dapp=bfh3ckzo3ydndgo7evd3utfnoaj5fdy9nycmpzg23vjfhnw&hashtags=AstarNetwork,LuckyRaffle">
+                <a className="tweetbutton" href="http://twitter.com/share?text=I won the LuckyRaffle 💰🥳%0AStake your $ASTR $SDN and be the lucky guy next time 🍀&url=https://lucky.substrate.fi&hashtags=AstarNetwork,LuckyDapp">
                   <i></i>Share on Twitter</a>
               </div>
               <div>📢 Invite other players 📢<br/>and make the Lucky raffle bigger next time</div>
@@ -95,20 +99,23 @@ const AccountInfos = () => {
   function StakeDatas() {
     let totalStake = undefined;
     let totalClaimed = undefined;
+    let totalPending = undefined;
     if (account) {
       if (stakeData?.data?.accounts?.nodes[0]) {totalStake = formatTokenBalance(stakeData.data?.accounts.nodes[0].totalStake)}
       else {totalStake = 0}
       if (rewardsData?.data?.accounts?.nodes[0]) {
         totalClaimed = formatTokenBalance(rewardsData.data?.accounts.nodes[0].totalClaimed)
+        totalPending = formatTokenBalance(rewardsData.data?.accounts.nodes[0].totalPending)
       }
-      else { totalClaimed = 0}
+      else { totalClaimed=0, totalPending=0}
 
       /*
       */ 
-      if (totalStake!==0 || totalClaimed!==0 ) {
+      if (totalStake!==0 || totalClaimed!==0 || totalPending!==0 ) {
         return <div>
-        <div className="py-1"><span>Your stake: </span><span>{totalStake}</span></div>
+        <div className="py-1 text-xl"><span>Your stake: </span><span>{totalStake}</span></div>
         <div className="py-1"><span>Already claimed: </span><span>{totalClaimed}</span></div>
+        <div className="py-1"><span>Pending Rewards: </span><span>{totalPending}</span></div>
       </div>
       }
       else if (stakeData.isFetching){
@@ -141,6 +148,7 @@ const AccountInfos = () => {
           <StakeDatas/>
         </div>
     </div>
+   
   </div>
   }
 

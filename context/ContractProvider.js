@@ -26,7 +26,7 @@ export const ContractProvider = ({ children }) => {
     if (rewardManagerContract && account) {
       doDryRun();
     }
-  },[rewardManagerContract,account])
+  },[rewardManagerContract,account,hasClaimed])
 
   useEffect(()=>{
     if (api) subscribeCurrentEra()
