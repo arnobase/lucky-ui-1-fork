@@ -34,18 +34,14 @@ export const EraEtaProvider = ({ children }) => {
   const updateEta = () => {
 
     const zone = DateTime.local().zoneName
-    console.log("zone",zone)
     let dateTime = DateTime.fromObject({},{
       zone,
     });
-    
-    console.log("dateTime",dateTime)
-
+  
     axios.get("https://api.astar.network/api/v1/shibuya/dapps-staking/stats/nexteraeta").then((response) => {
       const dataCountdown = response.data
       //const dataCountdown = 10
       setCountdown(dataCountdown)
-      console.log("response",dataCountdown)
       const etaNextEra = dateTime
         .plus(response.data * 1000)
       setEraEta(etaNextEra);

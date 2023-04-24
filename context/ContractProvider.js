@@ -15,6 +15,7 @@ export const ContractProvider = ({ children }) => {
   const [claimDryRunRes,setClaimDryRunRes] = useState(undefined)
   const [currentEra,setCurrentEra] = useState(undefined)
   const [currentEraStake,setCurrentEraStake] = useState(undefined)
+  const [hasClaimed,setHasClaimed] = useState(false)
 
   useEffect(() => {
     //console.log("loadRewardManagerContract")
@@ -25,7 +26,7 @@ export const ContractProvider = ({ children }) => {
     if (rewardManagerContract && account) {
       doDryRun();
     }
-  },[rewardManagerContract,account])
+  },[rewardManagerContract,account,hasClaimed])
 
   useEffect(()=>{
     if (api) subscribeCurrentEra()
@@ -45,9 +46,12 @@ export const ContractProvider = ({ children }) => {
     if(era) {
       const stake = await api.query.dappsStaking.contractEraStake({"Wasm":DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS},era);
       if (stake) {
-        console.log("UNWRAP.STAKE",stake)
-        setCurrentEraStake(stake.unwrap().total.toString())
-        console.log("STAKE",stake.unwrap().total.toString())
+        try {
+          setCurrentEraStake(stake.unwrap().total.toString())
+        }
+        catch (error) {
+          console.log("UNWRAP STAKE ERROR",stake,error)
+        }
       }
     }
   }
@@ -228,6 +232,7 @@ export const ContractProvider = ({ children }) => {
         }
         if (txError) toast.error(toastValue,toastOptions);
         else toast(toastValue,toastOptions);
+        setHasClaimed(true)
         unsub()
       }
     }).catch((error) => {
@@ -246,6 +251,7 @@ export const ContractProvider = ({ children }) => {
         rewardManagerContract,
         claim,
         claimDryRun,
+        hasClaimed,
         claimDryRunRes,
         currentEra,
         currentEraStake
