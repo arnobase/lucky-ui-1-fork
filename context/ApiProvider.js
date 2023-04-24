@@ -1,9 +1,9 @@
 import { ApiPromise, WsProvider } from "@polkadot/api";
 import React, { useState, useEffect } from "react";
+import { options } from "@astar-network/astar-api";
+import { PROVIDER_ENDPOINTS } from "../artifacts/constants";
 
 export const ApiContext = React.createContext();
-
-const WS_PROVIDER = "wss://rpc.shibuya.astar.network";
 
 export const ApiProvider = ({ children }) => {
   
@@ -12,14 +12,15 @@ export const ApiProvider = ({ children }) => {
 
   useEffect(() => {
     connectApi();
-  }, []);
+  }, [network]);
 
   const connectApi = async () => {
     try { 
-      const provider = new WsProvider(WS_PROVIDER);
-      const api = await ApiPromise.create({ provider });
-      setapi(api);
-      
+      const provider = new WsProvider(PROVIDER_ENDPOINTS[network]);
+      const apiPromise = new ApiPromise(options({ provider }));
+      await apiPromise.isReady;
+      setapi(apiPromise);
+      console.log("connected to "+network+" API: "+PROVIDER_ENDPOINTS[network])
     } catch (error) {
       console.error(error);
     }

@@ -7,7 +7,7 @@ import { ApiContext } from "../context/ApiProvider";
 
 const headerStyle= {
   //button: `flex items-center bg-[#191B1F] hover:bg-[#333437] rounded-2xl mx-2 text-[0.9rem] font-semibold cursor-pointer`,
-  button: `flex items-center bg-[#191B1F] rounded-2xl mx-2 text-[0.9rem] font-semibold`,
+  button: `flex items-center content-block bg-[#191B1F] rounded-2xl mx-2 text-[0.9rem] font-semibold`,
   buttonPadding: `p-2`,
   buttonIconContainer: `flex items-center justify-center p-2`,
   network: `mr-2`,

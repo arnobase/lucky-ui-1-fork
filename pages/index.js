@@ -14,7 +14,7 @@ export default function Home() {
       <Header />
       <EraCountdown />
       <AccountInfos />
-      <RafleHistory />
+      {<RafleHistory />}
     </div>
   );
 }
