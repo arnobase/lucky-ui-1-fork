@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "../styles/markdown.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ApiProvider } from "../context/ApiProvider";
 import { AccountProvider } from "../context/AccountProvider";
