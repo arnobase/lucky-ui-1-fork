@@ -38,7 +38,7 @@ export const PROVIDER_ENDPOINTS = {
 
 export const CONTRACT_STAKING_URL = {
   shibuya:  "https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=xz3shvmrgry3mt3qq3sjz3aupqtfhkj4rkeoqm6vjrend3w",
-  shiden:   "https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=xz3shvmrgry3mt3qq3sjz3aupqtfhkj4rkeoqm6vjrend3w",
+  shiden:   "https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=x6ykus6l6ch4eozitzsyjscxh2agk2ky9g6a2xeu1w9fftp",
   //astar:    "https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=xz3shvmrgry3mt3qq3sjz3aupqtfhkj4rkeoqm6vjrend3w"
 };
 
@@ -57,7 +57,7 @@ export const REWARD_MANAGER_CONTRACT_ADDRESS = {
 //export const DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS = 'Xz3sHvmRgRY3mt3qQ3SjZ3aUPQTfHkj4rKeoQM6VJrenD3W';
 export const DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS = {
   shibuya:  'Xz3sHvmRgRY3mt3qQ3SjZ3aUPQTfHkj4rKeoQM6VJrenD3W',
-  shiden:   'Xz3sHvmRgRY3mt3qQ3SjZ3aUPQTfHkj4rKeoQM6VJrenD3W' // à remplacer
+  shiden:   'X6ykUS6L6CH4EoZitZsYJsCxH2AGk2ky9G6a2xeu1W9ffTP' // à remplacer
 };
 
 import reward_manager_metadata from "./reward_manager_metadata.json"
