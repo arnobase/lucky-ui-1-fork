@@ -37,7 +37,9 @@ export const PROVIDER_ENDPOINTS = {
 }
 
 export const CONTRACT_STAKING_URL = {
-  shibuya: "https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=xz3shvmrgry3mt3qq3sjz3aupqtfhkj4rkeoqm6vjrend3w"
+  shibuya:  "https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=xz3shvmrgry3mt3qq3sjz3aupqtfhkj4rkeoqm6vjrend3w",
+  shiden:   "https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=xz3shvmrgry3mt3qq3sjz3aupqtfhkj4rkeoqm6vjrend3w",
+  //astar:    "https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=xz3shvmrgry3mt3qq3sjz3aupqtfhkj4rkeoqm6vjrend3w"
 };
 
 //export const QUERY_URL = "https://api.subquery.network/sq/GuiGou12358/lucky---shibuya"

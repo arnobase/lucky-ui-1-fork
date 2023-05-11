@@ -12,7 +12,7 @@ import Image from "next/image";
 import LuckyLogo from "../assets/lucky.svg";
 
 const RafleHistory = ({queryNetwork}) => {
-  console.log("RafleHistory",queryNetwork)
+  //console.log("RafleHistory",queryNetwork)
   const [querydata,setQueryData] = useState();
   const { account } = useContext(AccountContext);
   //const { network } = useContext(ApiContext)

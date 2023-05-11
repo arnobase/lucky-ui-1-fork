@@ -17,8 +17,6 @@ function MyApp({ Component, pageProps, router }) {
     setQueryNetwork(["shiden","shibuya","astar"].includes(router.query.network) ? router.query.network : undefined)
   },[router])
   
-  
-  console.log("MyApp",queryNetwork)
   return (
     <ApiProvider queryNetwork={queryNetwork}>
       <AccountProvider>

@@ -35,7 +35,7 @@ export const ContractProvider = ({ children }) => {
   const subscribeCurrentEra = async ()=>{
     const unsub = await api.query.dappsStaking.currentEra(
       (era) => {
-        console.log("ERA",era.toString());
+        //console.log("ERA",era.toString());
         setCurrentEra(era.toString())
         getCurrentEraStake(era.toString())
       }
@@ -88,7 +88,7 @@ export const ContractProvider = ({ children }) => {
   };
 
   const claimDryRun = async()=>{
-    console.log("sending DryRun on "+network+" for contract: ",rewardManagerContract.address.toString())
+    //console.log("sending DryRun on "+network+" for contract: ",rewardManagerContract.address.toString())
     // Get the initial gas WeightV2 using api.consts.system.blockWeights['maxBlock']
     const gasLimit = api.registry.createType(
       'WeightV2',
@@ -203,7 +203,7 @@ export const ContractProvider = ({ children }) => {
             const errindex = data_obj[0]['module']['index']
             const errno = parseInt(data_obj[0]['module']['error'].substr(2, 2),16);
             txError = getErrorDescription(errindex,errno)
-            console.log("txError",errindex,errno,txError)
+            //console.log("txError",errindex,errno,txError)
             */
           }
           //console.log('\t', phase.toString(), `: ${section}.${method}`, data.toString());
