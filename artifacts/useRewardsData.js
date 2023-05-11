@@ -3,13 +3,14 @@ import request, { gql } from "graphql-request";
 import { QUERY_URL } from "./constants";
 
 export const useRewardsData = (
-    address = undefined
+    address = undefined,
+    network
   ) => {
     if (address) {
       return useQuery(["rewardsdatas", address], () => {
         if (!address) return null;
         return request(
-          QUERY_URL,
+          QUERY_URL[network],
           gql`query {
             rewards(first:10000,orderBy: ERA_DESC, filter : {accountId: {equalTo: "${address}"}}){
               nodes{ era, accountId, amount }
@@ -21,7 +22,7 @@ export const useRewardsData = (
     else {
       return useQuery(["rewardsdatas"], () => {
         return request(
-          QUERY_URL,
+          QUERY_URL[network],
           gql`query {
             rewards(first:10000,orderBy: ERA_DESC){
               nodes{ era, accountId, amount }

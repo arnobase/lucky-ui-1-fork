@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useContext, useEffect } from "react";
 import { EraEtaContext } from "../context/EraEtaProvider";
 import { ContractContext } from "../context/ContractProvider";
-import { DateTime } from "luxon";
 
 const EraCountdown = (props) => {
 
@@ -30,7 +29,7 @@ const EraCountdown = (props) => {
   }
 
   return <div className={`flex items-center justify-center mt-14`}>
-    <div className="content-block bg-[#191B1F] rounded-2xl px-8 py-8 ">
+    <div className="era-display content-block bg-[#191B1F] rounded-2xl px-8 py-8 ">
       <div className="flex items-center justify-center text-lg" >Current ERA: {currentEra}</div>
       <div className="flex items-center justify-center text-lg" >Next Era:&nbsp;<EtaDisplay eraeta={eraeta}/></div>
       <div className="flex items-center justify-center text-2xl" ><CountdownDisplay countdown={countdown}/></div>

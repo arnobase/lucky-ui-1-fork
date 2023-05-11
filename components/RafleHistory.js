@@ -11,12 +11,13 @@ import { SS58_PREFIX } from "../artifacts/constants";
 import Image from "next/image";
 import LuckyLogo from "../assets/lucky.svg";
 
-const RafleHistory = () => {
-
+const RafleHistory = ({queryNetwork}) => {
+  console.log("RafleHistory",queryNetwork)
   const [querydata,setQueryData] = useState();
   const { account } = useContext(AccountContext);
-  const { data } = useRewardsData();
-  const { network } = useContext(ApiContext)
+  //const { network } = useContext(ApiContext)
+  const { data } = useRewardsData(undefined,queryNetwork);
+  
 
   useEffect(()=>{
     setQueryData(data);
@@ -36,7 +37,7 @@ const RafleHistory = () => {
     if (props.elements?.length !== 0) {
     return <div className="reward-list grid justify-center">      
       {props.elements.map(reward=>(
-        <div className="reward-item win-w-[300px]" key={"era"+reward.era}>Era <span>{reward.era}</span>: <span>{formatAddressShort(reward.accountId,SS58_PREFIX[network])}</span> wins <span>{formatTokenBalance(reward.amount)}</span></div>
+        <div className="reward-item win-w-[300px]" key={"era"+reward.era}>Era <span>{reward.era}</span>: <span>{formatAddressShort(reward.accountId,SS58_PREFIX[queryNetwork])}</span> wins <span>{formatTokenBalance(reward.amount)}</span></div>
       ))}
     </div>
     }

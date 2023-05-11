@@ -43,8 +43,8 @@ export const ContractProvider = ({ children }) => {
   }
 
   const getCurrentEraStake = async (era)=>{
-    if(era) {
-      const stake = await api.query.dappsStaking.contractEraStake({"Wasm":DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS},era);
+    if(era && network) {
+      const stake = await api.query.dappsStaking.contractEraStake({"Wasm":DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS[network]},era);
       if (stake) {
         try {
           setCurrentEraStake(stake.unwrap().total.toString())
@@ -77,8 +77,8 @@ export const ContractProvider = ({ children }) => {
 
   const loadRewardManagerContract = async () => {
     try { 
-      const abi = new Abi(REWARD_MANAGER_CONTRACT_ABI_METADATA, api.registry.getChainProperties());
-      const contract = new ContractPromise(api, abi, REWARD_MANAGER_CONTRACT_ADDRESS);
+      const abi = new Abi(REWARD_MANAGER_CONTRACT_ABI_METADATA[network], api.registry.getChainProperties());
+      const contract = new ContractPromise(api, abi, REWARD_MANAGER_CONTRACT_ADDRESS[network]);
       //console.log("CONTRACT-----",contract)
       
       setRewardManagerContract(contract);
