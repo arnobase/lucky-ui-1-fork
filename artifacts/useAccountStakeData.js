@@ -11,7 +11,7 @@ export const useAccountStakeData = (
       if (!(address&&network)) return null;
       const address_stake = formatAddress(address,network);
       return request(
-        QUERY_URL,
+        QUERY_URL[network],
         gql`
         query Accounts {
             accounts(filter : {or: [

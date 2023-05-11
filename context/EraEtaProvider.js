@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { DateTime } from 'luxon';
+import { ApiContext } from "./ApiProvider";
 
 export const EraEtaContext = React.createContext();
 
@@ -8,10 +9,11 @@ export const EraEtaProvider = ({ children }) => {
   
   const [eraeta, setEraEta] = useState(undefined);
   const [countdown, setCountdown] = useState(undefined);
+  const { network } = useContext(ApiContext)
 
   useEffect(()=>{
     updateEta()
-  },[])
+  },[network])
 
   useEffect(()=>{
     if (countdown===0) updateEta()
@@ -37,15 +39,18 @@ export const EraEtaProvider = ({ children }) => {
     let dateTime = DateTime.fromObject({},{
       zone,
     });
-  
-    axios.get("https://api.astar.network/api/v1/shibuya/dapps-staking/stats/nexteraeta").then((response) => {
-      const dataCountdown = response.data
-      //const dataCountdown = 10
-      setCountdown(dataCountdown)
-      const etaNextEra = dateTime
-        .plus(response.data * 1000)
-      setEraEta(etaNextEra);
-    });
+    
+    if (network) {
+      axios.get("https://api.astar.network/api/v1/"+network+"/dapps-staking/stats/nexteraeta").then((response) => {
+        const dataCountdown = response.data
+        //const dataCountdown = 10
+        setCountdown(dataCountdown)
+        const etaNextEra = dateTime
+          .plus(response.data * 1000)
+        setEraEta(etaNextEra);
+      }).catch((err) => {console.log(err)});
+    }
+    
   }
 
   return (

@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import LuckyLogo from "../assets/lucky.svg";
+//import LuckyLogo from "../assets/lucky.svg";
+import LuckyLogo from "../assets/logo-slogan-bg-noir-grand.png";
 import NetworkSelect from "./NetworkSelect";
 import AccountSelect from "./AccountSelect.js";
 
@@ -15,7 +16,7 @@ function Header() {
   return (
     <div className={headerStyle.headwrapper}>
       <div className={headerStyle.title}>
-        <Image className="mr-1" src={LuckyLogo} alt="Lucky" height={40} width={40} /><span className="leading-loose">Lucky</span>
+        <Image className="mr-1" src={LuckyLogo} alt="Lucky" height={75} />
       </div>
       <div className={headerStyle.buttonsContainer}>   
         <NetworkSelect/>    

@@ -13,7 +13,7 @@ export const useAccountRewardsData = (
       const address_contract = formatAddress(address,CONTRACT_PALLET_NETWORK[network]);
       //console.log("address_contract",address_contract)
       return request(
-        QUERY_URL,
+        QUERY_URL[network],
         gql`
         query Accounts {
             accounts(filter : {or: [

@@ -100,7 +100,7 @@ const AccountInfos = () => {
     let totalStake = undefined;
     let totalClaimed = undefined;
     let totalPending = undefined;
-    if (account) {
+    if (account && stakeData?.data && rewardsData?.data) {
       if (stakeData?.data?.accounts?.nodes[0]) {totalStake = formatTokenBalance(stakeData.data?.accounts.nodes[0].totalStake)}
       else {totalStake = 0}
       if (rewardsData?.data?.accounts?.nodes[0]) {
@@ -118,19 +118,19 @@ const AccountInfos = () => {
         <div className="py-1"><span>Pending Rewards: </span><span>{totalPending}</span></div>
       </div>
       }
-      else if (stakeData.isFetching){
-        return <div className="flex items-center justify-center">
-          <span>Loading... <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
-        </div>
-      } 
-      else {
+      else if (totalStake==0 && totalClaimed==0 && totalPending==0 ) {
         return <div className="flex items-center justify-center">
             <span>You don't have any stake or rewards yet on Lucky <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
         </div>
       }
       
     }
-    else {
+    else if (stakeData.isFetching){
+      return <div className="flex items-center justify-center">
+        <span>Loading... <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
+      </div>
+    } 
+    else if (!account) {
       return <div className="flex items-center justify-center">
         <span>Connect account to get Lucky <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
       </div>
