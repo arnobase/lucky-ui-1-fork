@@ -18,7 +18,7 @@ const EraCountdown = (props) => {
 
   function CountdownDisplay(props) {
     const distance = Math.floor(props.countdown)
-    var hours = Math.floor((distance % (60 * 60 * 24)) / (60 * 60));
+    var hours = Math.floor((distance) / (60 * 60));
     var minutes = Math.floor((distance % (60 * 60)) / (60)).toString().padStart(2,"0");
     var seconds = Math.floor((distance % (60))).toString().padStart(2,"0");
     if (distance) return <div className="countdown">
