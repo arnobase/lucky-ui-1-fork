@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import Header from "../components/Header";
+import Footer from "../components/Footer"
 import RafleHistory from "../components/RafleHistory";
 import AccountInfos from "../components/AccoutInfos";
 import { Toaster } from 'react-hot-toast';
@@ -31,6 +32,7 @@ export default function Home() {
       <DisplayEraCountdown />
       <AccountInfos />
       <DisplayRaffleHistory />
+      {/*<Footer />*/}
     </div>
   );
 }
