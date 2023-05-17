@@ -4,6 +4,7 @@ export const SS58_PREFIX = {
   astar:5,
   shiden:5,
   shibuya:5,
+  substrate:42,
   rococo:42,
   westend:42,
   polkadot:0,
@@ -12,7 +13,8 @@ export const SS58_PREFIX = {
 
 export const CONTRACT_PALLET_NETWORK = {
   astar: "polkadot",
-  shiden: "kusama",
+  //shiden: "kusama",
+  shiden: "westend",
   shibuya: "rococo"
 };
 
