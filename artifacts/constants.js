@@ -12,7 +12,8 @@ export const SS58_PREFIX = {
 };
 
 export const CONTRACT_PALLET_NETWORK = {
-  astar: "polkadot",
+  //astar: "polkadot",
+  astar: "substrate",
   //shiden: "kusama",
   shiden: "westend",
   shibuya: "rococo"
