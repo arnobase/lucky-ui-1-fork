@@ -85,7 +85,7 @@ const AccountInfos = () => {
             <div className="text-center">
               <div className="py-4">
                 <a className="tweetbutton" href="http://twitter.com/share?text=I won the @LuckyDapp  Raffle 💰🥳%0A%0AStake your $ASTR $SDN and be the lucky guy next time 🍀&url=https://lucky.substrate.fi&hashtags=AstarNetwork,LuckyDapp">
-                  <i></i>Share on Twitter</a>
+                  <i></i> Share on X</a>
               </div>
               <div>📢 Invite other players 📢<br/>and make the Lucky raffle bigger next time</div>
             </div>
