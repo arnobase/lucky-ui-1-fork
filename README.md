@@ -4,7 +4,7 @@
 
 ## Description
 
-This repository is the UI for [Lucky contract](https://github.com/GuiGou12358/lucky-contracts)
+This repository is the UI for [Lucky contract](https://github.com/LuckyDapp/lucky-contracts)
 
 this branch is deployed on https://lucky.substrate.fi/
 
