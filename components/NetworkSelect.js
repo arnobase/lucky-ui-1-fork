@@ -54,9 +54,9 @@ const NetworkSelect = ( () => {
     <div id="dropdown-states" className="z-10 hidden bg-black divide-y divide-gray-100 rounded-lg shadow w-44">
     <ul className="py-2 text-sm text-white" aria-labelledby="states-button">
         <li>
-            <a className="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-800">
+            <a href="/astar" className="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-800">
                 <div className="inline-flex items-center">
-                   Astar (Soon!)
+                   Astar
                 </div>
             </a>
         </li>
