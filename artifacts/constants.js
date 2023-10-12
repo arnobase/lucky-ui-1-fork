@@ -49,9 +49,9 @@ export const CONTRACT_STAKING_URL = {
 export const QUERY_URL = {
   //shibuya:  "https://api.subquery.network/sq/GuiGou12358/lucky-shibuya-v0_1_0",
   //shiden:   "https://api.subquery.network/sq/GuiGou12358/lucky-shiden-v0_1_0",
-  shibuya:    "https://lucky-subquery.substrate.fi/shibuya",
-  shiden:    "https://lucky-subquery.substrate.fi/shiden",
-  astar:    "https://lucky-subquery.substrate.fi/astar"
+  shibuya:    "https://query.substrate.fi/lucky-subquery-shibuya",
+  shiden:    "https://query.substrate.fi/lucky-subquery-shiden",
+  astar:    "https://query.substrate.fi/lucky-subquery-astar"
 };
 
 //export const REWARD_MANAGER_CONTRACT_ADDRESS = "WDtNnQgygsCXKfjdvL5TgimewWhcBhJgSSCkb5u5pzZJTpR";
