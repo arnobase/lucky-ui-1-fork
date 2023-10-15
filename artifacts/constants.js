@@ -58,7 +58,7 @@ export const QUERY_URL = {
 export const REWARD_MANAGER_CONTRACT_ADDRESS = {
   shibuya:  'WDtNnQgygsCXKfjdvL5TgimewWhcBhJgSSCkb5u5pzZJTpR',
   shiden:   'X6yBHZm9MGzedCVBn6nGHHUDxEnjUNzSoN4aqAP4qooQpEU',
-  astar:    'bbXFDjNBVhA8nmPN5pvgb8bXu5LVNpkGBKbM5QjpKyTsoZw'
+  astar:    'ZSV1GVepvmWFdshMWgczS4zYvmmwEsBjWQjN4WDpUEFRRPy'
 };
 
 //export const DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS = 'Xz3sHvmRgRY3mt3qQ3SjZ3aUPQTfHkj4rKeoQM6VJrenD3W';
