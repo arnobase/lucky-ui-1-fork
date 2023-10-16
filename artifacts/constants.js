@@ -42,31 +42,26 @@ export const PROVIDER_ENDPOINTS = {
 export const CONTRACT_STAKING_URL = {
   shibuya:  "https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=xz3shvmrgry3mt3qq3sjz3aupqtfhkj4rkeoqm6vjrend3w",
   shiden:   "https://portal.astar.network/shiden/dapp-staking/dapp?dapp=x6ykus6l6ch4eozitzsyjscxh2agk2ky9g6a2xeu1w9fftp",
-  astar:    "https://portal.astar.network/astar/dapp-staking/dapp?dapp=xxx"
+  astar:    "https://portal.astar.network/astar/dapp-staking/dapp?dapp=zsv1gvepvmwfdshmwgczs4zyvmmwesbjwqjn4wdpuefrrpy"
 };
 
-//export const QUERY_URL = "https://api.subquery.network/sq/GuiGou12358/lucky---shibuya"
 export const QUERY_URL = {
-  //shibuya:  "https://api.subquery.network/sq/GuiGou12358/lucky-shibuya-v0_1_0",
-  //shiden:   "https://api.subquery.network/sq/GuiGou12358/lucky-shiden-v0_1_0",
   shibuya:    "https://query.substrate.fi/lucky-subquery-shibuya",
   shiden:    "https://query.substrate.fi/lucky-subquery-shiden",
   astar:    "https://query.substrate.fi/lucky-subquery-astar"
 };
 
-//export const REWARD_MANAGER_CONTRACT_ADDRESS = "WDtNnQgygsCXKfjdvL5TgimewWhcBhJgSSCkb5u5pzZJTpR";
 export const REWARD_MANAGER_CONTRACT_ADDRESS = {
   shibuya:  'WDtNnQgygsCXKfjdvL5TgimewWhcBhJgSSCkb5u5pzZJTpR',
   shiden:   'X6yBHZm9MGzedCVBn6nGHHUDxEnjUNzSoN4aqAP4qooQpEU',
   astar:    'ZSV1GVepvmWFdshMWgczS4zYvmmwEsBjWQjN4WDpUEFRRPy'
 };
 
-//export const DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS = 'Xz3sHvmRgRY3mt3qQ3SjZ3aUPQTfHkj4rKeoQM6VJrenD3W';
 // pas utilisé pour le moment, sauf si on affiche le total stake (currentEraStake) 
 export const DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS = {
   shibuya:  'Xz3sHvmRgRY3mt3qQ3SjZ3aUPQTfHkj4rKeoQM6VJrenD3W',
-  shiden:   'X6ykUS6L6CH4EoZitZsYJsCxH2AGk2ky9G6a2xeu1W9ffTP', // à remplacer
-  astar:    '' // à compléter
+  shiden:   'X6ykUS6L6CH4EoZitZsYJsCxH2AGk2ky9G6a2xeu1W9ffTP', 
+  astar:    'ZSV1GVepvmWFdshMWgczS4zYvmmwEsBjWQjN4WDpUEFRRPy'
 };
 
 import reward_manager_metadata from "./reward_manager_metadata.json";
