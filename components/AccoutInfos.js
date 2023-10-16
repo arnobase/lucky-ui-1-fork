@@ -56,10 +56,11 @@ const AccountInfos = () => {
     let totalPending = undefined;
     if (account) {
       if (rewardsData?.data?.accounts?.nodes[0]) {
-        totalPending = formatTokenBalance(rewardsData.data?.accounts.nodes[0].totalPending)
+        const tp = rewardsData.data?.accounts.nodes[0].totalPending
+        totalPending = tp != 0 ? formatTokenBalance(tp) : 0
       }
       else totalPending=0 
-      if (totalPending!=0 && !hasClaimed) {
+      if ((totalPending!=0) && !hasClaimed) {
         return <>
         <div className={style.wrapper}>
           <div className={style.content+" pending-block"}>
@@ -83,8 +84,8 @@ const AccountInfos = () => {
             <div className="flex items-center justify-center">
             <div className="text-center">
               <div className="py-4">
-                <a className="tweetbutton" href="http://twitter.com/share?text=I won the LuckyRaffle 💰🥳%0AStake your $ASTR $SDN and be the lucky guy next time 🍀&url=https://lucky.substrate.fi&hashtags=AstarNetwork,LuckyDapp">
-                  <i></i>Share on Twitter</a>
+                <a target="_blank" className="tweetbutton" href="http://twitter.com/share?text=I won the @LuckyDapp  Raffle 💰🥳%0A%0AStake your $ASTR $SDN and be the lucky guy next time 🍀&url=https://lucky.substrate.fi&hashtags=AstarNetwork,LuckyDapp">
+                  <i></i> Share on X</a>
               </div>
               <div>📢 Invite other players 📢<br/>and make the Lucky raffle bigger next time</div>
             </div>
