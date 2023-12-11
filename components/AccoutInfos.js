@@ -12,6 +12,7 @@ import { ApiContext } from "../context/ApiProvider";
 import { ContractContext } from "../context/ContractProvider";
 import Image from "next/image";
 import LuckyLogo from "../assets/lucky.svg";
+import ExportedImage from "next-image-export-optimizer";
 
 const style = {
   wrapper: `flex items-center justify-center mt-14`,
@@ -121,19 +122,21 @@ const AccountInfos = () => {
       }
       else if (totalStake==0 && totalClaimed==0 && totalPending==0 ) {
         return <div className="flex items-center justify-center">
-            <span>You don't have any stake or rewards yet on Lucky <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
+            <span>You don't have any stake or rewards yet on Lucky 
+              <ExportedImage className="inline"  src={LuckyLogo} alt="Lucky" height={20} width={20}  />;
+            </span>
         </div>
       }
       
     }
     else if (stakeData.isFetching){
       return <div className="flex items-center justify-center">
-        <span>Loading... <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
+        <span>Loading... <ExportedImage className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
       </div>
     } 
     else if (!account) {
       return <div className="flex items-center justify-center">
-        <span>Connect account to get Lucky <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
+        <span>Connect account to get Lucky <ExportedImage className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
       </div>
     }
   }

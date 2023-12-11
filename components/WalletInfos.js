@@ -10,17 +10,24 @@ const style = {
 };
 
 const WalletInfos = () => {
+ 
   const { account,wallet } = useContext(AccountContext)
-  const { network } = useContext(ApiContext)
+  const { network, api, setNetwork } = useContext(ApiContext);
   const [allAccounts,setAllAccounts] = useState()
 
   useEffect(()=>{
+    setNetwork("shiden")
+  },[])
+
+  useEffect(()=>{
     const loadAccounts = async () => {
+      await wallet.enable('Lucky')
       const res= await wallet.getAccounts()
       setAllAccounts(res)
       console.log("RES",res)
     }
     //console.log("WALLET",wallet)
+    console.log("wallet",wallet)
     if (wallet) loadAccounts()
   },[wallet])
 

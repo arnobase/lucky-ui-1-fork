@@ -5,7 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "NEXT_PUBLIC_STATIC_EXPORT=true next build && next export && next-image-export-optimizer"
   },
   "main": "index.js",
   "repository": "https://github.com/arnobase/lucky-ui-1.git",
@@ -31,6 +32,7 @@
     "graphql-request": "^5.1.0",
     "luxon": "^3.2.1",
     "next": "^13.1.6",
+    "next-image-export-optimizer": "^1.8.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",

@@ -8,15 +8,35 @@ import EraCountdown from "../components/EraCountdown";
 import { ApiContext } from '../context/ApiProvider';
 import { useEffect, useContext, useState } from 'react';
 
-export default function Home() {
-  const router = useRouter();
+
+export async function getStaticPaths() {
+  return {
+    paths: [
+      { params: { network: 'astar' } },
+      { params: { network: 'shiden' } },
+      { params: { network: 'shibuya' } },
+    ],
+    fallback: false,
+  };
+}
+export async function getStaticProps({ params }) {
+  // Fetch necessary data for the page using params.network
+  const network = params.network;
+  // Pass data to the page via props
+  return { props: { network } };
+}
+
+export default function Home(params) {
+  console.log("params----",params)
+  //const router = useRouter();
   const { setNetwork } = useContext(ApiContext)
   const [queryNetwork,setQueryNetwork]=useState()
 
+
   useEffect(()=>{
-    setNetwork(router.query.network)
-    setQueryNetwork(router.query.network)
-  },[router])
+    setNetwork(params.network)
+    setQueryNetwork(params.network)
+  },[params])
 
   const DisplayRaffleHistory = () => {
     if (queryNetwork) return <RafleHistory queryNetwork={queryNetwork} />

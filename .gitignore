@@ -2,3 +2,5 @@ node_modules
 .history/
 .next/
 .DS_Store
+out/
+public/

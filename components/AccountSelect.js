@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { AccountContext } from "../context/AccountProvider";
 import { WalletSelect } from '@talismn/connect-components';
 import { DAPP_NAME } from "../artifacts/constants.js";
+import ExportedImage from "next-image-export-optimizer";
 
 const headerStyle={
   button: `max-h[50px] flex items-center content-block bg-[#191B1F] hover:bg-[#333437] rounded-2xl mx-2 text-[0.9rem] font-semibold cursor-pointer`,
@@ -33,7 +34,7 @@ const AccountSelect = ( () => {
           showAccountsList={true}
           triggerComponent={<div className={`${headerStyle.button} ${headerStyle.buttonPadding} pr-4`}>
             <div className={headerStyle.buttonIconContainer}>
-              <Image alt="account" src={activeAccount?.wallet?.logo.src} height={20} width={20} />
+              <ExportedImage alt="account" src={activeAccount?.wallet?.logo.src} height={20} width={20} />
             </div>
             <button>{activeAccount.name}</button>
             </div>
