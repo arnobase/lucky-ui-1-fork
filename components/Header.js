@@ -5,6 +5,8 @@ import LuckyLogo from "../assets/logo-slogan-bg-noir-grand.png";
 import NetworkSelect from "./NetworkSelect";
 import AccountSelect from "./AccountSelect.js";
 import ExportedImage from "next-image-export-optimizer";
+import { ApiContext } from "../context/ApiProvider.js";
+import { useContext } from "react";
 
 const headerStyle= {
   title: `col-span-3 sm:col-span-1 flex text-3xl text-white-700 text-center font-semibold  xs:min-w-full`,
@@ -14,10 +16,11 @@ const headerStyle= {
 }
 
 function Header() {
+  const { network } = useContext(ApiContext)
   return (
     <div className={headerStyle.headwrapper}>
       <div className={headerStyle.title}>
-        <ExportedImage className="mr-1" src={LuckyLogo} alt="Lucky" height={75} />
+        <a href={"/"+network}><ExportedImage className="mr-1" src={LuckyLogo} alt="Lucky" height={75} /></a>
       </div>
       <div className={headerStyle.buttonsContainer}>   
         <NetworkSelect/>    

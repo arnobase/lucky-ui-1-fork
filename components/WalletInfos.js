@@ -14,7 +14,7 @@ const style = {
 
 const WalletInfos = () => {
  
-  const { wallet } = useContext(AccountContext)
+  const { wallet,setAccount } = useContext(AccountContext)
   const { network, setNetwork } = useContext(ApiContext);
   const [allAccounts,setAllAccounts] = useState()
 
@@ -50,7 +50,9 @@ const WalletInfos = () => {
       <div className={style.content}>
           <div>
             <div className="py-1">
-              <table className="accounts-table">
+              <span className="text-2xl">Pending rewards overview</span>
+              { (allAccounts) ? <></> : <h3>Loading wallet accounts...</h3> }
+              <table className="accounts-table mt-4">
                 {allAccounts ? <tr>
                   <td>Address</td>
                   <td>Name</td>
@@ -66,9 +68,9 @@ const WalletInfos = () => {
                     <tr>
                       <td>{formatAddressShort(a.address,SS58_PREFIX["astar"])}</td>
                       <td>{a.name}</td>
-                      <td className="pending-network">{pendingShibuya?"🍀":""}</td>
-                      <td className="pending-network">{pendingShiden?"🍀":""}</td>
-                      <td className="pending-network">{pendingAstar?"🍀":""}</td>
+                      <td className={pendingShibuya?"pending-network cursor-pointer":"pending-network"} onClick={()=>{if (pendingShibuya) setAccount(a);location.href="/shibuya"}}>{pendingShibuya?"🍀":""}</td>
+                      <td className={pendingShiden?"pending-network cursor-pointer":"pending-network"} onClick={()=>{if (pendingShiden) setAccount(a);location.href="/shiden"}}>{pendingShiden?"🍀":""}</td>
+                      <td className={pendingAstar?"pending-network cursor-pointer":"pending-network"} onClick={()=>{if (pendingAstar) setAccount(a);location.href="/astar"}}>{pendingAstar?"🍀":""}</td>
                     </tr>
                 </>
               })}
