@@ -28,10 +28,18 @@ const SimpleList = () => (
 const DisplayNetwork = () => {
   const { network } = useContext(ApiContext)
   const networkLogo = {astar:astarLogo,shiden:shidenLogo,shibuya:shibuyaLogo}
-  if (network) return (<><div className={headerStyle.buttonIconContainer}>
-    <ExportedImage src={networkLogo[network]} alt={network} height={20} width={20} />
-</div>
-<p className={headerStyle.network}>{network}</p></>)
+  
+  if ((network === "astar" || network === "shiden" || network === "shibuya" )) {
+    console.log("network",network,networkLogo[network])
+    return (
+    <>
+      <div className={headerStyle.buttonIconContainer}>
+        <ExportedImage src={networkLogo[network]} alt={network} height={20} width={20} />
+      </div>
+      <p className={headerStyle.network}>{network}</p>
+    </>
+    )
+}
 }
 
 const NetworkSelect = ( () => {

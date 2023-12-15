@@ -43,9 +43,9 @@ module.exports = {
     return {
       //'/': { page: '[network]', query: {network: "astar"} },
       '/': { page: '/', query: {} },
-      '/shibuya': { page: '[network]' },
-      '/shiden': { page: '[network]' },
-      '/astar': { page: '[network]' },
+      '/shibuya': { page: 'shibuya' },
+      '/shiden': { page: 'shiden' },
+      '/astar': { page: 'astar' },
       // Add more paths here
     };
   },
