@@ -101,6 +101,15 @@ div.era-display {
   background-size: contain;
 }
 
+.accounts-table td {
+  border: 1px rgb(63, 63, 63) solid;
+  padding: 2px 8px 2px 8px;
+}
+td.pending-network {
+  text-align: center;
+  min-width: 75px;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
