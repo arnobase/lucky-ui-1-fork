@@ -14,19 +14,19 @@ export const useAccountPendingData = (
       return request(
         QUERY_URL[network],
         gql`
-        query {
-          accounts(filter:{
-            and:{
-              totalPending:{notEqualTo:"0"},
-              id:{in:["`+addresses.join('","')+`"]}
+          query {
+            accounts(filter:{
+              and:{
+                totalPending:{notEqualTo:"0"},
+                id:{in:["`+addresses.join('","')+`"]}
+              }
+            }){
+              nodes{
+                id
+                totalPending
+              }
             }
-          }){
-            nodes{
-              id
-              totalPending
-            }
-          }
-        }`
+          }`
       );
     });
   };

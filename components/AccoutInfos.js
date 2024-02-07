@@ -4,12 +4,14 @@ import { formatAddress } from "../lib/formatAddress";
 import { formatTokenBalance } from "../lib/formatTokenBalance";
 import { useAccountStakeData } from "../artifacts/useAccountStakeData";
 import { useAccountRewardsData } from "../artifacts/useAccountRewardsData";
+import { useAccountStakeByPeriodData } from "../artifacts/useAccountStakeByPeriodData";
 import { CONTRACT_STAKING_URL } from "../artifacts/constants";
 import { SS58_PREFIX } from "../artifacts/constants";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AccountContext } from "../context/AccountProvider";
 import { ApiContext } from "../context/ApiProvider";
 import { ContractContext } from "../context/ContractProvider";
+import { EraEtaContext } from "../context/EraEtaProvider";
 import Image from "next/image";
 import LuckyLogo from "../assets/lucky.svg";
 import ExportedImage from "next-image-export-optimizer";
@@ -21,16 +23,33 @@ const style = {
 
 const AccountInfos = () => {
   
+  const [stakeByPeriod,setStakeByPeriod] = useState(undefined)
   const { account } = useContext(AccountContext)
   const { network } = useContext(ApiContext)
   const { currentEraStake, hasClaimed } = useContext(ContractContext)
+  const { period,subPeriod } = useContext(EraEtaContext)
   const address = formatAddress(account?.address,network)
   const stakeData = useAccountStakeData(address,network)
   const rewardsData = useAccountRewardsData(address,network)
+  const stakeByPeriodData = useAccountStakeByPeriodData(address,network,period)
 
   useEffect(() => {
     rewardsData.refetch()
   }, [hasClaimed]);
+
+  useEffect(()=>{
+    if (stakeByPeriodData) {
+      stakeByPeriodData.refetch()
+    }
+  },[period])
+
+  useEffect(()=>{
+    if (stakeByPeriodData) {
+      if (stakeByPeriodData.data?.stakes?.aggregates?.sum?.amount) {
+        setStakeByPeriod(stakeByPeriodData.data?.stakes?.aggregates?.sum?.amount)
+      }
+    }
+  },[stakeByPeriodData])
 
   function CurrentEraStake() {
     if (currentEraStake) {
@@ -61,7 +80,7 @@ const AccountInfos = () => {
         totalPending = tp != 0 ? formatTokenBalance(tp) : 0
       }
       else totalPending=0 
-      if ((totalPending!=0) && !hasClaimed) {
+      if ((totalPending>0) && !hasClaimed) {
         return <>
         <div className={style.wrapper}>
           <div className={style.content+" pending-block"}>
@@ -107,7 +126,8 @@ const AccountInfos = () => {
       else {totalStake = 0}
       if (rewardsData?.data?.accounts?.nodes[0]) {
         totalClaimed = formatTokenBalance(rewardsData.data?.accounts.nodes[0].totalClaimed)
-        totalPending = formatTokenBalance(rewardsData.data?.accounts.nodes[0].totalPending)
+        const total_pending = rewardsData.data?.accounts.nodes[0].totalPending > 0 ? rewardsData.data?.accounts.nodes[0].totalPending : 0
+        totalPending = formatTokenBalance(total_pending)
       }
       else { totalClaimed=0, totalPending=0}
 
@@ -116,8 +136,10 @@ const AccountInfos = () => {
       if (totalStake!==0 || totalClaimed!==0 || totalPending!==0 ) {
         return <div>
         <div className="py-1 text-xl"><span>Your stake: </span><span>{totalStake}</span></div>
+        <div className="py-1"><span>Stake this period: </span><span>{formatTokenBalance(stakeByPeriod)}</span></div>
         <div className="py-1"><span>Already claimed: </span><span>{totalClaimed}</span></div>
         <div className="py-1"><span>Pending Rewards: </span><span>{totalPending}</span></div>
+        
       </div>
       }
       else if (totalStake==0 && totalClaimed==0 && totalPending==0 ) {

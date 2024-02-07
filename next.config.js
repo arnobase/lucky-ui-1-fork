@@ -40,12 +40,13 @@ module.exports = {
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
   ) {
+    const isStaticExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true';
     return {
       //'/': { page: '[network]', query: {network: "astar"} },
       '/': { page: '/', query: {} },
-      '/shibuya': { page: '/shibuya' },
-      '/shiden': { page: '/shiden' },
-      '/astar': { page: '/astar' },
+      '/shibuya': { page: isStaticExport?'[network]':'/shibuya' },
+      '/shiden': { page: isStaticExport?'[network]':'/shiden' },
+      '/astar': { page: isStaticExport?'[network]':'/astar' },
       // Add more paths here
     };
   },

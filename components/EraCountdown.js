@@ -5,14 +5,17 @@ import { ContractContext } from "../context/ContractProvider";
 
 const EraCountdown = (props) => {
 
-  const { eraeta, countdown } = useContext(EraEtaContext);
+  const { eraeta, period, subPeriod, countdown } = useContext(EraEtaContext);
   const { currentEra } = useContext(ContractContext);
   
   function EtaDisplay(props) {
     if (eraeta !== undefined) {
-    return <div className="flex items-center justify-center">
+    return <>
+    Next Era:&nbsp;
+    <div className="flex items-center justify-center">
         <span>{props.eraeta.toFormat('HH:mm dd-MMM')}</span>
     </div>
+    </>
     }
   }
 
@@ -30,8 +33,10 @@ const EraCountdown = (props) => {
 
   return <div className={`flex items-center justify-center mt-14`}>
     <div className="era-display content-block bg-[#191B1F] rounded-2xl px-8 py-8 ">
+      {(period) ? <div className="flex items-center justify-center text-lg" >Current period: {period}</div>:<></>}
+      {(subPeriod) ? <div className="flex items-center justify-center text-lg" >{subPeriod}</div>:<></>}
       <div className="flex items-center justify-center text-lg" >Current ERA: {currentEra}</div>
-      <div className="flex items-center justify-center text-lg" >Next Era:&nbsp;<EtaDisplay eraeta={eraeta}/></div>
+      <div className="flex items-center justify-center text-lg" ><EtaDisplay eraeta={eraeta}/></div>
       <div className="flex items-center justify-center text-2xl" ><CountdownDisplay countdown={countdown}/></div>
       <span></span>
     </div>

@@ -28,7 +28,6 @@ const SimpleList = () => (
 const DisplayNetwork = () => {
   const { network } = useContext(ApiContext)
   const networkLogo = {astar:astarLogo,shiden:shidenLogo,shibuya:shibuyaLogo}
-  
   if ((network === "astar" || network === "shiden" || network === "shibuya" )) {
     console.log("network",network,networkLogo[network])
     return (
@@ -45,7 +44,9 @@ const DisplayNetwork = () => {
 const NetworkSelect = ( () => {
   return <>
   <div className="flex">
+   
     <button id="states-button" data-dropdown-toggle="dropdown-states" className={headerStyle.button} type="button">
+
       <DisplayNetwork />
     </button>
     <div id="dropdown-states" className="z-10 hidden bg-black divide-y divide-gray-100 rounded-lg shadow w-44">
