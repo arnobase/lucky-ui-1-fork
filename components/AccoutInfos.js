@@ -4,7 +4,7 @@ import { formatAddress } from "../lib/formatAddress";
 import { formatTokenBalance } from "../lib/formatTokenBalance";
 import { useAccountStakeData } from "../artifacts/useAccountStakeData";
 import { useAccountRewardsData } from "../artifacts/useAccountRewardsData";
-import { useAccountStakeByPeriodData } from "../artifacts/useAccountStakeByPeriodData";
+import { useAccountStakeByPeriodData, useAccountStakeByPeriodDataAll } from "../artifacts/useAccountStakeByPeriodData";
 import { CONTRACT_STAKING_URL } from "../artifacts/constants";
 import { SS58_PREFIX } from "../artifacts/constants";
 import { useContext, useEffect, useState } from "react";
@@ -15,6 +15,7 @@ import { EraEtaContext } from "../context/EraEtaProvider";
 import Image from "next/image";
 import LuckyLogo from "../assets/lucky.svg";
 import ExportedImage from "next-image-export-optimizer";
+import BN from "bn.js";
 
 const style = {
   wrapper: `flex items-center justify-center mt-14`,
@@ -31,25 +32,48 @@ const AccountInfos = () => {
   const address = formatAddress(account?.address,network)
   const stakeData = useAccountStakeData(address,network)
   const rewardsData = useAccountRewardsData(address,network)
-  const stakeByPeriodData = useAccountStakeByPeriodData(address,network,period)
-
+  //const stakeByPeriodData = useAccountStakeByPeriodData(address,network,period)
+  const stakeByPeriodDataAll = useAccountStakeByPeriodDataAll(address,network,period)
+  
   useEffect(() => {
     rewardsData.refetch()
   }, [hasClaimed]);
 
   useEffect(()=>{
-    if (stakeByPeriodData) {
-      stakeByPeriodData.refetch()
+    if (stakeByPeriodDataAll) {
+      //stakeByPeriodData.refetch()
+      stakeByPeriodDataAll.refetch()
     }
   },[period])
 
+  /*
   useEffect(()=>{
     if (stakeByPeriodData) {
+      console.log("stakeByPeriodData",stakeByPeriodData)
       if (stakeByPeriodData.data?.stakes?.aggregates?.sum?.amount) {
-        setStakeByPeriod(stakeByPeriodData.data?.stakes?.aggregates?.sum?.amount)
+        const amount = stakeByPeriodData.data?.stakes?.aggregates?.sum?.amount
+        console.log("typeof",typeof amount,amount)
+        setStakeByPeriod(BigInt(amount))
       }
     }
   },[stakeByPeriodData])
+  */
+
+
+  useEffect(()=>{
+    if (stakeByPeriodDataAll) {
+      console.log("stakeByPeriodDataAll",stakeByPeriodDataAll.data?.stakes?.nodes)
+      if (stakeByPeriodDataAll.data?.stakes?.nodes !== undefined) {
+        let sum = new BN(0)
+        stakeByPeriodDataAll.data?.stakes?.nodes.forEach((ele)=>{
+          sum=sum.add(new BN(ele.amount))
+        })
+        setStakeByPeriod(String(sum))
+        //setStakeByPeriod(stakeByPeriodDataAll.data?.stakes?.nodes.reduce((n, {amount}) => n + amount, 0))
+      }
+    }
+  },[stakeByPeriodDataAll])
+
 
   function CurrentEraStake() {
     if (currentEraStake) {
@@ -134,9 +158,10 @@ const AccountInfos = () => {
       /*
       */ 
       if (totalStake!==0 || totalClaimed!==0 || totalPending!==0 ) {
+        console.log("stakeByPeriod",stakeByPeriod)
         return <div>
-        <div className="py-1 text-xl"><span>Your stake: </span><span>{totalStake}</span></div>
-        <div className="py-1"><span>Stake this period: </span><span>{formatTokenBalance(stakeByPeriod)}</span></div>
+        {network === "astar" ? <div className="py-1 text-xl"><span>Your stake: </span><span>{totalStake}</span></div> :
+        <div className="py-1 text-xl"><span>Stake for this period: </span><span>{formatTokenBalance(stakeByPeriod)}</span></div>}
         <div className="py-1"><span>Already claimed: </span><span>{totalClaimed}</span></div>
         <div className="py-1"><span>Pending Rewards: </span><span>{totalPending}</span></div>
         

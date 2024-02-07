@@ -21,3 +21,23 @@ export const useAccountStakeByPeriodData = (
       );
     });
   };
+
+  export const useAccountStakeByPeriodDataAll = (
+    address,
+    network,
+    period
+  ) => {
+    return useQuery(["accountstakebyperiodall"+network], () => {
+      if (!(address&&network&&period)) return null;
+      return request(
+        QUERY_URL[network],
+        gql`
+        query {
+          stakes(filter: {and: [ {accountId: {equalTo: "`+address+`"}}, {period: {equalTo: "`+period+`"}} ] } )
+          { 
+            nodes{amount}
+          }
+        }`
+      );
+    });
+  };

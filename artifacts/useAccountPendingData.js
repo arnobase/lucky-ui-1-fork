@@ -17,7 +17,7 @@ export const useAccountPendingData = (
           query {
             accounts(filter:{
               and:{
-                totalPending:{notEqualTo:"0"},
+                totalPending:{greaterThan:"0"},
                 id:{in:["`+addresses.join('","')+`"]}
               }
             }){
