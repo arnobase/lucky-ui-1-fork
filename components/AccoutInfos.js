@@ -44,7 +44,7 @@ const AccountInfos = () => {
       //stakeByPeriodData.refetch()
       stakeByPeriodDataAll.refetch()
     }
-  },[period])
+  },[period,address])
 
   /*
   useEffect(()=>{
@@ -98,13 +98,15 @@ const AccountInfos = () => {
 
   function PendingDatas() {
     let totalPending = undefined;
+    let tp=0
     if (account) {
       if (rewardsData?.data?.accounts?.nodes[0]) {
-        const tp = rewardsData.data?.accounts.nodes[0].totalPending
-        totalPending = tp != 0 ? formatTokenBalance(tp) : 0
+        tp = rewardsData.data?.accounts.nodes[0].totalPending
+        totalPending = tp > 0 ? formatTokenBalance(tp) : 0
       }
       else totalPending=0 
-      if ((totalPending>0) && !hasClaimed) {
+      console.log("totalPending",totalPending)
+      if ((totalPending && tp && tp>0) && !hasClaimed) {
         return <>
         <div className={style.wrapper}>
           <div className={style.content+" pending-block"}>

@@ -24,12 +24,16 @@ function Header() {
   const { network } = useContext(ApiContext)
   const raffle_url = network === undefined ? "/astar" : "/"+network
   return (
-    <div className="grid grid-cols-6 p-4">
-      <div className="sm:col-span-2 flex text-3xl text-white-700 text-center font-semibold  xs:min-w-full">
+    <div className="grid grid-cols-8 p-4">
+      <div className="sm:col-span-8 md:col-span-2 gd:col-span-2 flex text-3xl text-white-700 text-center font-semibold  xs:min-w-full">
         <a href={raffle_url}><ExportedImage className="mr-1" src={LuckyLogo} alt="Lucky" height={75} /></a>
       </div>
-      <div className="sm:col-span-4 flex justify-end items-center">  
-        <a href={raffle_url}>The Lucky Raffle</a> 
+      <div className="sm:col-span-8 md:col-span-3 gd:col-span-3 flex justify-end items-center"> 
+        <a className="pr-8" href={raffle_url}>The Lucky Raffle</a>
+        <a className="pr-8" href="/wallets">Wallet Overview</a> 
+        <a className="pr-8" href="/wiki">Docs</a> 
+      </div>
+      <div className="sm:col-span-8 md:col-span-3 gd:col-span-3 flex justify-end items-center"> 
         <NetworkSelect/>    
         <AccountSelect />
       </div>
