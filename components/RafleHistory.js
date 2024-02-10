@@ -10,6 +10,7 @@ import { ApiContext } from "../context/ApiProvider"
 import { SS58_PREFIX } from "../artifacts/constants";
 import Image from "next/image";
 import LuckyLogo from "../assets/lucky.svg";
+import ExportedImage from "next-image-export-optimizer";
 
 const RafleHistory = ({queryNetwork}) => {
   //console.log("RafleHistory",queryNetwork)
@@ -43,7 +44,7 @@ const RafleHistory = ({queryNetwork}) => {
     }
     else {
       return <div className="flex items-center justify-center">
-          <span>Nothing here yet...<Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
+          <span>Nothing here yet...<ExportedImage className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
       </div>
     }
   }

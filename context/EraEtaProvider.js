@@ -2,14 +2,27 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { DateTime } from 'luxon';
 import { ApiContext } from "./ApiProvider";
+import { usePalletInfosData } from "../artifacts/usePalletInfosData";
 
 export const EraEtaContext = React.createContext();
 
 export const EraEtaProvider = ({ children }) => {
   
   const [eraeta, setEraEta] = useState(undefined);
+  const [period, setPeriod] = useState(undefined);
+  const [subPeriod, setSubPeriod] = useState(undefined)
   const [countdown, setCountdown] = useState(undefined);
   const { network } = useContext(ApiContext)
+  const palletInfos = usePalletInfosData(network)
+
+  useEffect(()=>{
+    if (palletInfos) {
+      if (palletInfos?.data?.palletInfos?.nodes[0]) {
+        setPeriod(palletInfos?.data?.palletInfos?.nodes[0].currentPeriod)
+        setSubPeriod(palletInfos?.data?.palletInfos?.nodes[0].currentSubPeriod)
+      }
+    }
+  },[palletInfos])
 
   useEffect(()=>{
     updateEta()
@@ -57,6 +70,8 @@ export const EraEtaProvider = ({ children }) => {
     <EraEtaContext.Provider
       value={{
         eraeta,
+        period,
+        subPeriod,
         countdown,
         updateEta
       }}

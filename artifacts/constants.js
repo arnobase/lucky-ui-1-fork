@@ -52,7 +52,8 @@ export const QUERY_URL = {
 };
 
 export const REWARD_MANAGER_CONTRACT_ADDRESS = {
-  shibuya:  'WDtNnQgygsCXKfjdvL5TgimewWhcBhJgSSCkb5u5pzZJTpR',
+  //shibuya:  'WDtNnQgygsCXKfjdvL5TgimewWhcBhJgSSCkb5u5pzZJTpR',
+  shibuya:  "X8nqJsFQWBk137WxetcPdAGLwnJ8xpAQ5tXS1bNsHKaz1q6",
   shiden:   'X6yBHZm9MGzedCVBn6nGHHUDxEnjUNzSoN4aqAP4qooQpEU',
   astar:    'ZSV1GVepvmWFdshMWgczS4zYvmmwEsBjWQjN4WDpUEFRRPy'
 };
@@ -64,10 +65,11 @@ export const DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS = {
   astar:    'ZSV1GVepvmWFdshMWgczS4zYvmmwEsBjWQjN4WDpUEFRRPy'
 };
 
+import reward_manager_metadata_shibuya from "./reward_manager_metadata_shibuya.json";
 import reward_manager_metadata from "./reward_manager_metadata.json";
 import reward_manager_metadata_astar from "./reward_manager_metadata_astar.json"
 export const REWARD_MANAGER_CONTRACT_ABI_METADATA = {
-  shibuya:  reward_manager_metadata,
+  shibuya:  reward_manager_metadata_shibuya,
   shiden:   reward_manager_metadata,
   astar:    reward_manager_metadata_astar
 };

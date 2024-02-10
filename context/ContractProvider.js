@@ -33,11 +33,17 @@ export const ContractProvider = ({ children }) => {
   },[api])
 
   const subscribeCurrentEra = async ()=>{
-    const unsub = await api.query.dappsStaking.currentEra(
-      (era) => {
+    console.log("#####",api.query.dappsStaking)
+    const isV3 = api.query.dappStaking !== undefined
+    const query_dappstaking_currentera = isV3 ? api.query.dappStaking.currentEraInfo : api.query.dappsStaking.currentEra
+    const unsub = await query_dappstaking_currentera(
+      
+      (data) => {
+        console.log("###data",data)
+        const era = isV3 ? data.currentStakeAmount.era : data
         //console.log("ERA",era.toString());
         setCurrentEra(era.toString())
-        getCurrentEraStake(era.toString())
+        //getCurrentEraStake(era.toString())
       }
     );
   }

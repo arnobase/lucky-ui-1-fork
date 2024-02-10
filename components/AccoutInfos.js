@@ -4,14 +4,18 @@ import { formatAddress } from "../lib/formatAddress";
 import { formatTokenBalance } from "../lib/formatTokenBalance";
 import { useAccountStakeData } from "../artifacts/useAccountStakeData";
 import { useAccountRewardsData } from "../artifacts/useAccountRewardsData";
+import { useAccountStakeByPeriodData, useAccountStakeByPeriodDataAll } from "../artifacts/useAccountStakeByPeriodData";
 import { CONTRACT_STAKING_URL } from "../artifacts/constants";
 import { SS58_PREFIX } from "../artifacts/constants";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AccountContext } from "../context/AccountProvider";
 import { ApiContext } from "../context/ApiProvider";
 import { ContractContext } from "../context/ContractProvider";
+import { EraEtaContext } from "../context/EraEtaProvider";
 import Image from "next/image";
 import LuckyLogo from "../assets/lucky.svg";
+import ExportedImage from "next-image-export-optimizer";
+import BN from "bn.js";
 
 const style = {
   wrapper: `flex items-center justify-center mt-14`,
@@ -20,16 +24,56 @@ const style = {
 
 const AccountInfos = () => {
   
+  const [stakeByPeriod,setStakeByPeriod] = useState(undefined)
   const { account } = useContext(AccountContext)
   const { network } = useContext(ApiContext)
   const { currentEraStake, hasClaimed } = useContext(ContractContext)
+  const { period,subPeriod } = useContext(EraEtaContext)
   const address = formatAddress(account?.address,network)
   const stakeData = useAccountStakeData(address,network)
   const rewardsData = useAccountRewardsData(address,network)
-
+  //const stakeByPeriodData = useAccountStakeByPeriodData(address,network,period)
+  const stakeByPeriodDataAll = useAccountStakeByPeriodDataAll(address,network,period)
+  
   useEffect(() => {
     rewardsData.refetch()
   }, [hasClaimed]);
+
+  useEffect(()=>{
+    if (stakeByPeriodDataAll) {
+      //stakeByPeriodData.refetch()
+      stakeByPeriodDataAll.refetch()
+    }
+  },[period,address])
+
+  /*
+  useEffect(()=>{
+    if (stakeByPeriodData) {
+      console.log("stakeByPeriodData",stakeByPeriodData)
+      if (stakeByPeriodData.data?.stakes?.aggregates?.sum?.amount) {
+        const amount = stakeByPeriodData.data?.stakes?.aggregates?.sum?.amount
+        console.log("typeof",typeof amount,amount)
+        setStakeByPeriod(BigInt(amount))
+      }
+    }
+  },[stakeByPeriodData])
+  */
+
+
+  useEffect(()=>{
+    if (stakeByPeriodDataAll) {
+      console.log("stakeByPeriodDataAll",stakeByPeriodDataAll.data?.stakes?.nodes)
+      if (stakeByPeriodDataAll.data?.stakes?.nodes !== undefined) {
+        let sum = new BN(0)
+        stakeByPeriodDataAll.data?.stakes?.nodes.forEach((ele)=>{
+          sum=sum.add(new BN(ele.amount))
+        })
+        setStakeByPeriod(String(sum))
+        //setStakeByPeriod(stakeByPeriodDataAll.data?.stakes?.nodes.reduce((n, {amount}) => n + amount, 0))
+      }
+    }
+  },[stakeByPeriodDataAll])
+
 
   function CurrentEraStake() {
     if (currentEraStake) {
@@ -54,13 +98,15 @@ const AccountInfos = () => {
 
   function PendingDatas() {
     let totalPending = undefined;
+    let tp=0
     if (account) {
       if (rewardsData?.data?.accounts?.nodes[0]) {
-        const tp = rewardsData.data?.accounts.nodes[0].totalPending
-        totalPending = tp != 0 ? formatTokenBalance(tp) : 0
+        tp = rewardsData.data?.accounts.nodes[0].totalPending
+        totalPending = tp > 0 ? formatTokenBalance(tp) : 0
       }
       else totalPending=0 
-      if ((totalPending!=0) && !hasClaimed) {
+      console.log("totalPending",totalPending)
+      if ((totalPending && tp && tp>0) && !hasClaimed) {
         return <>
         <div className={style.wrapper}>
           <div className={style.content+" pending-block"}>
@@ -106,34 +152,40 @@ const AccountInfos = () => {
       else {totalStake = 0}
       if (rewardsData?.data?.accounts?.nodes[0]) {
         totalClaimed = formatTokenBalance(rewardsData.data?.accounts.nodes[0].totalClaimed)
-        totalPending = formatTokenBalance(rewardsData.data?.accounts.nodes[0].totalPending)
+        const total_pending = rewardsData.data?.accounts.nodes[0].totalPending > 0 ? rewardsData.data?.accounts.nodes[0].totalPending : 0
+        totalPending = formatTokenBalance(total_pending)
       }
       else { totalClaimed=0, totalPending=0}
 
       /*
       */ 
       if (totalStake!==0 || totalClaimed!==0 || totalPending!==0 ) {
+        console.log("stakeByPeriod",stakeByPeriod)
         return <div>
-        <div className="py-1 text-xl"><span>Your stake: </span><span>{totalStake}</span></div>
+        {network === "astar" ? <div className="py-1 text-xl"><span>Your stake: </span><span>{totalStake}</span></div> :
+        <div className="py-1 text-xl"><span>Stake for this period: </span><span>{formatTokenBalance(stakeByPeriod)}</span></div>}
         <div className="py-1"><span>Already claimed: </span><span>{totalClaimed}</span></div>
         <div className="py-1"><span>Pending Rewards: </span><span>{totalPending}</span></div>
+        
       </div>
       }
       else if (totalStake==0 && totalClaimed==0 && totalPending==0 ) {
         return <div className="flex items-center justify-center">
-            <span>You don't have any stake or rewards yet on Lucky <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
+            <span>You don't have any stake or rewards yet on Lucky 
+              <ExportedImage className="inline"  src={LuckyLogo} alt="Lucky" height={20} width={20}  />;
+            </span>
         </div>
       }
       
     }
     else if (stakeData.isFetching){
       return <div className="flex items-center justify-center">
-        <span>Loading... <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
+        <span>Loading... <ExportedImage className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
       </div>
     } 
     else if (!account) {
       return <div className="flex items-center justify-center">
-        <span>Connect account to get Lucky <Image className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
+        <span>Connect account to get Lucky <ExportedImage className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
       </div>
     }
   }
