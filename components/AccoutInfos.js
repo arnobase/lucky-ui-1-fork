@@ -162,8 +162,7 @@ const AccountInfos = () => {
       if (totalStake!==0 || totalClaimed!==0 || totalPending!==0 ) {
         console.log("stakeByPeriod",stakeByPeriod)
         return <div>
-        {network === "astar" ? <div className="py-1 text-xl"><span>Your stake: </span><span>{totalStake}</span></div> :
-        <div className="py-1 text-xl"><span>Stake for this period: </span><span>{formatTokenBalance(stakeByPeriod)}</span></div>}
+        <div className="py-1 text-xl"><span>Stake for this period: </span><span>{formatTokenBalance(stakeByPeriod)}</span></div>
         <div className="py-1"><span>Already claimed: </span><span>{totalClaimed}</span></div>
         <div className="py-1"><span>Pending Rewards: </span><span>{totalPending}</span></div>
         
