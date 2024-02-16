@@ -12,6 +12,7 @@ import { AccountContext } from "../context/AccountProvider";
 import { ApiContext } from "../context/ApiProvider";
 import { ContractContext } from "../context/ContractProvider";
 import { EraEtaContext } from "../context/EraEtaProvider";
+import CheckEvmAddress from "./checkEvmAddress";
 import Image from "next/image";
 import LuckyLogo from "../assets/lucky.svg";
 import ExportedImage from "next-image-export-optimizer";
@@ -206,6 +207,7 @@ const AccountInfos = () => {
 
   return (
     <>
+    <CheckEvmAddress/>
     <PendingDatas/>
     <AccountDatas/>
     </>
