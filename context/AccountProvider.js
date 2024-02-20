@@ -12,12 +12,12 @@ export const AccountProvider = ({ children }) => {
 
   useEffect (()=>{
     const loadSigner = async () => {
-      console.log("using account: "+account.address)
+      //console.log("using account: "+account.address)
       const { getWalletBySource} = await import('@talismn/connect-wallets');
       //console.log(account.source)
       const injector = await getWalletBySource(account.source);
       setStateWallet(injector);
-      console.log("Wallet(injector)",injector)
+      //console.log("Wallet(injector)",injector)
       await injector.enable('Lucky')
       api.setSigner(injector.signer)
       

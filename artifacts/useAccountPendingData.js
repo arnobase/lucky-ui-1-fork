@@ -10,7 +10,7 @@ export const useAccountPendingData = (
     return useQuery(["accountpendingdatas"+network], () => {
       if (!(address&&network)) return null;
       const addresses = address.map(a=>formatAddress(a.address,"substrate"))
-      console.log("addresses UseAccountPendingData",addresses)
+      //console.log("addresses UseAccountPendingData",addresses)
       return request(
         QUERY_URL[network],
         gql`

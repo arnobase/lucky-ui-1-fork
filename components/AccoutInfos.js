@@ -63,7 +63,7 @@ const AccountInfos = () => {
 
   useEffect(()=>{
     if (stakeByPeriodDataAll) {
-      console.log("stakeByPeriodDataAll",stakeByPeriodDataAll.data?.stakes?.nodes)
+      //("stakeByPeriodDataAll",stakeByPeriodDataAll.data?.stakes?.nodes)
       if (stakeByPeriodDataAll.data?.stakes?.nodes !== undefined) {
         let sum = new BN(0)
         stakeByPeriodDataAll.data?.stakes?.nodes.forEach((ele)=>{
@@ -161,19 +161,16 @@ const AccountInfos = () => {
       /*
       */ 
       if (totalStake!==0 || totalClaimed!==0 || totalPending!==0 ) {
-        console.log("stakeByPeriod",stakeByPeriod)
+        //console.log("stakeByPeriod",stakeByPeriod)
         return <div>
-        <div className="py-1 text-xl"><span>Stake for this period: </span><span>{formatTokenBalance(stakeByPeriod)}</span></div>
-        <div className="py-1"><span>Already claimed: </span><span>{totalClaimed}</span></div>
-        <div className="py-1"><span>Pending Rewards: </span><span>{totalPending}</span></div>
-        
-      </div>
+          <div className="py-1 text-xl"><span>Stake for this period: </span><span>{formatTokenBalance(stakeByPeriod)}</span></div>
+          <div className="py-1"><span>Already claimed: </span><span>{totalClaimed}</span></div>
+          <div className="py-1"><span>Pending Rewards: </span><span>{totalPending}</span></div>
+        </div>
       }
       else if (totalStake==0 && totalClaimed==0 && totalPending==0 ) {
-        return <div className="flex items-center justify-center">
-            <span>You don't have any stake or rewards yet on Lucky 
-              <ExportedImage className="inline"  src={LuckyLogo} alt="Lucky" height={20} width={20}  />;
-            </span>
+        return <div className="flex items-left justify-left">
+            <span className="pt-2">You don't have any stake or rewards yet with this account</span>
         </div>
       }
       
@@ -207,9 +204,9 @@ const AccountInfos = () => {
 
   return (
     <>
-    <CheckEvmAddress/>
-    <PendingDatas/>
-    <AccountDatas/>
+      <PendingDatas/>
+      <AccountDatas/>
+      <CheckEvmAddress />
     </>
   );
 };

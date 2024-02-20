@@ -10,7 +10,7 @@ export const ApiProvider = ({queryNetwork, children }) => {
   const [network, setNetwork] = useState(queryNetwork);
 
   useEffect(() => {
-    console.log("CONNECTAPI NETWORK",network)
+    //console.log("CONNECTAPI NETWORK",network)
     if (network) connectApi();
   }, [network]);
 

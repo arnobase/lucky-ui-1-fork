@@ -7,7 +7,7 @@ export const useAccountStakeByPeriodData = (
     network,
     period
   ) => {
-    return useQuery(["accountstakebyperiod"+network], () => {
+    return useQuery(["accountstakebyperiod"+address], () => {
       if (!(address&&network&&period)) return null;
       return request(
         QUERY_URL[network],
@@ -27,7 +27,7 @@ export const useAccountStakeByPeriodData = (
     network,
     period
   ) => {
-    return useQuery(["accountstakebyperiodall"+network], () => {
+    return useQuery(["accountstakebyperiodall"+address], () => {
       if (!(address&&network&&period)) return null;
       return request(
         QUERY_URL[network],

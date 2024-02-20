@@ -27,7 +27,6 @@ export async function getStaticProps({ params }) {
 }
 
 export default function Home(params) {
-  console.log("params----",params)
   //const router = useRouter();
   const { setNetwork } = useContext(ApiContext)
   const [queryNetwork,setQueryNetwork]=useState()

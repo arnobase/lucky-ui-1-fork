@@ -24,14 +24,17 @@ export const EraEtaProvider = ({ children }) => {
     }
   },[palletInfos])
 
+  /*
   useEffect(()=>{
     updateEta()
   },[network])
-
+  
   useEffect(()=>{
     if (countdown===0) updateEta()
   },[countdown])
-  
+  */
+
+
   let varCountdown;
   useEffect(()=>{
     let interval
@@ -46,6 +49,7 @@ export const EraEtaProvider = ({ children }) => {
     return () => clearInterval(interval);
   },[eraeta])
 
+  /*
   const updateEta = () => {
 
     const zone = DateTime.local().zoneName
@@ -65,6 +69,7 @@ export const EraEtaProvider = ({ children }) => {
     }
     
   }
+  */
 
   return (
     <EraEtaContext.Provider
@@ -73,7 +78,7 @@ export const EraEtaProvider = ({ children }) => {
         period,
         subPeriod,
         countdown,
-        updateEta
+        //updateEta
       }}
     >
       {children}
