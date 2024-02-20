@@ -32,7 +32,7 @@ const style = {
 function CheckEvmAddress() {
   
   const { api, rewardManagerContract, claimFrom, doClaimFromDryRun, claimFromDryRunRes } = useContext(ContractContext)
-  const [addressInput, setAddressInput] = useState("0x57Cf5c9e4e5B4B41003BB77C6bE0E01973d332c3")
+  const [addressInput, setAddressInput] = useState("")
   const [stakeByPeriod,setStakeByPeriod] = useState()
   const [isEVM, setIsEVM] = useState(false)
 
