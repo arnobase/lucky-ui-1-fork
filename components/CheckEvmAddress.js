@@ -40,12 +40,6 @@ function CheckEvmAddress() {
   const { network } = useContext(ApiContext)
   const { period,subPeriod } = useContext(EraEtaContext)
 
-  const [isCompatibleNetwork,setIsCompatibleNetwork] = useState()
-
-  useEffect(()=>{
-    setIsCompatibleNetwork(network==="shibuya")
-  },[network])
-
   const evmToPlm = useCallback((prefix) => {
     //console.log("evmToPlm")
     if (
@@ -73,7 +67,7 @@ function CheckEvmAddress() {
     async function doit (){
       const res = await doClaimFromDryRun(resultAddress_5)
     }
-    if (resultAddress_5 && api && rewardManagerContract && isCompatibleNetwork) {
+    if (resultAddress_5 && api && rewardManagerContract) {
       doit()
     }
   },[resultAddress_5, api, rewardManagerContract])
@@ -171,7 +165,8 @@ useEffect(()=>{
             type="text"
             value={addressInput}
             onChange={(e) => setAddressInput(e.target.value)}
-          ></input><AccountInfos /></>:<></>}
+          ></input>
+          <AccountInfos /></>:<></>}
         </div>
       </div>
     </>
