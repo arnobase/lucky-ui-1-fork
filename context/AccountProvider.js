@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { setToStorage, getFromStorage } from "../lib/storage";
 import { ApiContext } from "../context/ApiProvider";
 
@@ -9,6 +9,7 @@ export const AccountProvider = ({ children }) => {
   const [account, setStateAccount] = useState(undefined);
   const [wallet, setStateWallet] = useState(undefined);
   let lsAccount = undefined;
+  const refWallet = useRef()
 
   useEffect (()=>{
     const loadSigner = async () => {
@@ -48,6 +49,7 @@ export const AccountProvider = ({ children }) => {
       value={{
         account,
         wallet,
+        refWallet,
         setAccount,
         loadAccount
       }}

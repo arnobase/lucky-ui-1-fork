@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Abi, ContractPromise } from "@polkadot/api-contract";
+import { Keyring } from "@polkadot/api";
 import { ApiContext } from "../context/ApiProvider";
 import { AccountContext } from "../context/AccountProvider";
 import { REWARD_MANAGER_CONTRACT_ABI_METADATA, REWARD_MANAGER_CONTRACT_ADDRESS, DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS } from "../artifacts/constants";
@@ -64,7 +65,7 @@ export const ContractProvider = ({ children }) => {
 
   const doClaimDryRun = async () => {
     if (account) {
-      const { gasRequired, result, error } = await dryRun("psp22Reward::claim");;
+      const { gasRequired, result, error } = await dryRun("psp22Reward::claim",account);;
       const res = { gasRequired, result, error }
       setClaimDryRunRes(res)
       return res
@@ -72,8 +73,9 @@ export const ContractProvider = ({ children }) => {
   }
 
   const doClaimFromDryRun = async (from) => {
-    if (account) {
-      const { gasRequired, result, error } = await dryRun("psp22Reward::claimFrom",from);
+    const alice = new Keyring({ type: 'sr25519' }).addFromUri("//Alice")
+    if (from) {
+      const { gasRequired, result, error } = await dryRun("psp22Reward::claimFrom",alice,from);
       const res = { gasRequired, result, error }
       setClaimFromDryRunRes(res)
       return res
@@ -95,7 +97,7 @@ export const ContractProvider = ({ children }) => {
   /**
      * Generic function dryRun
      */
-  const dryRun = async(funcName,...args)=>{
+  const dryRun = async(funcName,account,...args)=>{
     const contract = rewardManagerContract
     //console.log("dryRun: args",args)
     //console.log("sending DryRun on "+network+" for contract: ",rewardManagerContract.address.toString())

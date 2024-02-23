@@ -1,6 +1,8 @@
 import * as polkadotCryptoUtils from "@polkadot/util-crypto";
 import * as polkadotUtils from "@polkadot/util";
 
+import { setToStorage, getFromStorage } from "../lib/storage";
+
 import ClaimFromRewards from "./ClaimFromRewards";
 import { formatAddressShort } from "../lib/formatAddressShort";
 import { formatAddress } from "../lib/formatAddress";
@@ -9,7 +11,7 @@ import { useAccountStakeByPeriodDataAll } from "../artifacts/useAccountStakeByPe
 
 import { SS58_PREFIX } from "../artifacts/constants";
 import { CONTRACT_STAKING_URL } from "../artifacts/constants";
-import { useContext, useEffect, useState, useCallback, useMemo } from "react";
+import { useContext, useEffect, useState, useCallback, useMemo, useRef } from "react";
 
 import { ApiContext } from "../context/ApiProvider";
 import { ContractContext } from "../context/ContractProvider";
@@ -32,13 +34,26 @@ const style = {
 function CheckEvmAddress() {
   
   const { api, rewardManagerContract, claimFrom, doClaimFromDryRun, claimFromDryRunRes } = useContext(ContractContext)
-  const [addressInput, setAddressInput] = useState("")
+  const [addressInput, setAddressInput] = useState()
+  const [isEVM, setIsEVM] = useState()
+  //const [isEvmChecked, setIsEvmChecked] = useState()
   const [stakeByPeriod,setStakeByPeriod] = useState()
-  const [isEVM, setIsEVM] = useState(false)
+  const refIsEvm = useRef()
 
-  const { account } = useContext(AccountContext)
+  const { account, refWallet } = useContext(AccountContext)
   const { network } = useContext(ApiContext)
   const { period,subPeriod } = useContext(EraEtaContext)
+
+  useEffect(()=>{
+    const _evmAddress = polkadotCryptoUtils.isEthereumAddress(getFromStorage("evmAddress")) ? getFromStorage("evmAddress") : ""
+    setAddressInput(_evmAddress)
+    const _isEVM = (!getFromStorage("isEVM") || getFromStorage("isEVM") === "false" || _evmAddress === "") ? false : true
+    console.log(!getFromStorage("isEVM"),getFromStorage("isEVM"))
+    console.log("_isEVM",_isEVM)
+    setIsEVM(_isEVM)
+    console.log("refIsEvm.current",refIsEvm.current.checked)
+    refIsEvm.current.checked = _isEVM ? "checked" : ""
+  },[])
 
   const evmToPlm = useCallback((prefix) => {
     //console.log("evmToPlm")
@@ -52,6 +67,13 @@ function CheckEvmAddress() {
     }
   }, [addressInput]);
 
+  useEffect(()=>{
+    setToStorage("isEVM",isEVM)
+    setToStorage("evmAddress",addressInput)
+  },[isEVM, addressInput])
+
+
+
   const resultAddress_5 = useMemo(() => {
     return evmToPlm(5)
   }, [addressInput]);
@@ -59,14 +81,19 @@ function CheckEvmAddress() {
     return evmToPlm(42)
   }, [addressInput]);
 
+
+
   const stakeByPeriodDataAll = useAccountStakeByPeriodDataAll(resultAddress_5,network,period)
   const stakeData = useAccountStakeData(resultAddress_42,network)
   const rewardsData = useAccountRewardsData(resultAddress_42,network)
 
   useEffect(()=>{
     async function doit (){
+      console.log("doit")
       const res = await doClaimFromDryRun(resultAddress_5)
+      console.log("Res Dry Run",res)
     }
+    
     if (resultAddress_5 && api && rewardManagerContract) {
       doit()
     }
@@ -112,7 +139,7 @@ useEffect(()=>{
 
   function Claim(){
     if((claimFromDryRunRes && claimFromDryRunRes.error===undefined)){
-      return <div><div className="py-1"><span className="pl-12 float-right">{account ? <ClaimFromRewards from={resultAddress_42} /> : <>Connect Substrate account to claim</>}</span></div></div>
+      return <div><div className="py-1"><span className="pl-12 float-right">{account ? <ClaimFromRewards from={resultAddress_42} /> : <><span className="underline cursor-pointer" onClick={()=>{refWallet.current.click()}}>Connect Substrate account to claim</span></>}</span></div></div>
     }  
   }
   
@@ -149,11 +176,12 @@ useEffect(()=>{
     <>
       <div className={style.wrapper}>
         <div className={style.content}>
+        {isEVM}
           <div className="flex justify-end items-end w-100">
             <label className="inline-flex cursor-pointer">
               <label className="inline-block pl-[0.15rem] hover:cursor-pointer mr-2" for="flexSwitchCheckDefault">Check an EVM Address</label>
-              <input type="checkbox" role="switch" value={isEVM} className="sr-only peer" id="flexSwitchCheckDefault"
-              onChange={() => setIsEVM(!isEVM)}
+              <input ref={refIsEvm} type="checkbox" role="switch" className="sr-only peer" id="flexSwitchCheckDefault"
+                onChange={(e) => {console.log(e.target.checked);setIsEVM(e.target.checked)}}
               />
               <div className="relative w-9 h-5 bg-gray-600 peer-focus:outline-none peer-focus:ring-blue-300 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all after:bg-gray-700 peer-checked:border-gray-600 peer-checked:bg-[rgba(116,190,100,1)]"></div>
             </label>
