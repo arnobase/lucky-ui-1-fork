@@ -29,7 +29,7 @@ const DisplayNetwork = () => {
   const { network } = useContext(ApiContext)
   const networkLogo = {astar:astarLogo,shiden:shidenLogo,shibuya:shibuyaLogo}
   if ((network === "astar" || network === "shiden" || network === "shibuya" )) {
-    console.log("network",network,networkLogo[network])
+    //("network",network,networkLogo[network])
     return (
     <>
       <div className={headerStyle.buttonIconContainer}>

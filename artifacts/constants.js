@@ -66,7 +66,7 @@ export const DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS = {
 };
 
 import reward_manager_metadata_shibuya from "./reward_manager_metadata_shibuya.json";
-import reward_manager_metadata from "./reward_manager_metadata.json";
+import reward_manager_metadata from "./reward_manager_metadata_shiden.json";
 import reward_manager_metadata_astar from "./reward_manager_metadata_astar.json"
 export const REWARD_MANAGER_CONTRACT_ABI_METADATA = {
   shibuya:  reward_manager_metadata_shibuya,
