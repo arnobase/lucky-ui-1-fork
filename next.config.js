@@ -41,6 +41,7 @@ module.exports = {
     { dev, dir, outDir, distDir, buildId }
   ) {
     const isStaticExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true';
+    //const isStaticExport = true
     return {
       //'/': { page: '[network]', query: {network: "astar"} },
       '/': { page: '/', query: {} },

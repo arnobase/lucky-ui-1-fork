@@ -1,20 +1,26 @@
 import Image from "next/image"
-import { useContext } from "react";
+import { useContext, Fragment } from "react";
 import { AccountContext } from "../context/AccountProvider";
 import { WalletSelect } from '@talismn/connect-components';
 import { DAPP_NAME } from "../artifacts/constants.js";
 import ExportedImage from "next-image-export-optimizer";
+import account_svg from "../assets/account.svg"
+import { Disclosure, Menu, Transition } from "@headlessui/react";
 
 const headerStyle={
-  button: `max-h[50px] flex items-center content-block bg-[#191B1F] hover:bg-[#333437] rounded-2xl mx-2 text-[0.9rem] font-semibold cursor-pointer`,
-  buttonPadding: `p-2`,
+  button: `max-h[50px] flex items-center rounded-2xl lg:ml-2 ml-0 text-[0.9rem] font-semibold cursor-pointer`,
+  buttonPadding: `p-0 lg:p-2`,
   buttonIconContainer: `flex items-center justify-center p-2`,
+}
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
 }
 
 const AccountSelect = ( () => {
 
   const { account, setAccount, refWallet } = useContext(AccountContext);
-  const defaultAccount = {name:"Connect",wallet:{logo:{src:"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJsb2dpbl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cGF0aCBpZD0iWE1MSURfMjFfIiBkPSJNMzAuOSA4MC4yYzAgMS4zIDEuNSAxLjkgMi41IDEuMWwzMi45LTMwLjJjLjMtLjMuNS0uNy41LTEuMSAwLS40LS4yLS44LS41LTEuMWwtMzMtMzAuMmMtLjktLjktMi41LS4yLTIuNSAxLjF2MTguMUgxMi4xYy0xLjEgMC0yLjEuOS0yLjEgMi4xdjIwLjFjMCAxLjEuOSAyLjEgMi4xIDIuMWgxOC44djE4eiIgZmlsbD0iI0VFRUVFRSIvPjxnPjxwYXRoIGQ9Ik03NiA4Mi4zSDU3LjFjLTIuNyAwLTQuOS0yLjItNC45LTQuOXMyLjItNC45IDQuOS00LjlINzZjMi4zIDAgNC4zLTEuOSA0LjMtNC4zVjMxLjZjMC0yLjMtMS45LTQuMy00LjMtNC4zSDU3LjFjLTIuNyAwLTQuOS0yLjItNC45LTQuOXMyLjItNC45IDQuOS00LjlINzZjNy43IDAgMTQgNi4zIDE0IDE0djM2LjdjMCA3LjktNi4zIDE0LjEtMTQgMTQuMXoiIGZpbGw9IiNFRUVFRUUiLz48L2c+PC9zdmc+Cg=="}}}
+  const defaultAccount = {name:"Connect",wallet:{logo:{src:account_svg}}}
   const activeAccount = (account !== undefined && account !== null) ? account : defaultAccount;
 
   const Logout = () => {
@@ -29,18 +35,18 @@ const AccountSelect = ( () => {
 
   return <>
     <WalletSelect
-          
-          onlyShowInstalled
-          dappName={DAPP_NAME}
-          showAccountsList={true}
-          triggerComponent={<div className={`${headerStyle.button} ${headerStyle.buttonPadding} pr-4`}>
-            <div className={headerStyle.buttonIconContainer}>
-              <ExportedImage alt="account" src={activeAccount?.wallet?.logo.src} height={20} width={20} />
-            </div>
-            <button ref={refWallet}>{activeAccount.name}</button>
-            </div>
-          } 
-          onAccountSelected={(account) => { setAccount(account)}}
+      dappName={DAPP_NAME}
+      showAccountsList={true}
+      triggerComponent={
+        <div className={`${headerStyle.button} ${headerStyle.buttonPadding} pr-0 lg:pr-4`}>
+          <div className={headerStyle.buttonIconContainer}>
+            <ExportedImage alt="account" className={activeAccount.name==="Connect" ? "invert":""} src={activeAccount?.wallet?.logo.src} height={20} width={20} />
+          </div>
+          <button ref={refWallet}></button>
+          <div className="hidden md:inline-block overflow-hidden whitespace-nowrap  text-ellipsis align-middle max-w-40">{activeAccount.name}</div>
+        </div>
+      } 
+      onAccountSelected={(account) => { setAccount(account)}}
     />
     <Logout />
   </>

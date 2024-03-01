@@ -10,11 +10,11 @@ import ExportedImage from "next-image-export-optimizer";
 const isStaticExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true';
 
 const headerStyle= {
-  button: `max-h[50px] flex items-center content-block bg-[#191B1F] hover:bg-[#333437] rounded-2xl mx-2 text-[0.9rem] font-semibold cursor-pointer p-2 pr-4`,
+  button: `max-h[50px] flex items-center rounded-2xl mx-1 text-[0.9rem] font-semibold cursor-pointer pr-0 lg:pr-2`,
   //button: `flex items-center content-block bg-[#191B1F] rounded-2xl mx-2  font-bold`,
-  buttonPadding: `p-2`,
-  buttonIconContainer: `flex items-center justify-center p-2`,
-  network: `mr-2`,
+  buttonPadding: `p-0 lg:p-2`,
+  buttonIconContainer: `flex items-center justify-center p-1`,
+  network: `mr-2 ml-1 hidden md:inline-block`,
 }
 
 const SimpleList = () => (
@@ -35,7 +35,7 @@ const DisplayNetwork = () => {
       <div className={headerStyle.buttonIconContainer}>
         <ExportedImage src={networkLogo[network]} alt={network} height={20} width={20} />
       </div>
-      <p className={headerStyle.network}>{network}</p>
+      <p className={headerStyle.network}>{network.charAt(0).toUpperCase() + network.slice(1)}</p>
     </>
     )
 }
