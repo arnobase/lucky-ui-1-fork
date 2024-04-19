@@ -7,6 +7,7 @@ import astarLogo from "../assets/astar.png";
 import { useContext } from "react";``
 import { ApiContext } from "../context/ApiProvider";
 import ExportedImage from "next-image-export-optimizer";
+import { usePathname } from 'next/navigation'
 const isStaticExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true';
 
 const headerStyle= {
@@ -42,6 +43,10 @@ const DisplayNetwork = () => {
 }
 
 const NetworkSelect = ( () => {
+  const pathname = usePathname()
+  const pathname_array = pathname.split("/")
+  const path_prefix = pathname_array.length > 2 ? "/"+pathname_array[1] : ""
+  //console.log(pathname,pathname_array,path_prefix)
   return <>
   <div className="flex">
    
@@ -52,21 +57,21 @@ const NetworkSelect = ( () => {
     <div id="dropdown-states" className="z-10 hidden bg-black divide-y divide-gray-100 rounded-lg shadow w-44">
     <ul className="py-2 text-sm text-white" aria-labelledby="states-button">
         <li>
-            <a href={isStaticExport ? "/astar.html" : "/astar"} className="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-800">
+            <a href={isStaticExport ? path_prefix+"/astar.html" : path_prefix+"/astar"} className="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-800">
                 <div className="inline-flex items-center">
                    Astar
                 </div>
             </a>
         </li>
         <li>
-            <a href={isStaticExport ? "/shiden.html" : "/shiden"} className="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-800">
+            <a href={isStaticExport ? path_prefix+"/shiden.html" : path_prefix+"/shiden"} className="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-800">
                 <div className="inline-flex items-center">
                     Shiden
                 </div>
             </a>
         </li>
         <li>
-            <a href={isStaticExport ? "/shibuya.html" : "/shibuya"} type="a" className="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-800">
+            <a href={isStaticExport ? path_prefix+"/shibuya.html" : path_prefix+"/shibuya"} type="a" className="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-800">
                 <div className="inline-flex items-center">
                     Shibuya
                 </div>

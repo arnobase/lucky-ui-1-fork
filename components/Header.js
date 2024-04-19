@@ -35,13 +35,14 @@ function Header() {
   const raffle_url = network === undefined ? "/astar" : "/" + network;
 
   const navigation = [
-    { name: 'The Raffle', href: '/', img:undefined, current:(network!==undefined) },
+    { name: 'The Raffle', href: '/', img:undefined, current:(pathname==="/"+network) },
+    { name: 'Lotto', href: '/lotto/shibuya', img: undefined,current:pathname.startsWith("/lotto") },
     { name: 'About', href: '/wiki', img: undefined,current:pathname==="/wiki" },
     { name: '', href: 'https://discord.gg/R3jjRSZ6D9', img:discord_svg, blank:true, current: false },
     { name: '', href: 'https://twitter.com/LuckyDapp', img:x_svg, blank:true, current: false },
   ]
 
-  console.log("pathname",pathname)
+  //console.log("pathname",pathname)
   return (
     <Disclosure as="nav" className="">
       {({ open }) => (
