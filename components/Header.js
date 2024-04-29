@@ -72,9 +72,9 @@ function Header() {
               </div>
                 <div className="pl-4 inset-y-0 flex items-center sm:inline-flex hidden">
                   <div className="self-center flex space-x-4">
-                    {navigation.map((item) => {
+                    {navigation.map((item,i) => {
                       return <a
-                          key={item.name}
+                          key={item.name+i}
                           href={item.href}
                           target={item.blank?"_blank":"_self"}
                           className={classNames(

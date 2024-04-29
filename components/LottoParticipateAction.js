@@ -1,4 +1,5 @@
 import { ApiContext } from '../context/ApiProvider';
+import { AccountContext } from "../context/AccountProvider";
 import { useContext, useEffect, useRef } from 'react';
 import { LottoContractContext } from "../context/LottoContractProvider";
 import toast from 'react-hot-toast';
@@ -13,13 +14,14 @@ const style = {
 };
 
 const LottoParticipateAction = () => {
+  const { account } = useContext(AccountContext)
   let selected_numbers = []
   
   const refLottoNb1 = useRef()
   const refLottoNb2 = useRef()
   const refLottoNb3 = useRef()
   const refLottoNb4 = useRef()
-  const { participate, doParticipateDryRun, doParticipateDryRunRes } = useContext(LottoContractContext)
+  const { participate, batchParticipate, doParticipateDryRun, doParticipateDryRunRes } = useContext(LottoContractContext)
 
   const processNumber = (e,ele) => {
     // remove the number if present
@@ -84,18 +86,31 @@ const LottoParticipateAction = () => {
   }
 
   const doParticipate = async (nb) => {
-    const drres = await doParticipateDryRun(nb)
-    //console.log("doParticipateDryRunRes",drres,nb)
-    if (drres?.error === undefined) {
-      participate(nb)
+    let error_msg = undefined
+    if (account === undefined) {
+      error_msg = "Connect account to participate"
     }
     else {
+      if (selected_numbers.length < 3) {
+        error_msg = "Select 4 numbers"
+      }
+      else {
+        const drres = await doParticipateDryRun(nb)
+        //console.log("doParticipateDryRunRes",drres,nb)
+        if (drres?.error === undefined) {
+          participate(nb)
+        }
+        else {
+          error_msg = drres?.error
+        }
+      }
+    }
+    if (error_msg) {
       toast.error(
-        drres?.error,
+        error_msg,
         {position: 'bottom-right'}
       )
     }
-    //participate(nb)
   }
 
   //console.log("participateDryRunRes",participateDryRunRes)
@@ -106,37 +121,13 @@ const LottoParticipateAction = () => {
   return (
   <div className='w-100'>
     <div className="w-96 flex flex-wrap m-auto">
-      {numbers.map(e=>(<div onClick={(ele)=>{processNumber(e,ele)}} className={style.ball+" border-transparent"}>{e}</div>))}
+      {numbers.map(e=>(<div key={e} onClick={(ele)=>{processNumber(e,ele)}} className={style.ball+" border-transparent"}>{e}</div>))}
     </div>
     <div className='w-96 m-auto flex place-content-around'>
-      <input 
-        disabled
-        ref={refLottoNb1} 
-        className={style.bigball}
-        id="refLottoNb1"
-        //onChange={checkLottoNumbers}
-      />
-      <input 
-        disabled
-        ref={refLottoNb2} 
-        className={style.bigball} 
-        id="refLottoNb2"
-        //onChange={checkLottoNumbers}
-      />
-      <input 
-        disabled
-        ref={refLottoNb3} 
-        className={style.bigball}
-        id="refLottoNb3"
-        //onChange={checkLottoNumbers}
-      />
-      <input 
-        disabled
-        ref={refLottoNb4} 
-        className={style.bigball} 
-        id="refLottoNb4"
-        //onChange={checkLottoNumbers}
-      />
+      <input disabled ref={refLottoNb1}  className={style.bigball} id="refLottoNb1" />
+      <input disabled ref={refLottoNb2}  className={style.bigball} id="refLottoNb2" />
+      <input disabled ref={refLottoNb3}  className={style.bigball} id="refLottoNb3" />
+      <input disabled ref={refLottoNb4}  className={style.bigball} id="refLottoNb4" />
     </div >
     <div className="w-60 m-auto cursor-pointer" onClick={() => {doParticipate(selected_numbers)}}>
       <button 
@@ -144,8 +135,18 @@ const LottoParticipateAction = () => {
         className="px-4 py-2 mt-8 mx-4 bg-pink-300 border-1 border-pink-400 text-pink-700 font-bold rounded-lg inline-flex items-center"
       >  <ExportedImage className="inline mr-3" src={pinklogo_svg} alt="PINK" height={30} width={30} />  Participink!  <ExportedImage className="inline ml-3" src={pinklogo_svg} alt="PINK" height={30} width={30} />  </button>
     </div>
+
   </div>
   );
 };
 
 export default LottoParticipateAction;
+
+/*
+    <div className="w-60 m-auto cursor-pointer" onClick={() => {batchParticipate([
+      [1,2,3,4],[1,2,3,5],[1,2,3,6],[1,2,3,7],[1,2,3,8],[1,2,3,9],[1,2,3,10],[1,2,3,11],[1,2,3,12],[1,2,3,13]
+    ])}}>
+      <button 
+        className="px-4 py-2 mt-8 mx-4 bg-pink-300 border-1 border-pink-400 text-pink-700 font-bold rounded-lg inline-flex items-center"
+      >  <ExportedImage className="inline mr-3" src={pinklogo_svg} alt="PINK" height={30} width={30} />  Batch  <ExportedImage className="inline ml-3" src={pinklogo_svg} alt="PINK" height={30} width={30} />  </button>
+    </div>*/

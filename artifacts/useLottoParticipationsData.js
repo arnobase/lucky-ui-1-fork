@@ -1,11 +1,23 @@
+
 import { useQuery } from "@tanstack/react-query";
 import request, { gql } from "graphql-request";
 import { QUERY_URL } from "./constants";
 
 export const useLottoParticipationsData = (
+    raffle,
+    account,
     network
   ) => {
-    //console.log("AN",address,network)
+    /* {and:{
+    	numRaffle:{equalTo:"2"},
+    	accountId:{equalTo:"5CJGoLVukE26Z7cdbj49wZmLeZn2vr8t54M8zxjwNN6hV8Lw"}
+    }},
+    */
+    const filterRaffle=raffle?"numRaffle:{equalTo:\""+raffle+"\"},":""
+    const filterAccount=account?"accountId:{equalTo:\""+account+"\"},":""
+    const filter = (filterRaffle || filterAccount) ? "filter:{and:{"+filterRaffle+filterAccount+"}},":""
+
+    console.log("AN",filter)
     return useQuery(["lottoparticipationsdatas"+network], () => {
       if (!(network)) return null;
       //console.log("address_contract",address_contract)
@@ -13,8 +25,9 @@ export const useLottoParticipationsData = (
         QUERY_URL["lotto_"+network],
         gql`
         query Lottoparticipationsdatas {
-          participations(orderBy:[NUM_RAFFLE_ASC,ACCOUNT_ID_ASC]){
+          participations(${filter}orderBy:[NUM_RAFFLE_ASC,ID_ASC]){
             nodes{
+              id
               numRaffle,
               accountId,
               numbers

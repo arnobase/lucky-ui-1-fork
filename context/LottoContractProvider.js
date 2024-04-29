@@ -9,6 +9,10 @@ import toast from 'react-hot-toast';
 
 export const LottoContractContext = React.createContext();
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export const LottoContractProvider = ({ children }) => {
   const { api, network } = useContext(ApiContext);
   const { account } = useContext(AccountContext);
@@ -188,12 +192,93 @@ export const LottoContractProvider = ({ children }) => {
     
   }
 
+  const batchParticipate = async (numbers_batch) => {
+    
+    const dryRunBatch = new Map()
+  
+    const txBatch = []
+    await numbers_batch.forEach(async (numbers)=>{
+      //const dryRunRes = await dryRunBatch.get(numbers.join("."))
+      const dryRunRes = await doParticipateDryRun(numbers)
+      
+      console.log(dryRunRes)
+      txBatch.push(await lottoContract.tx["participate"]({
+        gasLimit: getEstimatedGas(dryRunRes.gasRequired),
+        storageDepositLimit: null
+      },numbers))
+    })
+
+    console.log(txBatch)
+
+   if (txBatch.length !== numbers_batch.length ) {
+      sleep(5000).then(async () => { 
+
+        let txError = undefined;
+        //console.log("lottoContract",lottoContract)
+        console.log("txBatch",txBatch)
+        const unsub = await lottoContract.api.tx.utility.batch(txBatch)
+        .signAndSend(
+          account.address,
+          (res) => {
+            //console.log("--res--",res,res.events)
+            
+            res.events.forEach(({ phase, event: { data, method, section } }) => {
+              if (method === "ExtrinsicFailed") {
+                txError = "ExtrinsicFailed"
+              }
+              //console.log('\t', phase.toString(), `: ${section}.${method}`, data.toString());
+              //console.log("status",res.status.toString())
+            });
+            
+            console.log("res.status",res.status,res.status.toString())
+            console.log("res status...",res.status.broadcast,res.status.inBlock,res.status.finalized)
+            if (res.status.inBlock) {
+              toast.loading('Transaction is in block',{id:txToast});
+            }
+            if (res.status.finalized) {
+              toast.dismiss(txToast)
+              let txMessage;
+              if (txError) txMessage="Transaction Failed ("+txError+")"
+              else txMessage="Transaction sent successfully"
+              const toastValue = (t) => (
+                <span className="toast-tx-result text-right">
+                  {txMessage}<br/><a target="_blank" href={"https://"+network+".subscan.io/extrinsic/"+res.txHash.toHex()}>show in Subscan</a>
+                  <button className="btn-tx-result" onClick={() => toast.dismiss(t.id)}> close </button>
+                </span>
+              )
+              const toastOptions = {
+                duration: 6000000,
+                position: 'bottom-right',
+                style: {maxWidth:600},
+              }
+              if (txError) toast.error(toastValue,toastOptions);
+              else toast(toastValue,toastOptions);
+              setHasClaimed(true)
+              unsub()
+            }
+          }).catch((error) => {
+            toast.dismiss(txToast)
+            toast.error("Transaction Failed: "+error.toString(),{
+              position: 'bottom-right',
+              style: {maxWidth:600},
+            });
+          });     
+        //}
+
+       });
+    }
+
+    
+    
+  }
+
   return (
     <LottoContractContext.Provider
       value={{
         api,
         lottoContract,
         participate,
+        batchParticipate,
         doParticipateDryRun,
         participateDryRunRes
       }}
