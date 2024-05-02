@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import request, { gql } from "graphql-request";
 import { QUERY_URL } from "./constants";
+import { formatAddress } from "../lib/formatAddress";
 
 export const useLottoParticipationsData = (
     raffle,
@@ -14,7 +15,7 @@ export const useLottoParticipationsData = (
     }},
     */
     const filterRaffle=raffle?"numRaffle:{equalTo:\""+raffle+"\"},":""
-    const filterAccount=account?"accountId:{equalTo:\""+account+"\"},":""
+    const filterAccount=account?"accountId:{equalTo:\""+formatAddress(account,"substrate")+"\"},":""
     const filter = (filterRaffle || filterAccount) ? "filter:{and:{"+filterRaffle+filterAccount+"}},":""
 
     console.log("AN",filter)
