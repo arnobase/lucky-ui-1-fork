@@ -1,14 +1,12 @@
-import { useRouter } from 'next/router';
-import Header from "../../components/Header";
-import Footer from "../../components/Footer"
 
+import Header from "../../components/Header";
 import { Toaster } from 'react-hot-toast';
 import { ApiContext } from '../../context/ApiProvider';
-import { LottoContractContext, doParticipateDryRun, participateDryRunRes } from "../../context/LottoContractProvider";
 import { useEffect, useContext, useState, useRef } from 'react';
 import LottoParticipationList from '../../components/LottoParticipationList';
 import LottoParticipateAction from '../../components/LottoParticipateAction';
 import LottoResults from '../../components/LottoResults';
+import LottoHeader from '../../components/LottoHeader';
 
 export async function getStaticPaths() {
   return {
@@ -30,16 +28,11 @@ export async function getStaticProps({ params }) {
 export default function Home(params) {
   
   const { setNetwork } = useContext(ApiContext)
-  const [finalNumbers,setFinalNumbers] = useState([])
-  const [stateNumbersOk,setStateNumbersOk] = useState(false)
   const [selectedTab,setSelectedTab] = useState()
 
   const tabs = []
   tabs.push(useRef())
   tabs.push(useRef())
-
-  let current_tab = undefined
-  let previous_tab = undefined
 
   useEffect(()=>{
     setNetwork(params.network)
@@ -56,6 +49,7 @@ export default function Home(params) {
       <Header />
       <div className={`flex items-center justify-center mt-14`}>
         <div className="md:w-[600px] content-block bg-[#191B1F] rounded-2xl px-8 py-8">
+          <LottoHeader/>
           <ul className="mb-8 text-sm font-medium text-center rounded-lg shadow flex divide-gray-700 text-gray-400">
             <li className="w-full focus-within:z-10">
               <a href="#participate" key="1" id="lotto-tab-participate" onClick={(e)=>{setSelectedTab("participate")}} className={(selectedTab==="participate"?"bg-slate-600 ":"")+"inline-block w-full p-4 text-gray-900 bg-gray-100 border-r border-gray-500 dark:border-gray-700 rounded-s-lg active focus:outline-none bg-gray-700 text-white"} aria-current="page">Participate</a>

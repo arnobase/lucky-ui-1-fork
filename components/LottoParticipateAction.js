@@ -10,7 +10,7 @@ import pinklogo_svg from "../assets/pink-logo.svg"
 const style = {
   input: `text-center w-8 m-2 border border-sky-500`,
   ball: `w-[2.5rem] h-[2.5rem] pt-[6px] m-1 text-center cursor-pointer border-1 rounded-full`,
-  bigball: `w-20 h-20 pt-[0px] text-2xl m-1 text-center cursor-pointer border-1 rounded-full cursor-default`
+  bigball: `w-20 h-20 pt-[0px] text-2xl m-1 text-center cursor-default border-1 rounded-full cursor-default`
 };
 
 const LottoParticipateAction = () => {

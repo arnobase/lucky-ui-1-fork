@@ -38,6 +38,15 @@ export const LottoContractProvider = ({ children }) => {
     }
   }
 
+  const doGetCurrentRaffleIdDryRun = async () => {
+    if (account) {
+      const funcName = "raffle::getCurrentRaffleId"
+      const { resultToHuman, error } = await dryRun(funcName,account);;
+      const res = { resultToHuman, error }
+      return res
+    }
+  }
+
   const loadLottoContract = async () => {
     try { 
       const abi = new Abi(LOTTO_CONTRACT_ABI_METADATA[network], api.registry.getChainProperties());
@@ -72,12 +81,18 @@ export const LottoContractProvider = ({ children }) => {
       },
       ...args
     )
+
     const abiIndex = contract.query[funcName].meta.index
+    const type = lottoContract.abi.messages[abiIndex].returnType 
+    const typeName = type?.lookupName || type?.type || ''
+
     const { gasRequired, storageDeposit, result, output } = await contractPromise;
 
     //console.log("dryrun result",result, result.isErr ? result.asErr : result.asOk)
     // Check for errors
     let error = undefined
+    let resultToHuman = undefined
+
     if (result.isErr) {
       if (result.asErr.isModule) {
         const dispatchError = api.registry.findMetaError(result.asErr.asModule)
@@ -92,16 +107,14 @@ export const LottoContractProvider = ({ children }) => {
       const flags = result.asOk.flags.toHuman()
       // Check if the result is a revert via flags
       if (flags.includes('Revert')) {
-        //console.log("---Revert",flags)
-        const type = contract.abi.messages[abiIndex].returnType 
-        //console.log("type",type)
-        const typeName = type?.lookupName || type?.type || ''
         error = contract.abi.registry.createTypeUnsafe(typeName, [result.asOk.data]).toHuman()
         error = error ? error.Ok?.Err?.RaffleError : 'Revert'
       }
+      
+      resultToHuman = lottoContract.abi.registry.createTypeUnsafe(typeName, [result.asOk.data]).toHuman()
     }
     //console.log("DryRun error?:",error)
-    return { gasRequired, storageDeposit, result, output, error }
+    return { gasRequired, storageDeposit, result, resultToHuman, output, error }
   }
 
   const getEstimatedGas = (gasRequired) => {
@@ -280,7 +293,8 @@ export const LottoContractProvider = ({ children }) => {
         participate,
         batchParticipate,
         doParticipateDryRun,
-        participateDryRunRes
+        participateDryRunRes,
+        doGetCurrentRaffleIdDryRun
       }}
     >
       {children}
