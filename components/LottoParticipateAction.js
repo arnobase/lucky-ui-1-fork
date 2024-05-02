@@ -132,8 +132,8 @@ const LottoParticipateAction = () => {
     <div className="w-60 m-auto cursor-pointer" onClick={() => {doParticipate(selected_numbers)}}>
       <button 
         //disabled={participateDryRunRes?.error!==undefined} 
-        className="px-4 py-2 mt-8 mx-4 bg-pink-300 border-1 border-pink-400 text-pink-700 font-bold rounded-lg inline-flex items-center"
-      >  <ExportedImage className="inline mr-3" src={pinklogo_svg} alt="PINK" height={30} width={30} />  Participink!  <ExportedImage className="inline ml-3" src={pinklogo_svg} alt="PINK" height={30} width={30} />  </button>
+        className="px-14 m-auto py-2 mt-8 mx-4 bg-gray-600 border-1 border-gray-900 text-gray-100 font-bold rounded-lg"
+      >Participate!</button>
     </div>
 
   </div>
@@ -143,6 +143,9 @@ const LottoParticipateAction = () => {
 export default LottoParticipateAction;
 
 /*
+
+<ExportedImage className="inline mr-3" src={pinklogo_svg} alt="PINK" height={30} width={30} /> 
+
     <div className="w-60 m-auto cursor-pointer" onClick={() => {batchParticipate([
       [1,2,3,4],[1,2,3,5],[1,2,3,6],[1,2,3,7],[1,2,3,8],[1,2,3,9],[1,2,3,10],[1,2,3,11],[1,2,3,12],[1,2,3,13]
     ])}}>
