@@ -67,7 +67,7 @@ export const DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS = {
 };
 
 export const LOTTO_CONTRACT_ADDRESS = {
-  shibuya:  "WMrGnPBnqDUbmK3yNSi2KFibZg4skwtUSzauYgGm3KJyCxm",
+  shibuya:  "aB9AxBVmoYogZ5ZAX662R5YJafTVCqVbtGzJYX3LvvwZW5r",
   shiden:   '',
   astar:    ''
 };
