@@ -14,9 +14,9 @@ const LottoParticipationList = () => {
     participationsData.refetch()
   },[raffleFilter,accountFilter])
 
-  return (<div className='pt-8 w-100'>
+  return (<div className='pt-8 w-100 bg-[#191B1F] pt-6 pb-6 mt-8 rounded-xl'>
     <div className='m-auto w-96'>
-      <h3 className='text-xl py-3'>Participation list</h3>
+      <h3 className='text-xl py-3'>📜 Participation list</h3>
       <input
           className="bg-[#191B1F] ring-grey focus:ring-[rgba(116,190,100,1)] focus:border-[rgba(116,190,100,1)] text-white px-2 py-1 mb-3 w-full rounded-lg"
           type="text"
