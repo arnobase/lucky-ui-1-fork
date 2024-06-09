@@ -110,6 +110,10 @@ td.pending-network {
   min-width: 75px;
 }
 
+.mirrorX {
+  transform: scaleX(-1);
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -124,6 +128,15 @@ td.pending-network {
   .content-block {
     background-color: rgba(32, 33, 37, 0.9) !important;
   }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap');
+
+.unbounded-bold {
+  font-family: "Unbounded", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
 }
 
 @tailwind base;

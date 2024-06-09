@@ -7,6 +7,8 @@ import LottoParticipationList from '../../components/LottoParticipationList';
 import LottoParticipateAction from '../../components/LottoParticipateAction';
 import LottoResults from '../../components/LottoResults';
 import LottoHeader from '../../components/LottoHeader';
+import LottoIntro from "../../components/LottoIntro";
+import LottoFooter from "../../components/LottoFooter";
 
 export async function getStaticPaths() {
   return {
@@ -47,6 +49,12 @@ export default function Home(params) {
     <div>
       <Toaster/>
       <Header />
+      
+      <div className={`flex items-center justify-center mt-14`}>
+        <div className="md:w-[600px] content-block bg-[#191B1F] rounded-2xl px-2 py-8">
+          <LottoIntro/>
+        </div>
+      </div>
       <div className={`flex items-center justify-center mt-14`}>
         <div className="md:w-[600px] content-block bg-[#191B1F] rounded-2xl px-8 py-8">
           <LottoHeader/>
@@ -65,6 +73,11 @@ export default function Home(params) {
           <div id="lotto-results" ref={tabs[1]} className={selectedTab==="results"?"":"hidden"}>
           <LottoResults/>
           </div>
+        </div>
+      </div>
+      <div className={`flex items-center justify-center mt-14`}>
+        <div className="md:w-[800px]  rounded-2xl px-2 py-8 mb-8">
+          <LottoFooter/>
         </div>
       </div>
     </div>
