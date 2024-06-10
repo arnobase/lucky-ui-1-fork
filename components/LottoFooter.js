@@ -10,7 +10,7 @@ import ad_logo_name from "../assets/ad-logo-name.svg"
 import pink_logo from "../assets/pink-logo.svg"
 import polkadot_logo_name from "../assets/polkadot.svg"
 import phala_logo from "../assets/phala-logo.svg"
-import phala_name from "../assets/phala-network.svg"
+import phala_name from "../assets/phala-name.svg"
 
 const LottoFooter = () => {
   return (<>
@@ -20,7 +20,7 @@ const LottoFooter = () => {
         <div></div>
         <div>Lotto is a game made by Lucky in a partnership with <ExportedImage className="inline" src={pink_logo} alt="Pink" height={20} width={25} /><span className={unbounded.className+' align-middle pl-1'}>PI<span className='mirrorX inline-block'>N</span>K</span> and <ExportedImage className="inline" src={ad_logo_name} alt="Astar Degens" height={20} width={170} /></div>
         <div>built on <ExportedImage className="inline" src={astar_logo_name} alt="Astar" height={15} width={100} />, 
-        <ExportedImage className="inline ml-1 mr-2" src={phala_logo} alt="Phala" height={23} width={23} /><ExportedImage className="inline mr-1" src={phala_name} alt="Phala Network" height={23} width={190} />
+        <ExportedImage className="inline ml-1 mr-2" src={phala_logo} alt="Phala" height={23} width={23} /><ExportedImage className="inline mr-1" src={phala_name} alt="Phala Network" height={23} width={70} />
         
           and <img className="inline ml-1" src="https://apillon.io/images/logo.svg" width="120" /></div>
         <div>powered by <ExportedImage className="inline align-middle" src={polkadot_logo_name} alt="Astar" height={15} width={110} /></div>
