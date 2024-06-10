@@ -6,7 +6,7 @@ const unbounded = Unbounded({
 
 import ExportedImage from "next-image-export-optimizer";
 import astar_logo_name from "../assets/astar-logo-name.svg"
-import ad_logo_nom from "../assets/ad-logo-nom.svg"
+import ad_logo_name from "../assets/ad-logo-name.svg"
 import pink_logo from "../assets/pink-logo.svg"
 import polkadot_logo_name from "../assets/polkadot.svg"
 import phala_logo from "../assets/phala-logo.svg"
@@ -18,7 +18,7 @@ const LottoFooter = () => {
     <div class="flex items-center justify-center ">
       <div class="margin-auto text-center text-lg align-middle leading-8">
         <div></div>
-        <div>Lotto is a game made by Lucky in a partnership with <ExportedImage className="inline" src={pink_logo} alt="Pink" height={20} width={25} /><span className={unbounded.className+' align-middle pl-1'}>PI<span className='mirrorX inline-block'>N</span>K</span> and <ExportedImage className="inline" src={ad_logo_nom} alt="Astar Degens" height={20} width={170} /></div>
+        <div>Lotto is a game made by Lucky in a partnership with <ExportedImage className="inline" src={pink_logo} alt="Pink" height={20} width={25} /><span className={unbounded.className+' align-middle pl-1'}>PI<span className='mirrorX inline-block'>N</span>K</span> and <ExportedImage className="inline" src={ad_logo_name} alt="Astar Degens" height={20} width={170} /></div>
         <div>built on <ExportedImage className="inline" src={astar_logo_name} alt="Astar" height={15} width={100} />, 
         <ExportedImage className="inline ml-1 mr-2" src={phala_logo} alt="Phala" height={23} width={23} /><ExportedImage className="inline mr-1" src={phala_name} alt="Phala Network" height={23} width={190} />
         
