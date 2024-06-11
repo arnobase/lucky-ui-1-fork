@@ -1,11 +1,7 @@
-import { ApiContext } from '../context/ApiProvider';
 import { AccountContext } from "../context/AccountProvider";
 import { useContext, useEffect, useRef } from 'react';
 import { LottoContractContext } from "../context/LottoContractProvider";
 import toast from 'react-hot-toast';
-import ExportedImage from "next-image-export-optimizer";
-
-import pinklogo_svg from "../assets/pink-logo.svg"
 
 const style = {
   input: `text-center w-8 m-2 border border-sky-500`,
@@ -13,9 +9,9 @@ const style = {
   bigball: `w-20 h-20 pt-[0px] text-2xl m-1 text-center border-1 rounded-full bg-gray-600`
 };
 
-const LottoParticipateAction = () => {
+const LottoParticipateAction = (props) => {
   const { account } = useContext(AccountContext)
-  let selected_numbers = []
+  let selected_numbers = props.numbers.sn
   
   const refLottoNb1 = useRef()
   const refLottoNb2 = useRef()
@@ -29,7 +25,7 @@ const LottoParticipateAction = () => {
       const e_index = selected_numbers.indexOf(e);
       selected_numbers.splice(e_index, 1);
       ele.target.className = style.ball+" border-transparent "
-    } 
+    }
     // add if not present
     else {
       if (selected_numbers.length<4) {
@@ -39,6 +35,7 @@ const LottoParticipateAction = () => {
     }
     // update numbers array to keep it sorted
     selected_numbers = selected_numbers.sort(function (a, b) {  return a - b;  });
+    props.numbers.ssn(selected_numbers)
     // also update the values of the input fields
     refLottoNb1.current.value = selected_numbers[0] ? selected_numbers[0] : ""
     refLottoNb2.current.value = selected_numbers[1] ? selected_numbers[1] : ""

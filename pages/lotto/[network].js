@@ -29,6 +29,8 @@ export async function getStaticProps({ params }) {
 
 export default function Home(params) {
   
+  const [selectedNumbers,setSelectedNumbers] = useState([])
+
   const { setNetwork } = useContext(ApiContext)
   const [selectedTab,setSelectedTab] = useState()
 
@@ -67,11 +69,11 @@ export default function Home(params) {
             </li>
           </ul>
           <div id="lotto-participate" ref={tabs[0]} className={selectedTab==="participate"?"":"hidden"}>
-            <LottoParticipateAction />
+            <LottoParticipateAction numbers={{sn:selectedNumbers,ssn:setSelectedNumbers}} />
             <LottoParticipationList/>
           </div>
           <div id="lotto-results" ref={tabs[1]} className={selectedTab==="results"?"":"hidden"}>
-          <LottoResults/>
+            <LottoResults/>
           </div>
         </div>
       </div>
