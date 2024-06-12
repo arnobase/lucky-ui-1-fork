@@ -1,4 +1,4 @@
-## What is the Lucky dApp?
+# What is the Lucky dApp?
 
 Lucky is a dApp built on the top of dApp Staking in Astar Network.
 
@@ -8,9 +8,9 @@ If the user stakes on the Lucky dApp, he will still receive the rewards from the
 
 It's important to understand how dApp Staking works in Astar Network.
 
-Token holders can stake their tokens on their favourite dApp and rewards are sent both to the staker and to the dApp developper. It’s a smart way to incentive the builders even if unfortunatly some dApps can receive many rewards and doesn’t build so much in the ecosystem. This is why it's important that the token holders take the time to choose the dApp on which they stake.
+Token holders can stake their tokens on their favourite dApp and rewards are sent both to the staker and to the dApp developper. It’s a smart way to incentive the builders even if unfortunatly some dApps can receive many rewards and doesn’t build so much in the ecosystem. This is why it's important that the token holders take the time to choose the dApp on which they stake/vote.
 
-One word about the security, when a user stakes on a dApp, the tokens stay in the wallet of the user. The tokens are locked by the protocol and will be unlocked when the user will unstake. It means that this is the Astar protocol that directly secure the stake, and developers has no control on it.
+One word about the security, when a user stakes on a dApp, the tokens stay in the wallet of the user. The tokens are locked by the protocol and will be unlocked when the user will unstake. It means you never transfer tokens and the risk of losing tokens is zero (even if the risk 0 never exist).
 
 ## The raffle
 
@@ -25,57 +25,67 @@ So more tickets means more chance to win!
 
 To try to give everyone a chance and prevent a whale from getting all the rewards, a same address cannot win consecutively. It must wait 10 eras to participate in the lottery again. The number of epochs is configurable and can be adapted if necessary.
 
-Next we will implement a feature to reward the loyalty. It means that the longer you stake the more you increase your chance.
-
 ## How to use it?
 
 ### Stake
 
-Use the [Astar Portal](https://portal.astar.network) to stake on the Lucky dApp.
-
-Link to the testnet: [https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=xz3shvmrgry3mt3qq3sjz3aupqtfhkj4rkeoqm6vjrend3w](https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=xz3shvmrgry3mt3qq3sjz3aupqtfhkj4rkeoqm6vjrend3w)
+Use the [Astar Portal](https://portal.astar.network/astar/dapp-staking/dapp?dapp=zsv1gvepvmwfdshmwgczs4zyvmmwesbjwqjn4wdpuefrrpy) to stake on the Lucky dApp and that's all!
 
 ### Claim
 
 When an account win the raffle, the tokens are available to claim. Each user need to claim manually. Go to the Lucky dApp periodically to see if you won a raffle and have rewards to claim.
 
-[https://lucky.substrate.fi/](https://lucky.substrate.fi/)
+The tokens are stored in the contract until you claim, that means you can just stake and forget it for some times. Come back in a while, no need to worry, your rewards will still wait for you!
 
-The tokens are stored in the contract until you claim, that means you can just stake and forget it for some times. Come back in a while, no need to worry, your Raffle will still wait for you!
-
-But stay tuned as we are thinking about proposing other types of raffle, which could be reserved to active users of the dapp in the future
-
-### Give feedback
-
-Feel free to give us your feedback via this form: [https://forms.gle/XdvwAZSNo4U4N3DZA](https://forms.gle/XdvwAZSNo4U4N3DZA)
+But stay tuned as we are thinking about proposing other types of raffle, which could be reserved to active users of the dapp in the future.
 
 ## Technical point of view
 
-The principle is simple but behind the scene there are several wasm smart contracts, subquery or subsquid for indexing the data and schedulled jobs to regulary claim the rewards from the dApp Staking, read the data from the indexer and push them into the smart contracts.
+The principle is simple but behind the scene there are several wasm smart contracts, phat contracts, subquery/subsquid indexer to regulary claim the rewards from dApp Staking and organise a raffle per era.
 
-All these schedulled jobs will be replaced soon by phat contracts in order to have a 100% decentralized dApp .
+The dApp is built with Smart contracts on Astar Network and Phat contracts on Phala Network to be as decentralized as possible.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/hW4OcKYC3YM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-## Awards and Partnerships
+## Awards
 
-The dApp was awarded in the Polkadot Hackathon Europe Edition, in the category ink! Smart Contracts.
+The Lucky dApp was awarded in the Polkadot Hackathon Europe Edition, in the category ink! Smart Contracts.
 
-We have a partnership with the dApp Royal Raffle written by the community Kusama Kingdom and when the Lucky dApp will be tested, our technology could then be used by other teams or other DAOs.
+# What is the Lotto dApp?
 
-## Links
+Lotto is a free lottery in which participants choose 4 numbers between 1 and 50 and if their numbers match with the winning numbers, they win the jackpot.
 
-test dApp (Shibuya): [https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=xz3shvmrgry3mt3qq3sjz3aupqtfhkj4rkeoqm6vjrend3w]()
+The initial jackpot will consist of 4M $PINK + 2000 ASTR and will increase regularly.
 
-Shiden dApp: --
-Astar dApp: --
+There will be a draw every week until we have a winner.
 
-Web: [https://lucky.substrate.fi]()
-Twitter: [https://twitter.com/Luckydapp]()
+## How to participate?
 
-## contact (Discord):
+Just pick 4 numbers and submit your participation (free to play).
 
-GuiGou#1021
-Arηo#8446
+You just have to pay the transaction fee to register your participation in the blockchain.
 
------
+All data is recorded on the blockchain for easy verification.
+
+## How the winning numbers are drawn?
+
+It is managed by a Phat Contract (ie a smart contract deployed on Phala Network) and we use a VRF (Verifiable Random Function), developped by Phala Team, to draw the winning numbers.
+
+As Phala team very well said [here](https://x.com/PhalaNetwork/status/1790410734775455810): Using a verifiable random function (VRF) for number drawing, the game ensures transparency and fairness. All data is recorded on the blockchain for easy verification.
+
+## Winners
+
+If your numbers match the draw, congrats you win the jackpot!
+
+In this case the winner need to manually claim the jackpot on the dApp.
+
+If there is a winner, he will receive the full jackpot.
+
+If there are several winners, the jackpot will be shared equally.
+
+
+## Technical point of view
+
+As for the Lucky dApp, we use Smart contracts on Astar Network and Phat contracts on Phala Network to be as decentralized as possible.
+
+<iframe width="560" height="315" src="https://youtu.be/2NqkHoibHDc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
