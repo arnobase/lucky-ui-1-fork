@@ -55,7 +55,7 @@ The Lucky dApp was awarded in the Polkadot Hackathon Europe Edition, in the cate
 
 Lotto is a free lottery in which participants choose 4 numbers between 1 and 50 and if their numbers match with the winning numbers, they win the jackpot.
 
-The initial jackpot will consist of 4M $PINK + 2000 ASTR and will increase regularly.
+The initial jackpot will consist of 4 millions $PINK + 2000 $ASTR and will increase regularly.
 
 There will be a draw every week until we have a winner.
 
@@ -88,4 +88,4 @@ If there are several winners, the jackpot will be shared equally.
 
 As for the Lucky dApp, we use Smart contracts on Astar Network and Phat contracts on Phala Network to be as decentralized as possible.
 
-<iframe width="560" height="315" src="https://youtu.be/2NqkHoibHDc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2NqkHoibHDc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
