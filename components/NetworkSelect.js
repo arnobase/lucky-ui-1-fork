@@ -7,14 +7,15 @@ import astarLogo from "../assets/astar.png";
 import { useContext } from "react";``
 import { ApiContext } from "../context/ApiProvider";
 import ExportedImage from "next-image-export-optimizer";
+import { usePathname } from 'next/navigation'
 const isStaticExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true';
 
 const headerStyle= {
-  button: `max-h[50px] flex items-center content-block bg-[#191B1F] hover:bg-[#333437] rounded-2xl mx-2 text-[0.9rem] font-semibold cursor-pointer p-2 pr-4`,
+  button: `max-h[50px] flex items-center rounded-2xl mx-1 text-[0.9rem] font-semibold cursor-pointer pr-0 lg:pr-2`,
   //button: `flex items-center content-block bg-[#191B1F] rounded-2xl mx-2  font-bold`,
-  buttonPadding: `p-2`,
-  buttonIconContainer: `flex items-center justify-center p-2`,
-  network: `mr-2`,
+  buttonPadding: `p-0 lg:p-2`,
+  buttonIconContainer: `flex items-center justify-center p-1`,
+  network: `mr-2 ml-1 hidden md:inline-block`,
 }
 
 const SimpleList = () => (
@@ -35,13 +36,17 @@ const DisplayNetwork = () => {
       <div className={headerStyle.buttonIconContainer}>
         <ExportedImage src={networkLogo[network]} alt={network} height={20} width={20} />
       </div>
-      <p className={headerStyle.network}>{network}</p>
+      <p className={headerStyle.network}>{network.charAt(0).toUpperCase() + network.slice(1)}</p>
     </>
     )
 }
 }
 
 const NetworkSelect = ( () => {
+  const pathname = usePathname()
+  const pathname_array = pathname.split("/")
+  const path_prefix = pathname_array.length > 2 ? "/"+pathname_array[1] : ""
+  //console.log(pathname,pathname_array,path_prefix)
   return <>
   <div className="flex">
    
@@ -52,21 +57,21 @@ const NetworkSelect = ( () => {
     <div id="dropdown-states" className="z-10 hidden bg-black divide-y divide-gray-100 rounded-lg shadow w-44">
     <ul className="py-2 text-sm text-white" aria-labelledby="states-button">
         <li>
-            <a href={isStaticExport ? "/astar.html" : "/astar"} className="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-800">
+            <a href={isStaticExport ? path_prefix+"/astar.html" : path_prefix+"/astar"} className="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-800">
                 <div className="inline-flex items-center">
                    Astar
                 </div>
             </a>
         </li>
         <li>
-            <a href={isStaticExport ? "/shiden.html" : "/shiden"} className="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-800">
+            <a href={isStaticExport ? path_prefix+"/shiden.html" : path_prefix+"/shiden"} className="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-800">
                 <div className="inline-flex items-center">
                     Shiden
                 </div>
             </a>
         </li>
         <li>
-            <a href={isStaticExport ? "/shibuya.html" : "/shibuya"} type="a" className="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-800">
+            <a href={isStaticExport ? path_prefix+"/shibuya.html" : path_prefix+"/shibuya"} type="a" className="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-800">
                 <div className="inline-flex items-center">
                     Shibuya
                 </div>

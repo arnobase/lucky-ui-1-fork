@@ -41,12 +41,16 @@ module.exports = {
     { dev, dir, outDir, distDir, buildId }
   ) {
     const isStaticExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true';
+    //const isStaticExport = true
     return {
       //'/': { page: '[network]', query: {network: "astar"} },
       '/': { page: '/', query: {} },
+      '/wiki': { page:'/wiki'},
       '/shibuya': { page: isStaticExport?'[network]':'/shibuya' },
       '/shiden': { page: isStaticExport?'[network]':'/shiden' },
       '/astar': { page: isStaticExport?'[network]':'/astar' },
+      '/lotto/shibuya': { page: isStaticExport?'/lotto/[network]':'/lotto/shibuya' },
+      '/lotto/astar': { page: isStaticExport?'/lotto/[network]':'/lotto/astar' },
       // Add more paths here
     };
   },

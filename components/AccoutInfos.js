@@ -106,7 +106,7 @@ const AccountInfos = () => {
         totalPending = tp > 0 ? formatTokenBalance(tp) : 0
       }
       else totalPending=0 
-      console.log("totalPending",totalPending)
+      //console.log("totalPending",totalPending)
       if ((totalPending && tp && tp>0) && !hasClaimed) {
         return <>
         <div className={style.wrapper}>
@@ -161,7 +161,7 @@ const AccountInfos = () => {
       /*
       */ 
       if (totalStake!==0 || totalClaimed!==0 || totalPending!==0 ) {
-        //console.log("stakeByPeriod",stakeByPeriod)
+        //console.log("###1")
         return <div>
           <div className="py-1 text-xl"><span>Stake for this period: </span><span>{formatTokenBalance(stakeByPeriod)}</span></div>
           <div className="py-1"><span>Already claimed: </span><span>{totalClaimed}</span></div>
@@ -169,6 +169,7 @@ const AccountInfos = () => {
         </div>
       }
       else if (totalStake==0 && totalClaimed==0 && totalPending==0 ) {
+        //console.log("###2")
         return <div className="flex items-left justify-left">
             <span className="pt-2">You don't have any stake or rewards yet with this account</span>
         </div>
@@ -176,15 +177,18 @@ const AccountInfos = () => {
       
     }
     else if (stakeData.isFetching){
+      //console.log("###3")
       return <div className="flex items-center justify-center">
         <span>Loading... <ExportedImage className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
       </div>
     } 
     else if (!account) {
+      //console.log("###4")
       return <div className="flex items-center justify-center">
         <span>Connect account to get Lucky <ExportedImage className="inline" src={LuckyLogo} alt="Lucky" height={20} width={20} /></span>
       </div>
     }
+    else return <div></div>
   }
 
   function AccountDatas () {

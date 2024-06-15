@@ -421,12 +421,26 @@
     border-left: .25em solid var(--color-border-default);
   }
   
+  /* edited by Arno */
   .markdown-body ul,
   .markdown-body ol {
     margin-top: 0;
     margin-bottom: 0;
-    padding-left: 2em;
+    padding-left: 1em; /* 2em -> 1em */
+    max-width: 230px; /**/
   }
+
+  /**/
+  .toc-level.toc-level-1 a.toc-link-h1 {
+    font-size: 1.2em;
+    font-weight: 500;
+  }
+
+  /**/
+  .toc-item.toc-item-h1 {
+    margin-bottom: 20px;
+  }
+  /* edit end */
   
   .markdown-body ol ol,
   .markdown-body ul ol {
