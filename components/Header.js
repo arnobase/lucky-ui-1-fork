@@ -34,13 +34,17 @@ function Header() {
   const { network } = useContext(ApiContext);
   const raffle_url = network === undefined ? "/astar" : "/" + network;
 
+  const isStaticExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true';
+  //const isStaticExport = true
   const navigation = [
     { name: 'The Raffle', href: '/', img:undefined, current:(pathname==="/"+network) },
-    { name: 'Lotto', href: '/lotto/shibuya', img: undefined,current:pathname.startsWith("/lotto") },
-    { name: 'About', href: '/wiki', img: undefined,current:pathname==="/wiki" },
+    { name: 'Lotto', href: isStaticExport ? '/lotto/astar.html' : '/lotto/astar', img: undefined,current:pathname.startsWith("/lotto") },
+    { name: 'About', href: isStaticExport ? '/wiki.html' : '/wiki', img: undefined,current:pathname==="/wiki" },
     { name: '', href: 'https://discord.gg/R3jjRSZ6D9', img:discord_svg, blank:true, current: false },
     { name: '', href: 'https://twitter.com/LuckyDapp', img:x_svg, blank:true, current: false },
   ]
+
+  
 
   //console.log("pathname",pathname)
   return (
