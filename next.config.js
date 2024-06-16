@@ -51,6 +51,7 @@ module.exports = {
       '/astar': { page: isStaticExport?'[network]':'/astar' },
       '/lotto/shibuya': { page: isStaticExport?'/lotto/[network]':'/lotto/shibuya' },
       '/lotto/astar': { page: isStaticExport?'/lotto/[network]':'/lotto/astar' },
+      '/lotto/astar.html': { page: isStaticExport?'/lotto/[network]':'/lotto/astar' },
       // Add more paths here
     };
   },
