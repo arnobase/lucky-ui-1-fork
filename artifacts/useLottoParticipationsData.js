@@ -26,7 +26,7 @@ export const useLottoParticipationsData = (
         QUERY_URL["lotto_"+network],
         gql`
         query Lottoparticipationsdatas {
-          participations(${filter}orderBy:[NUM_RAFFLE_ASC,ID_ASC]){
+          participations(${filter}orderBy:[ID_DESC]){
             nodes{
               id
               numRaffle,
