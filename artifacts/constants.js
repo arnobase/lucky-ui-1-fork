@@ -70,7 +70,7 @@ export const DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS = {
 export const LOTTO_CONTRACT_ADDRESS = {
   shibuya:  "bQBYitAbSZuJUvL2ZGqinseRXrcTggZ6F4TvJKYrR7WvkvJ",
   shiden:   '',
-  astar:    'XSMfwh4kriyo96h5LBdttiixKKd3fRxZL5dR81pK4gCuNsC'
+  astar:    'ZsaaL58Adg7k1xT1EumK575H6GymJ214kvRk8NxKouTWqnC'
 };
 
 import reward_manager_metadata_shibuya from "./reward_manager_metadata_shibuya.json";
