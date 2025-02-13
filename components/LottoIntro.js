@@ -24,7 +24,7 @@ const LottoIntro = () => {
     <div class="flex items-center justify-center">
       <div class="text-lg margin-auto text-center">
         <div class="text-2xl">The Lotto raffle is currently</div>
-        <div class="text-2xl pb-2">💰 4M $PINK and {lottoAstrRewards.toString()} $ASTR 💰</div>
+        <div class="text-2xl pb-2">💰 4M $PINK and {/*lottoAstrRewards.toString()*/}10,000 $ASTR 💰</div>
         <div>Pick 4 numbers and submit your participation (free to play).</div>
         <div>A draw is made every Tuesday</div>
         <div>If your numbers match the draw, you win!</div>
