@@ -13,8 +13,7 @@ const LottoHeader = () => {
   useEffect(()=>{
     const doQuery = async () => {
       const res = await doGetCurrentRaffleIdDryRun()
-      console.log("doGetCurrentRaffleIdDryRun",res.resultToHuman.Ok)
-      setRaffleIdRes(res.resultToHuman.Ok)
+      setRaffleIdRes(res.resultToHuman.Ok.Ok)
     }
     if (lottoContract) doQuery()
   },[lottoContract])

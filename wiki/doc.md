@@ -61,7 +61,7 @@ There will be a draw every week until we have a winner.
 
 ## How to participate?
 
-Just pick 4 numbers and submit your participation (free to play).
+Just pick 5 numbers and submit your participation (free to play).
 
 You just have to pay the transaction fee to register your participation in the blockchain.
 
@@ -82,7 +82,6 @@ In this case the winner need to manually claim the jackpot on the dApp.
 If there is a winner, he will receive the full jackpot.
 
 If there are several winners, the jackpot will be shared equally.
-
 
 ## Technical point of view
 

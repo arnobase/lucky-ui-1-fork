@@ -40,9 +40,10 @@ export const LottoContractProvider = ({ children }) => {
 
   const doGetCurrentRaffleIdDryRun = async () => {
     if (account) {
-      const funcName = "raffle::getCurrentRaffleId"
+      const funcName = "raffle::getDrawNumber"
       const { resultToHuman, error } = await dryRun(funcName,account);;
       const res = { resultToHuman, error }
+      console.log("resultToHuman",resultToHuman)
       return res
     }
   }

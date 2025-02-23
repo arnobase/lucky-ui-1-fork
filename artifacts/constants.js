@@ -50,7 +50,8 @@ export const QUERY_URL = {
   shiden:    "https://query.substrate.fi/lucky-subquery-shiden",
   astar:    "https://query.substrate.fi/lucky-subquery-astar",
   lotto_shibuya:  "https://query.substrate.fi/lotto-subquery-shibuya",
-  lotto_astar:  "https://query.substrate.fi/lotto-subquery-astar"
+  //lotto_astar:  "https://query.substrate.fi/lotto-subquery-astar"
+  lotto_astar:  "https://query.substrate.fi/lotto-multichain-subquery-mainnet"
 };
 
 export const REWARD_MANAGER_CONTRACT_ADDRESS = {
@@ -82,9 +83,9 @@ export const REWARD_MANAGER_CONTRACT_ABI_METADATA = {
   astar:    reward_manager_metadata_astar
 };
 
-import lotto_metadata_shibuya from "./lotto_metadata_shibuya.json";
+import lotto_metadata_shibuya from "./lotto_client_substrate.json";
 //import lotto_metadata from "./lotto_metadata_shiden.json";
-import lotto_metadata_astar from "./lotto_metadata_astar.json"
+import lotto_metadata_astar from "./lotto_client_substrate.json"
 export const LOTTO_CONTRACT_ABI_METADATA = {
   shibuya:  lotto_metadata_shibuya,
   //shiden:   reward_manager_metadata,
