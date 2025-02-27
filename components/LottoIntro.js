@@ -10,6 +10,7 @@ const LottoIntro = () => {
   const { api, network } = useContext(ApiContext);
   const bn_18 = new BN(10).pow(new BN(18))
 
+  /*
   useEffect(()=>{
     const doQuery = async () => {
       let { data: { free: _lottoAstrRewards } } = await api.query.system.account(LOTTO_CONTRACT_ADDRESS[network]);
@@ -18,14 +19,15 @@ const LottoIntro = () => {
     }
     if (api && network) doQuery()
   },[api, network])
+    */
 
   return (<>
  
     <div class="flex items-center justify-center">
       <div class="text-lg margin-auto text-center">
         <div class="text-2xl">The Lotto raffle is currently</div>
-        <div class="text-2xl pb-2">💰 4M $PINK and {lottoAstrRewards.toString()} $ASTR 💰</div>
-        <div>Pick 4 numbers and submit your participation (free to play).</div>
+        <div class="text-2xl pb-2">💰 4M $PINK and {/*lottoAstrRewards.toString()*/}10,000 $ASTR 💰</div>
+        <div>Pick 5 numbers and submit your participation (free to play).</div>
         <div>A draw is made every Tuesday</div>
         <div>If your numbers match the draw, you win!</div>
         <div>If there is no winner, the jackpot is put back into play </div>

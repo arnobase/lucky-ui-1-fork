@@ -4,15 +4,33 @@ import { useLottoParticipationsData } from '../artifacts/useLottoParticipationsD
 import { SS58_PREFIX } from "../artifacts/constants";
 import { formatAddressShort } from "../lib/formatAddressShort";
 
+const ITEMS_PER_PAGE = 20;
+
 const LottoParticipationList = () => {
   const {network} = useContext(ApiContext)
   const [raffleFilter,setRaffleFilter]=useState()
   const [accountFilter,setAccountFilter]=useState()
-  const participationsData = useLottoParticipationsData(raffleFilter,accountFilter,network)
- 
+  const [currentPage, setCurrentPage] = useState(0);
+  
+  const participationsData = useLottoParticipationsData(
+    raffleFilter,
+    accountFilter,
+    network,
+    currentPage * ITEMS_PER_PAGE,
+    ITEMS_PER_PAGE
+  );
+
+  const totalPages = Math.ceil((participationsData?.data?.participations?.totalCount || 0) / ITEMS_PER_PAGE);
+
   useEffect(()=>{
+    setCurrentPage(0); // Reset to first page when filters change
     participationsData.refetch()
   },[raffleFilter,accountFilter])
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+    participationsData.refetch();
+  };
 
   return (<div className='pt-8 w-100 bg-[#191B1F] pt-6 pb-6 mt-8 rounded-xl'>
     <div className='m-auto w-96'>
@@ -44,8 +62,8 @@ const LottoParticipationList = () => {
         
           {participationsData?.data?.participations?.nodes.map(participation=>(
             <tr className='flex w-full' key={participation.id}>
-              <td className='w-1/5 text-center'>{participation.numRaffle}</td>
-              <td className='w-2/5'>{formatAddressShort(participation.accountId,SS58_PREFIX[network])}</td>
+              <td className='w-1/5 text-center'>{participation.drawNumber}</td>
+              <td className='w-2/5'>{formatAddressShort(participation.accountId, SS58_PREFIX[network])}</td>
               <td className='w-2/5'>{participation.numbers.join(",")}</td>
             </tr>
           ))}
@@ -54,6 +72,32 @@ const LottoParticipationList = () => {
         
       </table>
 
+      {/* Pagination controls */}
+      <div className="flex justify-between items-center mt-4">
+        <button 
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 0}
+          className="px-4 py-2 rounded-lg bg-[#2C2F36] disabled:opacity-50"
+        >
+          Previous
+        </button>
+        
+        <span className="text-sm">
+          Page {currentPage + 1} of {totalPages || 1}
+        </span>
+        
+        <button 
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage >= totalPages - 1}
+          className="px-4 py-2 rounded-lg bg-[#2C2F36] disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
+
+      <div className="text-sm text-center mt-2 text-gray-400">
+        Total entries: {participationsData?.data?.participations?.totalCount || 0}
+      </div>
     </div>
   </div>);
   

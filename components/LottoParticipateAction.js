@@ -17,6 +17,7 @@ const LottoParticipateAction = (props) => {
   const refLottoNb2 = useRef()
   const refLottoNb3 = useRef()
   const refLottoNb4 = useRef()
+  const refLottoNb5 = useRef()
   const { participate, batchParticipate, doParticipateDryRun, doParticipateDryRunRes } = useContext(LottoContractContext)
 
   const processNumber = (e,ele) => {
@@ -28,7 +29,7 @@ const LottoParticipateAction = (props) => {
     }
     // add if not present
     else {
-      if (selected_numbers.length<4) {
+      if (selected_numbers.length<5) {
         selected_numbers.push(e)
         ele.target.className = style.ball+" bg-gradient-to-br from-purple-500 to-pink-500 border-pink-600"
       }
@@ -41,6 +42,7 @@ const LottoParticipateAction = (props) => {
     refLottoNb2.current.value = selected_numbers[1] ? selected_numbers[1] : ""
     refLottoNb3.current.value = selected_numbers[2] ? selected_numbers[2] : ""
     refLottoNb4.current.value = selected_numbers[3] ? selected_numbers[3] : ""
+    refLottoNb5.current.value = selected_numbers[4] ? selected_numbers[4] : ""
     checkLottoNumbers()
     //setUpdate(new Date())
   }
@@ -51,23 +53,20 @@ const LottoParticipateAction = (props) => {
       (refLottoNb1?.current.value > 0
         && refLottoNb2?.current.value > 0
         && refLottoNb3?.current.value > 0
-        && refLottoNb4?.current.value > 0)
+        && refLottoNb4?.current.value > 0
+        && refLottoNb5?.current.value > 0)
       && (refLottoNb1?.current.value <= 50
         && refLottoNb2?.current.value <= 50
         && refLottoNb3?.current.value <= 50
-        && refLottoNb4?.current.value <= 50)
-      && (refLottoNb1?.current.value 
-        !== refLottoNb2?.current.value)
-      && (refLottoNb1?.current.value  
-        !== refLottoNb3?.current.value)
-      && (refLottoNb1?.current.value  
-        !== refLottoNb4?.current.value)
-      && (refLottoNb2?.current.value 
-        !== refLottoNb3?.current.value)
-      && (refLottoNb2?.current.value 
-        !== refLottoNb4?.current.value)
-      && (refLottoNb3?.current.value 
-        !== refLottoNb4?.current.value)
+        && refLottoNb4?.current.value <= 50
+        && refLottoNb5?.current.value <= 50)
+      && (new Set([
+        refLottoNb1?.current.value,
+        refLottoNb2?.current.value,
+        refLottoNb3?.current.value,
+        refLottoNb4?.current.value,
+        refLottoNb5?.current.value
+      ]).size === 5)
 
     //console.log("numbersOk",numbersOk)
     //console.log("finalNumbers",selected_numbers)
@@ -88,8 +87,8 @@ const LottoParticipateAction = (props) => {
       error_msg = "Connect account to participate"
     }
     else {
-      if (selected_numbers.length < 3) {
-        error_msg = "Select 4 numbers"
+      if (selected_numbers.length < 5) {
+        error_msg = "Select 5 numbers"
       }
       else {
         const drres = await doParticipateDryRun(nb)
@@ -125,6 +124,7 @@ const LottoParticipateAction = (props) => {
       <input disabled ref={refLottoNb2}  className={style.bigball} id="refLottoNb2" />
       <input disabled ref={refLottoNb3}  className={style.bigball} id="refLottoNb3" />
       <input disabled ref={refLottoNb4}  className={style.bigball} id="refLottoNb4" />
+      <input disabled ref={refLottoNb5}  className={style.bigball} id="refLottoNb5" />
     </div >
     <div className="w-60 m-auto cursor-pointer" onClick={() => {doParticipate(selected_numbers)}}>
       <button 
