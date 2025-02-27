@@ -21,7 +21,7 @@ const LottoParticipationList = () => {
         <tbody>
           {resultsData?.data?.results?.nodes.map(e=>(
             <tr key={e.id}>
-              <td className='w-20 text-center'>{e.numRaffle}</td>
+              <td className='w-20 text-center'>{e.drawNumber}</td>
               <td className='w-40'>{String(e.numbers)}</td>
             </tr>
           ))}

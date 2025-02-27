@@ -13,10 +13,10 @@ export const useLottoResultsData = (
         QUERY_URL["lotto_"+network],
         gql`
         query results {
-          results(orderBy:NUM_RAFFLE_DESC){
+          results(orderBy:DRAW_NUMBER_DESC){
             nodes{
               id,
-              numRaffle,
+              drawNumber,
               numbers
             }
           }
