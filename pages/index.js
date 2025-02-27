@@ -1,20 +1,6 @@
-
-import Header from "../components/Header";
-import RafleHistory from "../components/RafleHistory";
-import AccountInfos from "../components/AccoutInfos";
-import { Toaster } from 'react-hot-toast';
-import EraCountdown from "../components/EraCountdown";
-
+const isStaticExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true';
 export default function Home() {
-
-  return (
-    <div>
-     
-      <Toaster/>
-      <Header />
-      <EraCountdown />
-      <AccountInfos />
-      {<RafleHistory />}
-    </div>
-  );
+  if (typeof window !== "undefined") {
+    window.location.replace(isStaticExport ? "/astar.html" : "/astar")
+  }
 }

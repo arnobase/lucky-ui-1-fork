@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Abi, ContractPromise } from "@polkadot/api-contract";
+import { Keyring } from "@polkadot/api";
 import { ApiContext } from "../context/ApiProvider";
 import { AccountContext } from "../context/AccountProvider";
 import { REWARD_MANAGER_CONTRACT_ABI_METADATA, REWARD_MANAGER_CONTRACT_ADDRESS, DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS } from "../artifacts/constants";
@@ -13,9 +14,11 @@ export const ContractProvider = ({ children }) => {
   const { account } = useContext(AccountContext);
   const [rewardManagerContract, setRewardManagerContract] = useState();
   const [claimDryRunRes,setClaimDryRunRes] = useState(undefined)
+  const [claimFromDryRunRes,setClaimFromDryRunRes] = useState(undefined)
   const [currentEra,setCurrentEra] = useState(undefined)
   const [currentEraStake,setCurrentEraStake] = useState(undefined)
   const [hasClaimed,setHasClaimed] = useState(false)
+  const [hasClaimedEVM,setHasClaimedEVM ] = useState(false)
 
   useEffect(() => {
     //console.log("loadRewardManagerContract")
@@ -24,7 +27,7 @@ export const ContractProvider = ({ children }) => {
   
   useEffect(()=>{
     if (rewardManagerContract && account) {
-      doDryRun();
+      doClaimDryRun();
     }
   },[rewardManagerContract,account,hasClaimed])
 
@@ -33,18 +36,20 @@ export const ContractProvider = ({ children }) => {
   },[api])
 
   const subscribeCurrentEra = async ()=>{
-    const unsub = await api.query.dappsStaking.currentEra(
-      (era) => {
-        console.log("ERA",era.toString());
+    const query_dappstaking_currentera = api.query.dappStaking.currentEraInfo
+    const unsub = await query_dappstaking_currentera(
+      (data) => {
+        const era = data.currentStakeAmount.era
+        //console.log("ERA",era.toString());
         setCurrentEra(era.toString())
-        getCurrentEraStake(era.toString())
+        //getCurrentEraStake(era.toString())
       }
     );
   }
 
   const getCurrentEraStake = async (era)=>{
-    if(era) {
-      const stake = await api.query.dappsStaking.contractEraStake({"Wasm":DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS},era);
+    if(era && network) {
+      const stake = await api.query.dappsStaking.contractEraStake({"Wasm":DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS[network]},era);
       if (stake) {
         try {
           setCurrentEraStake(stake.unwrap().total.toString())
@@ -56,29 +61,29 @@ export const ContractProvider = ({ children }) => {
     }
   }
 
-  const doDryRun = async () => {
-    const { gasRequired, result, error } = await claimDryRun();
-    const res = { gasRequired, result, error }
-    setClaimDryRunRes(res)
-    return res
+  const doClaimDryRun = async () => {
+    if (account) {
+      const { gasRequired, result, error } = await dryRun("psp22Reward::claim",account);;
+      const res = { gasRequired, result, error }
+      setClaimDryRunRes(res)
+      return res
+    }
   }
 
-  /*
-  function getErrorDescription(errindex,errno) {
-    //console.log("#####",metadata['lookup']['types'])
-    const metadata = REWARD_MANAGER_CONTRACT_ABI_METADATA
-    const pallet = metadata.pallets.find(ele => ele.index == errindex)
-    //console.log(pallet)
-    const type = metadata['lookup']['types'].find((ele => ele.id == pallet.errors.type))
-    const variant = type['type']['def']['Variant']['variants'].find(ele => ele.index == errno)
-    const description = variant['docs'].join(' ');
-    return description;
-  }*/
+  const doClaimFromDryRun = async (from) => {
+    const alice = new Keyring({ type: 'sr25519' }).addFromUri("//Alice")
+    if (from) {
+      const { gasRequired, result, error } = await dryRun("psp22Reward::claimFrom",alice,from);
+      const res = { gasRequired, result, error }
+      setClaimFromDryRunRes(res)
+      return res
+    }
+  }
 
   const loadRewardManagerContract = async () => {
     try { 
-      const abi = new Abi(REWARD_MANAGER_CONTRACT_ABI_METADATA, api.registry.getChainProperties());
-      const contract = new ContractPromise(api, abi, REWARD_MANAGER_CONTRACT_ADDRESS);
+      const abi = new Abi(REWARD_MANAGER_CONTRACT_ABI_METADATA[network], api.registry.getChainProperties());
+      const contract = new ContractPromise(api, abi, REWARD_MANAGER_CONTRACT_ADDRESS[network]);
       //console.log("CONTRACT-----",contract)
       
       setRewardManagerContract(contract);
@@ -87,8 +92,13 @@ export const ContractProvider = ({ children }) => {
     }
   };
 
-  const claimDryRun = async()=>{
-    console.log("sending DryRun on "+network+" for contract: ",rewardManagerContract.address.toString())
+  /**
+     * Generic function dryRun
+     */
+  const dryRun = async(funcName,account,...args)=>{
+    const contract = rewardManagerContract
+    //console.log("dryRun: args",args)
+    //console.log("sending DryRun on "+network+" for contract: ",rewardManagerContract.address.toString())
     // Get the initial gas WeightV2 using api.consts.system.blockWeights['maxBlock']
     const gasLimit = api.registry.createType(
       'WeightV2',
@@ -97,34 +107,16 @@ export const ContractProvider = ({ children }) => {
     // Query the contract message
     // This will return the gas required and storageDeposit to execute the message
     // and the result of the message
-    const rewardManagerContractPromise = rewardManagerContract.query["psp22Reward::claim"](
+    //(contract.query)
+    const contractPromise = rewardManagerContract.query[funcName](
       account.address,
       {
-        gasLimit: gasLimit,
-        storageDepositLimit: null
-      }
-    )
-    /*
-    toast.promise(
-      rewardManagerContractPromise, 
-      {
-        loading: 'Loading Contract',
-        success: 'Lycky contract loaded',
-        error: 'Error when loading to the Lucky contract',
+        gasLimit: gasLimit
       },
-      {
-        position: 'bottom-right',
-        style: {
-          minWidth: '250px',
-        },
-        success: {
-          duration: 3000,
-          icon: '🍀',
-        },
-      }
-    );
-    */
-    const { gasRequired, storageDeposit, result } = await rewardManagerContractPromise;
+      ...args
+    )
+    const abiIndex = contract.query[funcName].meta.index
+    const { gasRequired, storageDeposit, result, output } = await contractPromise;
 
     // Check for errors
     let error = undefined
@@ -142,14 +134,16 @@ export const ContractProvider = ({ children }) => {
       const flags = result.asOk.flags.toHuman()
       // Check if the result is a revert via flags
       if (flags.includes('Revert')) {
-        const type = rewardManagerContract.abi.messages[5].returnType // here 5 is the index of the message in the ABI
+        //console.log("---Revert",flags)
+        const type = contract.abi.messages[abiIndex].returnType // here 5 is the index of the message in the ABI
+        //console.log("type",type)
         const typeName = type?.lookupName || type?.type || ''
-        error = rewardManagerContract.abi.registry.createTypeUnsafe(typeName, [result.asOk.data]).toHuman()
-        error = error ? error.Ok.Err.toString() : 'Revert'
+        error = contract.abi.registry.createTypeUnsafe(typeName, [result.asOk.data]).toHuman()
+        error = error ? error.Ok?.Err?.toString() : 'Revert'
       }
     }
-    console.log("DryRun error?:",error)
-    return { gasRequired, storageDeposit, result, error }
+    //console.log("DryRun error?:",error)
+    return { gasRequired, storageDeposit, result, output, error }
   }
 
   const getEstimatedGas = (gasRequired) => {
@@ -167,7 +161,7 @@ export const ContractProvider = ({ children }) => {
   }
 
   const claim = async () => {
-    const res = await doDryRun()
+    const res = await doClaimDryRun()
     const { gasRequired, error } = res
     //console.log("DRYRUNRES",gasRequired, result, error)
     
@@ -203,7 +197,7 @@ export const ContractProvider = ({ children }) => {
             const errindex = data_obj[0]['module']['index']
             const errno = parseInt(data_obj[0]['module']['error'].substr(2, 2),16);
             txError = getErrorDescription(errindex,errno)
-            console.log("txError",errindex,errno,txError)
+            //console.log("txError",errindex,errno,txError)
             */
           }
           //console.log('\t', phase.toString(), `: ${section}.${method}`, data.toString());
@@ -245,14 +239,100 @@ export const ContractProvider = ({ children }) => {
     //}
   }
 
+  const claimFrom = async (from) => {
+    const res = await doClaimFromDryRun(from)
+    const { gasRequired, error } = res
+    //console.log("DRYRUNRES",gasRequired, result, error)
+    
+    if (error) {
+      toast.error(
+        error,
+        {position: 'bottom-right'}
+      )
+      //return
+    }
+    const txToast = toast.loading(
+      'Sending Transaction...',
+      {
+        position: 'bottom-right',
+      }
+    );
+
+    //if (!error) {
+    let txError = undefined;
+    const unsub = await rewardManagerContract.tx["psp22Reward::claimFrom"](
+      {
+        gasLimit: getEstimatedGas(gasRequired),
+        storageDepositLimit: null
+      },
+      from
+    )
+    .signAndSend(
+      account.address,
+      (res) => {
+        //console.log("RES.events",res.events)
+        res.events.forEach(({ phase, event: { data, method, section } }) => {
+          if (method === "ExtrinsicFailed") {
+            txError = "ExtrinsicFailed"
+            /*
+            const data_obj = JSON.parse(data.toString())
+            const errindex = data_obj[0]['module']['index']
+            const errno = parseInt(data_obj[0]['module']['error'].substr(2, 2),16);
+            txError = getErrorDescription(errindex,errno)
+            //console.log("txError",errindex,errno,txError)
+            */
+          }
+          //console.log('\t', phase.toString(), `: ${section}.${method}`, data.toString());
+          //console.log("status",res.status.toString())
+        });
+        
+      //console.log("method",res.method,res.data.toString())
+      if (res.status.isInBlock) {
+        toast.loading('Transaction is in block',{id:txToast});
+      }
+      if (res.status.isFinalized) {
+        toast.dismiss(txToast)
+        let txMessage;
+        if (txError) txMessage="Transaction Failed ("+txError+")"
+        else txMessage="Transaction sent successfully"
+        const toastValue = (t) => (
+          <span className="toast-tx-result text-right">
+            {txMessage}<br/><a target="_blank" href={"https://"+network+".subscan.io/extrinsic/"+res.txHash.toHex()}>show in Subscan</a>
+            <button className="btn-tx-result" onClick={() => toast.dismiss(t.id)}> close </button>
+          </span>
+        )
+        const toastOptions = {
+          duration: 6000000,
+          position: 'bottom-right',
+          style: {maxWidth:600},
+        }
+        if (txError) toast.error(toastValue,toastOptions);
+        else toast(toastValue,toastOptions);
+        setHasClaimed(true)
+        doClaimFromDryRun(from)
+        unsub()
+      }
+    }).catch((error) => {
+      toast.dismiss(txToast)
+      toast.error("Transaction Failed: "+error.toString(),{
+        position: 'bottom-right',
+        style: {maxWidth:600},
+      });
+    });     
+    //}
+  }
+
   return (
     <ContractContext.Provider
       value={{
+        api,
         rewardManagerContract,
         claim,
-        claimDryRun,
+        claimFrom,
+        doClaimFromDryRun,
         hasClaimed,
         claimDryRunRes,
+        claimFromDryRunRes,
         currentEra,
         currentEraStake
       }}

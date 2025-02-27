@@ -4,6 +4,7 @@ export const SS58_PREFIX = {
   astar:5,
   shiden:5,
   shibuya:5,
+  substrate:42,
   rococo:42,
   westend:42,
   polkadot:0,
@@ -11,16 +12,18 @@ export const SS58_PREFIX = {
 };
 
 export const CONTRACT_PALLET_NETWORK = {
-  astar: "polkadot",
-  shiden: "kusama",
+  //astar: "polkadot",
+  astar: "substrate",
+  //shiden: "kusama",
+  shiden: "westend",
   shibuya: "rococo"
-}
+};
 
 export const NETWORK_TOKENS = {
   astar:"ASTR",
   shiden:"SDN",
   shibuya:"SBY"
-}
+};
 
 export const TOKEN_DECIMALS = {
   ASTR: 18,
@@ -30,21 +33,60 @@ export const TOKEN_DECIMALS = {
 
 export const PROVIDER_ENDPOINTS = {
   astar:"wss://rpc.astar.network",
-  shiden:"wss://shiden.api.onfinality.io/public-ws",
+  //shiden:"wss://shiden.api.onfinality.io/public-ws",
+  shiden:"wss://shiden.api.onfinality.io/ws?apikey=53bc7e7e-1dbf-4272-af42-66c42a474c30",
   //shibuya:"wss://rpc.shibuya.astar.network",
   shibuya:"wss://shibuya-rpc.dwellir.com",
 }
 
 export const CONTRACT_STAKING_URL = {
-  shibuya: "https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=xz3shvmrgry3mt3qq3sjz3aupqtfhkj4rkeoqm6vjrend3w"
-}
+  shibuya:  "https://portal.astar.network/shibuya-testnet/dapp-staking/dapp?dapp=xz3shvmrgry3mt3qq3sjz3aupqtfhkj4rkeoqm6vjrend3w",
+  shiden:   "https://portal.astar.network/shiden/dapp-staking/dapp?dapp=x6ykus6l6ch4eozitzsyjscxh2agk2ky9g6a2xeu1w9fftp",
+  astar:    "https://portal.astar.network/astar/dapp-staking/dapp?dapp=zsv1gvepvmwfdshmwgczs4zyvmmwesbjwqjn4wdpuefrrpy"
+};
 
-//export const QUERY_URL = "https://api.subquery.network/sq/GuiGou12358/lucky---shibuya"
-export const QUERY_URL = "https://api.subquery.network/sq/GuiGou12358/lucky-shibuya-v0_1_0"
+export const QUERY_URL = {
+  shibuya:    "https://query.substrate.fi/lucky-subquery-shibuya",
+  shiden:    "https://query.substrate.fi/lucky-subquery-shiden",
+  astar:    "https://query.substrate.fi/lucky-subquery-astar",
+  lotto_shibuya:  "https://query.substrate.fi/lotto-subquery-shibuya",
+  lotto_astar:  "https://query.substrate.fi/lotto-subquery-astar"
+};
 
-//export const REWARD_MANAGER_CONTRACT_ADDRESS = "W66fXdDBkcp7RkZmsS7qLLpjdHB4FDSqWgJArbvCYG3PQ48";
-export const REWARD_MANAGER_CONTRACT_ADDRESS = "WDtNnQgygsCXKfjdvL5TgimewWhcBhJgSSCkb5u5pzZJTpR";
-export const DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS = 'Xz3sHvmRgRY3mt3qQ3SjZ3aUPQTfHkj4rKeoQM6VJrenD3W';
+export const REWARD_MANAGER_CONTRACT_ADDRESS = {
+  //shibuya:  'WDtNnQgygsCXKfjdvL5TgimewWhcBhJgSSCkb5u5pzZJTpR',
+  shibuya:  "X8nqJsFQWBk137WxetcPdAGLwnJ8xpAQ5tXS1bNsHKaz1q6",
+  shiden:   'X6yBHZm9MGzedCVBn6nGHHUDxEnjUNzSoN4aqAP4qooQpEU',
+  astar:    'ZSV1GVepvmWFdshMWgczS4zYvmmwEsBjWQjN4WDpUEFRRPy'
+};
 
-import reward_manager_metadata from "./reward_manager_metadata.json"
-export const REWARD_MANAGER_CONTRACT_ABI_METADATA = reward_manager_metadata
+// pas utilisé pour le moment, sauf si on affiche le total stake (currentEraStake) 
+export const DAPP_STAKING_APPLICATION_CONTRACT_ADDRESS = {
+  shibuya:  'Xz3sHvmRgRY3mt3qQ3SjZ3aUPQTfHkj4rKeoQM6VJrenD3W',
+  shiden:   'X6ykUS6L6CH4EoZitZsYJsCxH2AGk2ky9G6a2xeu1W9ffTP', 
+  astar:    'ZSV1GVepvmWFdshMWgczS4zYvmmwEsBjWQjN4WDpUEFRRPy'
+};
+
+export const LOTTO_CONTRACT_ADDRESS = {
+  shibuya:  "bQBYitAbSZuJUvL2ZGqinseRXrcTggZ6F4TvJKYrR7WvkvJ",
+  shiden:   '',
+  astar:    'XSMfwh4kriyo96h5LBdttiixKKd3fRxZL5dR81pK4gCuNsC'
+};
+
+import reward_manager_metadata_shibuya from "./reward_manager_metadata_shibuya.json";
+import reward_manager_metadata from "./reward_manager_metadata_shiden.json";
+import reward_manager_metadata_astar from "./reward_manager_metadata_astar.json"
+export const REWARD_MANAGER_CONTRACT_ABI_METADATA = {
+  shibuya:  reward_manager_metadata_shibuya,
+  shiden:   reward_manager_metadata,
+  astar:    reward_manager_metadata_astar
+};
+
+import lotto_metadata_shibuya from "./lotto_metadata_shibuya.json";
+//import lotto_metadata from "./lotto_metadata_shiden.json";
+import lotto_metadata_astar from "./lotto_metadata_astar.json"
+export const LOTTO_CONTRACT_ABI_METADATA = {
+  shibuya:  lotto_metadata_shibuya,
+  //shiden:   reward_manager_metadata,
+  astar:    lotto_metadata_astar
+};

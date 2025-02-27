@@ -1,7 +1,7 @@
 {
   "source": {
-    "hash": "0xde76e2fe202e942906e9ff6eb899f5988ae12e767ad7743db60ed6943fe6f240",
-    "language": "ink! 4.0.1",
+    "hash": "0xf821de16f22e732fcc5d33e8afcb8f63231e21019d79a5d841a6ecbf6d7b40b2",
+    "language": "ink! 4.2.0",
     "compiler": "rustc 1.69.0-nightly",
     "build_info": {
       "build_mode": "Release",
@@ -15,7 +15,7 @@
   },
   "contract": {
     "name": "reward_manager",
-    "version": "0.1.0",
+    "version": "0.1.2",
     "authors": [
       "guigou"
     ]
@@ -24,6 +24,7 @@
     "constructors": [
       {
         "args": [],
+        "default": false,
         "docs": [],
         "label": "new",
         "payable": false,
@@ -38,6 +39,45 @@
       }
     ],
     "docs": [],
+    "environment": {
+      "accountId": {
+        "displayName": [
+          "AccountId"
+        ],
+        "type": 13
+      },
+      "balance": {
+        "displayName": [
+          "Balance"
+        ],
+        "type": 0
+      },
+      "blockNumber": {
+        "displayName": [
+          "BlockNumber"
+        ],
+        "type": 1
+      },
+      "chainExtension": {
+        "displayName": [
+          "ChainExtension"
+        ],
+        "type": 27
+      },
+      "hash": {
+        "displayName": [
+          "Hash"
+        ],
+        "type": 25
+      },
+      "maxEventTopics": 4,
+      "timestamp": {
+        "displayName": [
+          "Timestamp"
+        ],
+        "type": 26
+      }
+    },
     "events": [
       {
         "args": [
@@ -49,7 +89,7 @@
               "displayName": [
                 "AccountId"
               ],
-              "type": 19
+              "type": 13
             }
           },
           {
@@ -76,7 +116,7 @@
           }
         ],
         "docs": [
-          " Event emitted when a reward is pending"
+          "Event emitted when a reward is pending"
         ],
         "label": "PendingReward"
       },
@@ -90,7 +130,7 @@
               "displayName": [
                 "AccountId"
               ],
-              "type": 19
+              "type": 13
             }
           },
           {
@@ -106,7 +146,7 @@
           }
         ],
         "docs": [
-          " Event emitted when a user claim rewards"
+          "Event emitted when a user claim rewards"
         ],
         "label": "RewardsClaimed"
       }
@@ -129,6 +169,7 @@
             }
           }
         ],
+        "default": false,
         "docs": [],
         "label": "upgrade_contract",
         "mutates": true,
@@ -144,6 +185,7 @@
       },
       {
         "args": [],
+        "default": false,
         "docs": [],
         "label": "get_role_reward_manager",
         "mutates": false,
@@ -159,6 +201,7 @@
       },
       {
         "args": [],
+        "default": false,
         "docs": [],
         "label": "get_role_reward_viewer",
         "mutates": false,
@@ -173,12 +216,20 @@
         "selector": "0x3c40d3be"
       },
       {
-        "args": [],
-        "docs": [
-          " claim all pending rewards for the current account",
-          " After claiming, there is not anymore pending rewards for this account"
+        "args": [
+          {
+            "label": "value",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 0
+            }
+          }
         ],
-        "label": "Psp22Reward::claim",
+        "default": false,
+        "docs": [],
+        "label": "withdraw",
         "mutates": true,
         "payable": false,
         "returnType": {
@@ -186,26 +237,38 @@
             "ink",
             "MessageResult"
           ],
-          "type": 13
+          "type": 7
         },
-        "selector": "0x51be5832"
+        "selector": "0x410fcc9d"
       },
       {
-        "args": [],
-        "docs": [
-          " return true if the current account has pending rewards"
+        "args": [
+          {
+            "label": "from",
+            "type": {
+              "displayName": [
+                "psp22reward_external",
+                "GetPendingRewardsFromInput1"
+              ],
+              "type": 13
+            }
+          }
         ],
-        "label": "Psp22Reward::has_pending_rewards",
-        "mutates": false,
+        "default": false,
+        "docs": [
+          " return the pending rewards for a given account."
+        ],
+        "label": "Psp22Reward::get_pending_rewards_from",
+        "mutates": true,
         "payable": false,
         "returnType": {
           "displayName": [
             "ink",
             "MessageResult"
           ],
-          "type": 15
+          "type": 14
         },
-        "selector": "0x4fa2ad68"
+        "selector": "0xf53a4041"
       },
       {
         "args": [
@@ -230,6 +293,7 @@
             }
           }
         ],
+        "default": false,
         "docs": [
           " Add the accounts in the list of winners for a given era",
           " accounts contains the list of winners and the rewards by account"
@@ -242,9 +306,27 @@
             "ink",
             "MessageResult"
           ],
-          "type": 13
+          "type": 19
         },
         "selector": "0xc218e5ba"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [
+          " return true if the current account has pending rewards"
+        ],
+        "label": "Psp22Reward::has_pending_rewards",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 21
+        },
+        "selector": "0x4fa2ad68"
       },
       {
         "args": [
@@ -253,16 +335,18 @@
             "type": {
               "displayName": [
                 "psp22reward_external",
-                "GetPendingRewardsFromInput1"
+                "ClaimFromInput1"
               ],
-              "type": 19
+              "type": 13
             }
           }
         ],
+        "default": false,
         "docs": [
-          " return the pending rewards for a given account."
+          " claim all pending rewards for the given account",
+          " After claiming, there is not anymore pending rewards for this account"
         ],
-        "label": "Psp22Reward::get_pending_rewards_from",
+        "label": "Psp22Reward::claim_from",
         "mutates": true,
         "payable": false,
         "returnType": {
@@ -270,9 +354,57 @@
             "ink",
             "MessageResult"
           ],
-          "type": 20
+          "type": 19
         },
-        "selector": "0xf53a4041"
+        "selector": "0x14e8fe0f"
+      },
+      {
+        "args": [
+          {
+            "label": "from",
+            "type": {
+              "displayName": [
+                "psp22reward_external",
+                "HasPendingRewardsFromInput1"
+              ],
+              "type": 13
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " return true if the given account has pending rewards"
+        ],
+        "label": "Psp22Reward::has_pending_rewards_from",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 21
+        },
+        "selector": "0x11bf0337"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [
+          " claim all pending rewards for the current account",
+          " After claiming, there is not anymore pending rewards for this account"
+        ],
+        "label": "Psp22Reward::claim",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 19
+        },
+        "selector": "0x51be5832"
       },
       {
         "args": [
@@ -293,10 +425,11 @@
                 "accesscontrol_external",
                 "HasRoleInput2"
               ],
-              "type": 19
+              "type": 13
             }
           }
         ],
+        "default": false,
         "docs": [
           " Returns `true` if `account` has been granted `role`."
         ],
@@ -308,7 +441,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 15
+          "type": 21
         },
         "selector": "0xc1d9ac18"
       },
@@ -325,6 +458,7 @@
             }
           }
         ],
+        "default": false,
         "docs": [
           " Returns the admin role that controls `role`. See `grant_role` and `revoke_role`."
         ],
@@ -347,6 +481,55 @@
             "type": {
               "displayName": [
                 "accesscontrol_external",
+                "RenounceRoleInput1"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "label": "account",
+            "type": {
+              "displayName": [
+                "accesscontrol_external",
+                "RenounceRoleInput2"
+              ],
+              "type": 13
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Revokes `role` from the calling account.",
+          " Roles are often managed via `grant_role` and `revoke_role`: this function's",
+          " purpose is to provide a mechanism for accounts to lose their privileges",
+          " if they are compromised (such as when a trusted device is misplaced).",
+          "",
+          " On success a `RoleRevoked` event is emitted.",
+          "",
+          " # Errors",
+          "",
+          " Returns with `InvalidCaller` error if caller is not `account`.",
+          " Returns with `MissingRole` error if `account` doesn't have `role`."
+        ],
+        "label": "AccessControl::renounce_role",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 23
+        },
+        "selector": "0xeaf1248a"
+      },
+      {
+        "args": [
+          {
+            "label": "role",
+            "type": {
+              "displayName": [
+                "accesscontrol_external",
                 "GrantRoleInput1"
               ],
               "type": 1
@@ -359,10 +542,11 @@
                 "accesscontrol_external",
                 "GrantRoleInput2"
               ],
-              "type": 19
+              "type": 13
             }
           }
         ],
+        "default": false,
         "docs": [
           " Grants `role` to `account`.",
           "",
@@ -404,10 +588,11 @@
                 "accesscontrol_external",
                 "RevokeRoleInput2"
               ],
-              "type": 19
+              "type": 13
             }
           }
         ],
+        "default": false,
         "docs": [
           " Revokes `role` from `account`.",
           "",
@@ -428,54 +613,6 @@
           "type": 23
         },
         "selector": "0x6e4f0991"
-      },
-      {
-        "args": [
-          {
-            "label": "role",
-            "type": {
-              "displayName": [
-                "accesscontrol_external",
-                "RenounceRoleInput1"
-              ],
-              "type": 1
-            }
-          },
-          {
-            "label": "account",
-            "type": {
-              "displayName": [
-                "accesscontrol_external",
-                "RenounceRoleInput2"
-              ],
-              "type": 19
-            }
-          }
-        ],
-        "docs": [
-          " Revokes `role` from the calling account.",
-          " Roles are often managed via `grant_role` and `revoke_role`: this function's",
-          " purpose is to provide a mechanism for accounts to lose their privileges",
-          " if they are compromised (such as when a trusted device is misplaced).",
-          "",
-          " On success a `RoleRevoked` event is emitted.",
-          "",
-          " # Errors",
-          "",
-          " Returns with `InvalidCaller` error if caller is not `account`.",
-          " Returns with `MissingRole` error if `account` doesn't have `role`."
-        ],
-        "label": "AccessControl::renounce_role",
-        "mutates": true,
-        "payable": false,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 23
-        },
-        "selector": "0xeaf1248a"
       }
     ]
   },
@@ -839,6 +976,10 @@
               {
                 "index": 2,
                 "name": "UpgradeError"
+              },
+              {
+                "index": 3,
+                "name": "TransferError"
               }
             ]
           }
@@ -970,12 +1111,32 @@
       "id": 13,
       "type": {
         "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 5,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "AccountId"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "type": {
+        "def": {
           "variant": {
             "variants": [
               {
                 "fields": [
                   {
-                    "type": 14
+                    "type": 15
                   }
                 ],
                 "index": 0,
@@ -996,7 +1157,7 @@
         "params": [
           {
             "name": "T",
-            "type": 14
+            "type": 15
           },
           {
             "name": "E",
@@ -1009,7 +1170,145 @@
       }
     },
     {
-      "id": 14,
+      "id": 15,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 16
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 10
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 16
+          },
+          {
+            "name": "E",
+            "type": 10
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 0
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 0
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 18
+          }
+        }
+      }
+    },
+    {
+      "id": 18,
+      "type": {
+        "def": {
+          "tuple": [
+            13,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": 19,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 20
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 20
+          },
+          {
+            "name": "E",
+            "type": 4
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 20,
       "type": {
         "def": {
           "variant": {
@@ -1051,139 +1350,6 @@
       }
     },
     {
-      "id": 15,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 16
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 4
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 16
-          },
-          {
-            "name": "E",
-            "type": 4
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
-      "id": 16,
-      "type": {
-        "def": {
-          "primitive": "bool"
-        }
-      }
-    },
-    {
-      "id": 17,
-      "type": {
-        "def": {
-          "sequence": {
-            "type": 18
-          }
-        }
-      }
-    },
-    {
-      "id": 18,
-      "type": {
-        "def": {
-          "tuple": [
-            19,
-            0
-          ]
-        }
-      }
-    },
-    {
-      "id": 19,
-      "type": {
-        "def": {
-          "composite": {
-            "fields": [
-              {
-                "type": 5,
-                "typeName": "[u8; 32]"
-              }
-            ]
-          }
-        },
-        "path": [
-          "ink_primitives",
-          "types",
-          "AccountId"
-        ]
-      }
-    },
-    {
-      "id": 20,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
-                "fields": [
-                  {
-                    "type": 21
-                  }
-                ],
-                "index": 0,
-                "name": "Ok"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 4
-                  }
-                ],
-                "index": 1,
-                "name": "Err"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 21
-          },
-          {
-            "name": "E",
-            "type": 4
-          }
-        ],
-        "path": [
-          "Result"
-        ]
-      }
-    },
-    {
       "id": 21,
       "type": {
         "def": {
@@ -1201,7 +1367,7 @@
               {
                 "fields": [
                   {
-                    "type": 10
+                    "type": 4
                   }
                 ],
                 "index": 1,
@@ -1217,7 +1383,7 @@
           },
           {
             "name": "E",
-            "type": 10
+            "type": 4
           }
         ],
         "path": [
@@ -1229,33 +1395,8 @@
       "id": 22,
       "type": {
         "def": {
-          "variant": {
-            "variants": [
-              {
-                "index": 0,
-                "name": "None"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 0
-                  }
-                ],
-                "index": 1,
-                "name": "Some"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 0
-          }
-        ],
-        "path": [
-          "Option"
-        ]
+          "primitive": "bool"
+        }
       }
     },
     {
@@ -1339,6 +1480,47 @@
         ],
         "path": [
           "Result"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 5,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "Hash"
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "type": {
+        "def": {
+          "primitive": "u64"
+        }
+      }
+    },
+    {
+      "id": 27,
+      "type": {
+        "def": {
+          "variant": {}
+        },
+        "path": [
+          "ink_env",
+          "types",
+          "NoChainExtension"
         ]
       }
     }
