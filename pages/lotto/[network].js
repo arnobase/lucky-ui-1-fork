@@ -78,7 +78,7 @@ export default function Home(params) {
         </div>
       </div>
       <div className={`flex items-center justify-center mt-14`}>
-        <div className="md:w-[800px]  rounded-2xl px-2 py-8 mb-8">
+        <div className="md:w-[800px]  rounded-2xl px-2 mb-8">
           <LottoFooter/>
         </div>
       </div>
